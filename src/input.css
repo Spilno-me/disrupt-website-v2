@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Pilat Extended';
+  src: url('./fonts/PilatExtended-Regular.woff2') format('woff2'),
+       url('./fonts/PilatExtended-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pilat Extended';
+  src: url('./fonts/PilatExtended-Bold.woff2') format('woff2'),
+       url('./fonts/PilatExtended-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('./fonts/FixelText-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('./fonts/FixelText-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fixel';
+  src: url('./fonts/FixelText-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: "Pilat Extended", "Arial", "sans-serif";
+  --font-sans: "Fixel", "system-ui", "sans-serif";
+  --color-primary: #3b82f6;
+  --color-secondary: #9333ea;
+}

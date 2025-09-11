@@ -1,0 +1,30 @@
+{
+  "name": "disrupt-website",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spilno-me/disrupt-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Spilno-me/disrupt-website/issues"
+  },
+  "homepage": "https://github.com/Spilno-me/disrupt-website#readme",
+  "description": "",
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "@tailwindcss/vite": "^4.1.13",
+    "tailwindcss": "^4.1.13",
+    "vite": "^7.1.5"
+  }
+}
