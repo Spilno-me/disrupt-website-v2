@@ -1,0 +1,114 @@
+{
+  "hero": {
+    "title": "Más que automatización",
+    "description": "Creemos que los equipos deben dedicar su energía a crear un impacto real, no a ahogarse en tareas administrativas y repetitivas. El trabajo debe ser significativo, no mecánico."
+  },
+  "features": {
+    "title": "Próximo lanzamiento",
+    "subtitle": "Disrupt integra software, servicios y consultoría en un sistema inteligente. Nuestro enfoque impulsado por agentes elimina la ineficiencia, escala sin esfuerzo y reduce costos.",
+    "cards": {
+      "hours": {
+        "title": "Horas no Meses",
+        "description": "Los agentes de IA entregan resultados más rápido que las soluciones tradicionales"
+      },
+      "costs": {
+        "title": "Reducir Costos",
+        "description": "Reduce la dependencia de herramientas costosas y trabajo manual"
+      },
+      "automation": {
+        "title": "Automatización Inteligente",
+        "description": "Automatización que abarca cumplimiento, EHS y operaciones"
+      }
+    }
+  },
+  "contact": {
+    "form": {
+      "title": "Ve cómo funciona Disrupt",
+      "subtitle": "Sé uno de los primeros en experimentar un sistema impulsado por IA que libera a tus equipos de tareas administrativas y los ayuda a enfocarse en el impacto.",
+      "labels": {
+        "name": "Nombre",
+        "email": "Correo electrónico*",
+        "company": "Empresa*",
+        "message": "Mensaje",
+        "placeholder": "Deja un mensaje",
+        "privacyPolicy": "Al seleccionar esto, aceptas nuestra Política de Privacidad."
+      },
+      "button": {
+        "submit": "Reservar una Llamada",
+        "submitting": "Enviando..."
+      },
+      "validation": {
+        "emailRequired": "El correo electrónico es obligatorio",
+        "emailInvalid": "Por favor ingresa una dirección de correo válida",
+        "companyRequired": "La empresa es obligatoria",
+        "privacyRequired": "Debes aceptar nuestra Política de Privacidad"
+      },
+      "messages": {
+        "successTitle": "¡Mensaje enviado exitosamente!",
+        "successDescription": "Gracias por contactarnos. Te responderemos pronto.",
+        "errorTitle": "Error al enviar el mensaje",
+        "errorFallback": "Por favor inténtalo de nuevo o contáctanos directamente."
+      }
+    },
+    "info": {
+      "title": "Envíanos un correo",
+      "subtitle": "Ponte en contacto y creemos algo increíble.",
+      "contactLabel": "Contacto",
+      "followLabel": "Síguenos",
+      "comingSoon": "Próximamente...",
+      "emailSubject": "Creemos algo increíble"
+    }
+  },
+  "header": {
+    "logo": "Disrupt",
+    "bookCall": "Contáctanos",
+    "language": "Idioma"
+  },
+  "footer": {
+    "company": "Disrupt Inc.",
+    "description": "Construyendo el futuro de la automatización inteligente.",
+    "legal": {
+      "privacy": "Política de Privacidad",
+      "terms": "Términos de Servicio"
+    },
+    "copyright": "Todos los derechos reservados."
+  },
+  "legal": {
+    "privacy": {
+      "title": "Declaración de Información de Privacidad",
+      "lastUpdated": "Última actualización: enero 2025",
+      "sections": {
+        "intro": "En Disrupt Inc., valoramos tu privacidad y estamos comprometidos a proteger tus datos personales. Esta Declaración de Información de Privacidad explica cómo recopilamos, usamos, almacenamos y protegemos la información, en cumplimiento con las regulaciones aplicables de protección de datos y seguridad, incluyendo el Reglamento General de Protección de Datos de la UE (GDPR), la Directiva NIS2, y marcos reconocidos globalmente como el Marco de Ciberseguridad NIST, ISO 27001 y SOC 2.",
+        "whoWeAre": {
+          "title": "1. Quiénes Somos",
+          "content": "Disrupt Inc. actúa como controlador de tus datos personales, a menos que se especifique lo contrario. Estamos comprometidos con la transparencia y responsabilidad en cómo procesamos datos personales y cómo protegemos tus derechos."
+        },
+        "scope": {
+          "title": "2. Alcance de Esta Declaración",
+          "intro": "Esta declaración se aplica a:",
+          "applies": [
+            "Visitantes de nuestros sitios web",
+            "Usuarios de nuestros servicios y plataformas",
+            "Participantes en nuestros eventos, webinars o entrenamientos",
+            "Contactos comerciales y partes interesadas"
+          ],
+          "processor": "Cuando actuamos como procesador (en nombre de nuestros clientes), se aplican las políticas de privacidad de nuestros clientes, y operamos bajo estrictos compromisos contractuales."
+        },
+        "dataCollected": {
+          "title": "3. Datos que Recopilamos",
+          "intro": "Podemos recopilar:",
+          "types": [
+            "Identificadores (nombre, correo, teléfono, organización)",
+            "Detalles de cuenta (información de inicio de sesión, datos de facturación)",
+            "Información de uso (cookies, información del dispositivo, direcciones IP, datos de sesión)",
+            "Comunicaciones comerciales (solicitudes de soporte, correos, registros de llamadas)"
+          ]
+        }
+      }
+    },
+    "terms": {
+      "title": "Términos de Servicio",
+      "lastUpdated": "Última actualización: enero 2025"
+    }
+  }
+}

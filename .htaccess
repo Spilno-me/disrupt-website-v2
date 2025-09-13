@@ -1,0 +1,59 @@
+# Enable mod_rewrite
+RewriteEngine On
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"
+Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+
+# API routes - redirect to PHP backend
+RewriteRule ^api/send-email$ api/send-email.php [L]
+RewriteRule ^api/health$ api/health.php [L]
+
+# Frontend routing - serve index.html for all non-API routes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/api/
+RewriteRule . /index.html [L]
+
+# Security - prevent access to sensitive files
+<Files ".env">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "*.json">
+    <RequireAll>
+        Require all granted
+        <RequireNone>
+            Require uri-path "package.json"
+            Require uri-path "package-lock.json"
+        </RequireNone>
+    </RequireAll>
+</Files>
+
+# Enable GZIP compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+</IfModule>
+
+# Set cache headers for static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>

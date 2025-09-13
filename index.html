@@ -3,90 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disrupt Website</title>
+    <meta name="description" content="AI-powered automation solutions that eliminate inefficiency and reduce costs. Free your teams from repetitive tasks to focus on meaningful impact.">
+    <meta name="keywords" content="AI automation, business process optimization, intelligent systems, workflow automation, cost reduction">
+    <title>Disrupt Inc. - AI-Powered Automation Solutions</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://disrupt.inc/">
+    <meta property="og:title" content="Disrupt Inc. - AI-Powered Automation Solutions">
+    <meta property="og:description" content="AI-powered automation solutions that eliminate inefficiency and reduce costs. Free your teams from repetitive tasks to focus on meaningful impact.">
+    <meta property="og:image" content="https://disrupt.inc/assets/hero_bg_optimized.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://disrupt.inc/">
+    <meta property="twitter:title" content="Disrupt Inc. - AI-Powered Automation Solutions">
+    <meta property="twitter:description" content="AI-powered automation solutions that eliminate inefficiency and reduce costs. Free your teams from repetitive tasks to focus on meaningful impact.">
+    <meta property="twitter:image" content="https://disrupt.inc/assets/hero_bg_optimized.jpg">
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon_light.svg" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/svg+xml" href="/favicon_dark.svg" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/svg+xml" href="/favicon_dark.svg" media="(prefers-color-scheme: no-preference)">
     <link rel="stylesheet" href="./src/input.css">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G0GBZFQJZ2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-G0GBZFQJZ2', {
+        send_page_view: false
+      });
+    </script>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-    <header class="bg-white shadow-lg">
-        <nav class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="text-xl font-display font-bold text-gray-800">
-                    Disrupt
-                </div>
-                <div class="hidden md:flex space-x-6">
-                    <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Home</a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">About</a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Services</a>
-                    <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-300">Contact</a>
-                </div>
-                <div class="md:hidden">
-                    <button class="text-gray-600 hover:text-gray-900">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="flex-grow">
-        <section class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-20">
-            <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-6xl font-display font-bold mb-6">
-                    Welcome to Disrupt
-                </h1>
-                <p class="text-xl md:text-2xl mb-8">
-                    Innovation starts here. Transform your ideas into reality.
-                </p>
-                <button class="bg-white text-blue-600 font-bold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-300">
-                    Get Started
-                </button>
-            </div>
-        </section>
-
-        <section class="py-16">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl font-display font-bold text-center text-gray-800 mb-12">
-                    Our Services
-                </h2>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <div class="text-blue-500 mb-4">
-                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-display font-bold text-gray-800 mb-4">Fast Development</h3>
-                        <p class="text-gray-600">Rapid prototyping and development to bring your ideas to market quickly.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <div class="text-blue-500 mb-4">
-                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-display font-bold text-gray-800 mb-4">Innovation</h3>
-                        <p class="text-gray-600">Cutting-edge solutions using the latest technologies and methodologies.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <div class="text-blue-500 mb-4">
-                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-display font-bold text-gray-800 mb-4">Team Support</h3>
-                        <p class="text-gray-600">Dedicated team support to ensure your project's success from start to finish.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2024 Disrupt Website. All rights reserved.</p>
-        </div>
-    </footer>
+<body class="min-h-screen flex flex-col">
+    <div id="root"></div>
+    <script type="module" src="./src/main.tsx"></script>
 </body>
 </html>

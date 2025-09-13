@@ -1,0 +1,114 @@
+{
+  "hero": {
+    "title": "More than automation",
+    "description": "We believe teams should spend their energy on creating real impact, not drowning in admin and repetitive tasks. Work should feel meaningful not mechanical."
+  },
+  "features": {
+    "title": "Launching soon",
+    "subtitle": "Disrupt integrates software, services, and advisory into one intelligent system. Our agent-driven approach eliminates inefficiency, scales effortlessly, and lowers costs.",
+    "cards": {
+      "hours": {
+        "title": "Hours not Months",
+        "description": "AI agents deliver results faster than traditional solutions"
+      },
+      "costs": {
+        "title": "Cut Costs",
+        "description": "Reduce reliance on costly tools and manual work"
+      },
+      "automation": {
+        "title": "Smart Automation",
+        "description": "Automation that spans compliance, EHS, and operations"
+      }
+    }
+  },
+  "contact": {
+    "form": {
+      "title": "See how Disrupt works",
+      "subtitle": "Be among the first to experience an AI-powered system that frees your teams from admin and helps them focus on impact.",
+      "labels": {
+        "name": "Name",
+        "email": "Email*",
+        "company": "Company*",
+        "message": "Message",
+        "placeholder": "Leave a message",
+        "privacyPolicy": "By selecting this you agree to our Privacy Policy."
+      },
+      "button": {
+        "submit": "Book a Call",
+        "submitting": "Submitting..."
+      },
+      "validation": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email address",
+        "companyRequired": "Company is required",
+        "privacyRequired": "You must agree to our Privacy Policy"
+      },
+      "messages": {
+        "successTitle": "Message sent successfully!",
+        "successDescription": "Thank you for reaching out. We'll get back to you soon.",
+        "errorTitle": "Failed to send message",
+        "errorFallback": "Please try again or contact us directly."
+      }
+    },
+    "info": {
+      "title": "Email us",
+      "subtitle": "Reach out, and let's create something amazing.",
+      "contactLabel": "Contact",
+      "followLabel": "Follow us",
+      "comingSoon": "Coming soon...",
+      "emailSubject": "Let's create something amazing"
+    }
+  },
+  "header": {
+    "logo": "Disrupt",
+    "bookCall": "Contact us",
+    "language": "Language"
+  },
+  "footer": {
+    "company": "Disrupt Inc.",
+    "description": "Building the future of intelligent automation.",
+    "legal": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "copyright": "All rights reserved."
+  },
+  "legal": {
+    "privacy": {
+      "title": "Privacy Information Statement",
+      "lastUpdated": "Last updated: January 2025",
+      "sections": {
+        "intro": "At Disrupt Inc., we value your privacy and are committed to protecting your personal data. This Privacy Information Statement explains how we collect, use, store, and safeguard information, in compliance with applicable data protection and security regulations, including the EU General Data Protection Regulation (GDPR), the NIS2 Directive, and globally recognized frameworks such as NIST Cybersecurity Framework, ISO 27001, and SOC 2.",
+        "whoWeAre": {
+          "title": "1. Who We Are",
+          "content": "Disrupt Inc. acts as the controller of your personal data, unless otherwise specified. We are committed to transparency and accountability in how we process personal data and how we protect your rights."
+        },
+        "scope": {
+          "title": "2. Scope of This Statement",
+          "intro": "This statement applies to:",
+          "applies": [
+            "Visitors to our websites",
+            "Users of our services and platforms",
+            "Participants in our events, webinars, or training",
+            "Business contacts and stakeholders"
+          ],
+          "processor": "When acting as a processor (on behalf of our customers), our customers' privacy policies govern, and we operate under strict contractual commitments."
+        },
+        "dataCollected": {
+          "title": "3. Data We Collect",
+          "intro": "We may collect:",
+          "types": [
+            "Identifiers (name, email, phone, organization)",
+            "Account details (login information, billing data)",
+            "Usage information (cookies, device info, IP addresses, session data)",
+            "Business communications (support requests, emails, call records)"
+          ]
+        }
+      }
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "lastUpdated": "Last updated: January 2025"
+    }
+  }
+}

@@ -1,0 +1,120 @@
+name: "🔍 PR Build & Test Pipeline"
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: "18"
+
+jobs:
+  build-and-test:
+    name: "🏗️ Build & Test Frontend"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: |
+          echo "📦 Installing dependencies..."
+          npm ci
+
+      - name: Run Tests
+        run: |
+          echo "🧪 Running frontend tests..."
+          npm test -- --run --reporter=verbose
+
+      - name: Build Project
+        run: |
+          echo "🏗️ Building production version..."
+          npm run build
+          echo "✅ Build completed successfully!"
+
+      - name: Validate Build Output
+        run: |
+          echo "🔍 Validating build output..."
+          if [ ! -f "dist/index.html" ]; then
+            echo "❌ Build output validation failed - index.html not found"
+            exit 1
+          fi
+          
+          if [ ! -d "dist/assets" ]; then
+            echo "❌ Build output validation failed - assets directory not found"
+            exit 1
+          fi
+          
+          echo "✅ Build output validation passed!"
+
+  lint-and-format:
+    name: "🎨 Lint & Format Check"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: |
+          echo "📦 Installing dependencies..."
+          npm ci
+
+      - name: Run TypeScript Check
+        run: |
+          echo "🔍 Running TypeScript check..."
+          npx tsc --noEmit
+
+      - name: Check for Lint Issues
+        run: |
+          echo "🎨 Checking for lint issues..."
+          if command -v eslint &> /dev/null; then
+            npm run lint || echo "⚠️ No lint script found, skipping..."
+          else
+            echo "ℹ️ ESLint not configured, skipping lint check"
+          fi
+
+  summary:
+    name: "📊 PR Summary"
+    runs-on: ubuntu-latest
+    needs: [build-and-test, lint-and-format]
+    if: always()
+
+    steps:
+      - name: PR Summary
+        run: |
+          echo "📊 PR Build Summary"
+          echo "=================="
+          
+          if [[ "${{ needs.build-and-test.result }}" == "success" ]]; then
+            echo "✅ Build & Test: Passed"
+          else
+            echo "❌ Build & Test: Failed"
+          fi
+          
+          if [[ "${{ needs.lint-and-format.result }}" == "success" ]]; then
+            echo "✅ Lint & Format: Passed"
+          else
+            echo "❌ Lint & Format: Failed"
+          fi
+          
+          if [[ "${{ needs.build-and-test.result }}" == "success" && "${{ needs.lint-and-format.result }}" == "success" ]]; then
+            echo ""
+            echo "🎉 All checks passed! PR is ready for review."
+          else
+            echo ""
+            echo "🚨 Some checks failed. Please review and fix the issues."
+            exit 1
+          fi

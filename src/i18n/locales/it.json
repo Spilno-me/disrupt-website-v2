@@ -1,0 +1,114 @@
+{
+  "hero": {
+    "title": "Più che automazione",
+    "description": "Crediamo che i team dovrebbero dedicare le loro energie a creare un vero impatto, non ad annegare in compiti amministrativi e ripetitivi. Il lavoro dovrebbe essere significativo, non meccanico."
+  },
+  "features": {
+    "title": "In arrivo presto",
+    "subtitle": "Disrupt integra software, servizi e consulenza in un unico sistema intelligente. Il nostro approccio basato su agenti elimina l'inefficienza, scala senza sforzo e riduce i costi.",
+    "cards": {
+      "hours": {
+        "title": "Ore non Mesi",
+        "description": "Gli agenti IA forniscono risultati più velocemente delle soluzioni tradizionali"
+      },
+      "costs": {
+        "title": "Ridurre i Costi",
+        "description": "Riduce la dipendenza da strumenti costosi e lavoro manuale"
+      },
+      "automation": {
+        "title": "Automazione Intelligente",
+        "description": "Automazione che abbraccia conformità, EHS e operazioni"
+      }
+    }
+  },
+  "contact": {
+    "form": {
+      "title": "Scopri come funziona Disrupt",
+      "subtitle": "Sii tra i primi a sperimentare un sistema potenziato dall'IA che libera i tuoi team dalle attività amministrative e li aiuta a concentrarsi sull'impatto.",
+      "labels": {
+        "name": "Nome",
+        "email": "Email*",
+        "company": "Azienda*",
+        "message": "Messaggio",
+        "placeholder": "Lascia un messaggio",
+        "privacyPolicy": "Selezionando questo accetti la nostra Informativa sulla Privacy."
+      },
+      "button": {
+        "submit": "Prenota una Chiamata",
+        "submitting": "Invio in corso..."
+      },
+      "validation": {
+        "emailRequired": "L'email è obbligatoria",
+        "emailInvalid": "Per favore inserisci un indirizzo email valido",
+        "companyRequired": "L'azienda è obbligatoria",
+        "privacyRequired": "Devi accettare la nostra Informativa sulla Privacy"
+      },
+      "messages": {
+        "successTitle": "Messaggio inviato con successo!",
+        "successDescription": "Grazie per averci contattato. Ti risponderemo presto.",
+        "errorTitle": "Errore nell'invio del messaggio",
+        "errorFallback": "Per favore riprova o contattaci direttamente."
+      }
+    },
+    "info": {
+      "title": "Inviaci una email",
+      "subtitle": "Contattaci e creiamo qualcosa di straordinario.",
+      "contactLabel": "Contatto",
+      "followLabel": "Seguici",
+      "comingSoon": "In arrivo presto...",
+      "emailSubject": "Creiamo qualcosa di straordinario"
+    }
+  },
+  "header": {
+    "logo": "Disrupt",
+    "bookCall": "Contattaci",
+    "language": "Lingua"
+  },
+  "footer": {
+    "company": "Disrupt Inc.",
+    "description": "Costruiamo il futuro dell'automazione intelligente.",
+    "legal": {
+      "privacy": "Informativa Privacy",
+      "terms": "Termini di Servizio"
+    },
+    "copyright": "Tutti i diritti riservati."
+  },
+  "legal": {
+    "privacy": {
+      "title": "Dichiarazione Informativa sulla Privacy",
+      "lastUpdated": "Ultimo aggiornamento: gennaio 2025",
+      "sections": {
+        "intro": "In Disrupt Inc., valutiamo la tua privacy e ci impegniamo a proteggere i tuoi dati personali. Questa Dichiarazione Informativa sulla Privacy spiega come raccogliamo, utilizziamo, conserviamo e proteggiamo le informazioni, in conformità con le normative applicabili sulla protezione dei dati e la sicurezza, incluso il Regolamento Generale sulla Protezione dei Dati dell'UE (GDPR), la Direttiva NIS2 e framework riconosciuti globalmente come NIST Cybersecurity Framework, ISO 27001 e SOC 2.",
+        "whoWeAre": {
+          "title": "1. Chi Siamo",
+          "content": "Disrupt Inc. agisce come titolare dei tuoi dati personali, salvo diversa specificazione. Siamo impegnati alla trasparenza e responsabilità nel modo in cui trattiamo i dati personali e proteggiamo i tuoi diritti."
+        },
+        "scope": {
+          "title": "2. Ambito di Questa Dichiarazione",
+          "intro": "Questa dichiarazione si applica a:",
+          "applies": [
+            "Visitatori dei nostri siti web",
+            "Utenti dei nostri servizi e piattaforme",
+            "Partecipanti ai nostri eventi, webinar o corsi di formazione",
+            "Contatti commerciali e stakeholder"
+          ],
+          "processor": "Quando agiamo come responsabile del trattamento (per conto dei nostri clienti), si applicano le politiche sulla privacy dei nostri clienti e operiamo sotto rigorosi impegni contrattuali."
+        },
+        "dataCollected": {
+          "title": "3. Dati che Raccogliamo",
+          "intro": "Potremmo raccogliere:",
+          "types": [
+            "Identificatori (nome, email, telefono, organizzazione)",
+            "Dettagli dell'account (informazioni di accesso, dati di fatturazione)",
+            "Informazioni di utilizzo (cookie, info del dispositivo, indirizzi IP, dati di sessione)",
+            "Comunicazioni commerciali (richieste di supporto, email, registrazioni chiamate)"
+          ]
+        }
+      }
+    },
+    "terms": {
+      "title": "Termini di Servizio",
+      "lastUpdated": "Ultimo aggiornamento: gennaio 2025"
+    }
+  }
+}

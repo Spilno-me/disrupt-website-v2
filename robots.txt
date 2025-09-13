@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://disrupt.inc/sitemap.xml
+
+# Crawl delay for polite crawling
+Crawl-delay: 1
+
+# Block access to admin areas and sensitive files
+Disallow: /api/
+Disallow: /*.env
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /backend/
+Disallow: /php-backend/
+Disallow: /deploy-package/
+Disallow: /*.json$
