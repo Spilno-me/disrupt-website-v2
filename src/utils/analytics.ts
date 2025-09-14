@@ -1,4 +1,3 @@
-import { ANALYTICS } from '@/constants/appConstants'
 
 declare global {
   interface Window {

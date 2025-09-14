@@ -3,6 +3,7 @@ import { Separator } from '@/components/ui/separator'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { COMPANY_INFO } from '@/constants/appConstants'
 import { useTranslation } from '@/hooks/useI18n'
+import { trackButtonClick } from '@/utils/analytics'
 import { useState } from 'react'
 
 export function ContactInfo() {

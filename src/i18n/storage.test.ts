@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { retrieveStoredLanguage, persistLanguagePreference } from './storage'
 import { DEFAULT_LANGUAGE, LANGUAGE_STORAGE_KEY } from './constants'
 

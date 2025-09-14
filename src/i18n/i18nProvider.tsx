@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { I18nContext } from './i18nContext'
 import { useI18nState } from './useI18nState'
 import { LoadingScreen } from './LoadingScreen'

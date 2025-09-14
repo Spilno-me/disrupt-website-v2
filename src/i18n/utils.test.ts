@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import {
   getNestedValue,
   createTranslationFunction,
@@ -6,7 +6,7 @@ import {
   detectBrowserLanguage
 } from './utils'
 import { TranslationKeys } from './types'
-import { TRANSLATION_FALLBACK_MESSAGES, DEFAULT_LANGUAGE } from './constants'
+import { DEFAULT_LANGUAGE } from './constants'
 
 const mockTranslations: TranslationKeys = {
   hero: {
@@ -15,10 +15,99 @@ const mockTranslations: TranslationKeys = {
   },
   features: {
     title: 'Features',
+    subtitle: 'Test features',
     cards: {
       hours: {
-        title: 'Fast'
+        title: 'Fast',
+        description: 'Save hours'
+      },
+      costs: {
+        title: 'Costs',
+        description: 'Save costs'
+      },
+      automation: {
+        title: 'Automation',
+        description: 'Automate tasks'
       }
+    }
+  },
+  contact: {
+    form: {
+      title: 'Contact',
+      subtitle: 'Get in touch',
+      labels: {
+        name: 'Name',
+        email: 'Email',
+        company: 'Company',
+        message: 'Message',
+        placeholder: 'Placeholder',
+        privacyPolicy: 'Privacy Policy'
+      },
+      button: {
+        submit: 'Submit',
+        submitting: 'Submitting'
+      },
+      validation: {
+        emailRequired: 'Email required',
+        emailInvalid: 'Email invalid',
+        companyRequired: 'Company required',
+        privacyRequired: 'Privacy required'
+      },
+      messages: {
+        successTitle: 'Success',
+        successDescription: 'Message sent',
+        errorTitle: 'Error',
+        errorFallback: 'Try again'
+      }
+    },
+    info: {
+      title: 'Contact Info',
+      subtitle: 'Get in touch',
+      contactLabel: 'Contact',
+      followLabel: 'Follow',
+      comingSoon: 'Coming Soon',
+      emailSubject: 'Contact'
+    }
+  },
+  header: {
+    logo: 'Logo',
+    bookCall: 'Book Call'
+  },
+  footer: {
+    company: 'Company',
+    description: 'Description',
+    legal: {
+      privacy: 'Privacy',
+      terms: 'Terms'
+    },
+    copyright: 'Copyright'
+  },
+  legal: {
+    privacy: {
+      title: 'Privacy',
+      lastUpdated: 'Updated',
+      sections: {
+        intro: 'Introduction',
+        whoWeAre: {
+          title: 'Who We Are',
+          content: 'Content'
+        },
+        scope: {
+          title: 'Scope',
+          intro: 'Introduction',
+          applies: ['Visitors'],
+          processor: 'Processor'
+        },
+        dataCollected: {
+          title: 'Data',
+          intro: 'Introduction',
+          types: ['Email']
+        }
+      }
+    },
+    terms: {
+      title: 'Terms',
+      lastUpdated: 'Updated'
     }
   }
 }
@@ -101,11 +190,11 @@ describe('detectBrowserLanguage', () => {
   let originalWindow: any
   
   beforeEach(() => {
-    originalWindow = global.window
+    originalWindow = globalThis.window
   })
-  
+
   afterEach(() => {
-    global.window = originalWindow
+    globalThis.window = originalWindow
   })
 
   it('should return exact language match', () => {

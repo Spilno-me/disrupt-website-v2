@@ -1,0 +1,62 @@
+# GitHub Release Configuration
+# Auto-generates release notes based on commit messages and PR labels
+
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+    authors:
+      - dependabot
+
+  categories:
+    - title: 🚀 Major Features
+      labels:
+        - feat
+        - feature
+        - major
+    - title: 🐛 Bug Fixes
+      labels:
+        - fix
+        - bugfix
+        - patch
+    - title: 📚 Documentation
+      labels:
+        - docs
+        - documentation
+    - title: 🏗️ Infrastructure & CI/CD
+      labels:
+        - ci
+        - build
+        - deploy
+        - infrastructure
+    - title: ✨ Enhancements
+      labels:
+        - enhancement
+        - improvement
+    - title: 🧪 Testing
+      labels:
+        - test
+        - testing
+    - title: 🔧 Maintenance
+      labels:
+        - chore
+        - maintenance
+        - dependencies
+
+  # Template for release notes
+  template: |
+    ## 🎉 What's New
+
+    $CHANGES
+
+    ## 🌐 Live Website
+    Visit us at: https://disruptinc.io
+
+    ## 📊 Release Stats
+    - **Contributors**: $CONTRIBUTORS
+    - **Commits**: $CHANGES
+
+    ---
+
+    Built with ❤️ by Disrupt Inc.
+    © 2025 Disrupt Inc. All rights reserved.
