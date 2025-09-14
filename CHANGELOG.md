@@ -5,6 +5,24 @@ All notable changes to the Disrupt Inc. Website will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2025-09-14
+
+### 🐛 Fixed
+- **Mobile Footer Layout**: Improved responsive design with vertical stacking on mobile devices
+- **Mobile Footer Spacing**: Enhanced logo positioning and content spacing for better mobile UX
+- **TypeScript Errors**: Resolved all TypeScript compilation errors throughout the codebase
+- **Code Quality**: Removed unused imports and fixed type declarations
+
+### 🏗️ Improved
+- **CI/CD Pipeline**: Added GitHub release automation workflows
+- **Type Safety**: Enhanced TypeScript configuration with proper asset declarations
+- **Test Configuration**: Updated test files with correct mock objects and type interfaces
+
+### 🔧 Technical
+- Added comprehensive Vite environment variable type declarations
+- Fixed circular imports in i18n context modules
+- Updated test environment detection for PHP backend architecture
+
 ## [1.0.0] - 2025-09-14
 
 ### 🎉 Initial Release - Official Disrupt Inc. Website Launch
