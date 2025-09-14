@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 import { Header } from './Header'
 import { Footer } from './Footer'
-import { UI_CONSTANTS } from '@/constants/appConstants'
 
 interface PageLayoutProps {
   children: ReactNode

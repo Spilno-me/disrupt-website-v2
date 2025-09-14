@@ -25,6 +25,19 @@ vi.mock('@/i18n/dom')
 
 // Setup i18n mocks
 const mockTranslations = {
+  hero: {
+    title: 'Welcome',
+    description: 'Test description'
+  },
+  features: {
+    title: 'Features',
+    subtitle: 'Test features',
+    cards: {
+      hours: { title: 'Hours', description: 'Save hours' },
+      costs: { title: 'Costs', description: 'Save costs' },
+      automation: { title: 'Automation', description: 'Automate tasks' }
+    }
+  },
   contact: {
     form: {
       title: 'Contact Us',
@@ -53,6 +66,55 @@ const mockTranslations = {
         errorTitle: 'Error',
         errorFallback: 'Please try again later.'
       }
+    },
+    info: {
+      title: 'Contact Info',
+      subtitle: 'Get in touch',
+      contactLabel: 'Contact',
+      followLabel: 'Follow',
+      comingSoon: 'Coming Soon',
+      emailSubject: 'Contact Inquiry'
+    }
+  },
+  header: {
+    logo: 'Logo',
+    bookCall: 'Book Call'
+  },
+  footer: {
+    company: 'Company',
+    description: 'Description',
+    legal: {
+      privacy: 'Privacy Policy',
+      terms: 'Terms of Service'
+    },
+    copyright: 'Copyright'
+  },
+  legal: {
+    privacy: {
+      title: 'Privacy Policy',
+      lastUpdated: 'Last updated',
+      sections: {
+        intro: 'Introduction',
+        whoWeAre: {
+          title: 'Who We Are',
+          content: 'Content'
+        },
+        scope: {
+          title: 'Scope',
+          intro: 'Introduction',
+          applies: ['Visitors', 'Users'],
+          processor: 'Processor info'
+        },
+        dataCollected: {
+          title: 'Data Collected',
+          intro: 'Introduction',
+          types: ['Email', 'Name']
+        }
+      }
+    },
+    terms: {
+      title: 'Terms of Service',
+      lastUpdated: 'Last updated'
     }
   }
 }

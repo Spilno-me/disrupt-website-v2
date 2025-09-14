@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { loadTranslations, type TranslationLoadResult } from './translations'
+import { loadTranslations } from './translations'
 import { DEFAULT_LANGUAGE } from './constants'
 
 // Mock the dynamic import for the real translations

@@ -1,10 +1,6 @@
 import { PageLayout } from '@/components/layout/PageLayout'
-import { UI_CONSTANTS } from '@/constants/appConstants'
 
 function PrivacyPolicy() {
-  const handleHomeNavigation = () => {
-    window.location.href = '/'
-  }
 
   return (
     <PageLayout>

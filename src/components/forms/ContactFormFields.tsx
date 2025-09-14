@@ -13,8 +13,6 @@ interface ContactFormFieldsProps {
 }
 
 export function ContactFormFields({ control }: ContactFormFieldsProps) {
-  const { t } = useTranslation()
-
   return (
     <>
       <NameField control={control} />

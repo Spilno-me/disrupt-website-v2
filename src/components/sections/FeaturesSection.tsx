@@ -1,6 +1,5 @@
 import { Clock, TrendingDown, Brain } from 'lucide-react'
 import { FeatureCard } from './FeatureCard'
-import { UI_CONSTANTS } from '@/constants/appConstants'
 import { useTranslation } from '@/hooks/useI18n'
 
 export function FeaturesSection() {

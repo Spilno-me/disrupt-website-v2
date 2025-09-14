@@ -1,4 +1,5 @@
 export interface TranslationKeys {
+  [key: string]: any
   hero: {
     title: string
     description: string

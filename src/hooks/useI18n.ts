@@ -23,8 +23,7 @@ export function useI18n(): I18nContextType {
  */
 export function useTranslation() {
   const translations = useI18nStore(state => state.translations)
-  const isLoading = useI18nStore(state => state.isLoading)
-  
+
   const t = (key: string) => {
     if (translations) {
       return createTranslationFunction(translations)(key)

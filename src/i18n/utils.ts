@@ -7,12 +7,12 @@ export function getNestedValue<T extends Record<string, unknown>>(
   obj: T,
   path: string
 ): TranslationValue | null {
-  return path.split('.').reduce<TranslationValue | null>((current, key) => {
+  return path.split('.').reduce<TranslationValue | null>((current: TranslationValue | null, key: string): TranslationValue | null => {
     if (current === null) {
       return null
     }
     if (isValidTranslationContainer(current) && key in current) {
-      return current[key]
+      return current[key] as TranslationValue | null
     }
     return null
   }, obj as TranslationValue)

@@ -1,6 +1,5 @@
-import { Button } from '@/components/ui/button'
 import logoImage from '@/assets/D_Pixels_Logo.png'
-import { COMPANY_INFO, NAVIGATION, UI_CONSTANTS } from '@/constants/appConstants'
+import { COMPANY_INFO, UI_CONSTANTS } from '@/constants/appConstants'
 import { navigateToHome, scrollToElement } from '@/utils/navigation'
 import { useTranslation } from '@/hooks/useI18n'
 import { LanguageSwitcher } from '@/components/ui/language-switcher'

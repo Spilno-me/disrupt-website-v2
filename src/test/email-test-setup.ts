@@ -166,8 +166,8 @@ export const emailTestHelpers = {
 
 // Test environment detection
 export const testEnvironment = {
-  isIntegrationTest: process.env.VITEST_MODE === 'integration' || process.env.NODE_ENV === 'test',
-  isLocalBackend: process.env.NODE_ENV !== 'production',
+  isIntegrationTest: import.meta.env.VITEST_MODE === 'integration' || import.meta.env.MODE === 'test',
+  isLocalBackend: import.meta.env.MODE !== 'production',
   
   shouldSkipIntegrationTests(): boolean {
     return !this.isIntegrationTest && !this.isLocalBackend
