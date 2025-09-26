@@ -1,4 +1,4 @@
-import heroBackground from '@/assets/hero-image-optimized.jpg'
+import heroBackground from '@/assets/v2waves.png'
 import { UI_CONSTANTS } from '@/constants/appConstants'
 import { useTranslation } from '@/hooks/useI18n'
 import { useParallax } from '@/hooks/useParallax'
@@ -9,11 +9,13 @@ export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [dimensions, setDimensions] = useState({ containerHeight: 0, elementHeight: 0 })
   
-  const { transform } = useParallax({ 
-    speed: -0.5, 
+  const { transform } = useParallax({
+    speed: -0.5,
     offset: 0,
     containerHeight: dimensions.containerHeight,
-    elementHeight: dimensions.elementHeight
+    elementHeight: dimensions.elementHeight,
+    stopPoint: 286, // Parallax stops after scrolling 286px
+    debug: false // Debug mode off - parallax configured
   })
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export function HeroSection() {
         >
           <img
             src={heroBackground}
-            alt="Futuristic cityscape with floating island and Disrupt logo"
+            alt="V2 Waves - Modern wave pattern design"
             className="w-[120%] h-full object-cover object-center absolute left-1/2 transform -translate-x-1/2"
           />
         </div>
