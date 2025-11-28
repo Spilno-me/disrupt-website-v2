@@ -1,0 +1,505 @@
+import React from 'react'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { render, screen, waitFor, act } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { I18nProvider, useI18n } from './i18nContext'
+import * as storageModule from './storage'
+import * as translationsModule from './translations'
+import * as utilsModule from './utils'
+import * as domModule from './dom'
+
+// Mock all modules
+vi.mock('./storage')
+vi.mock('./translations')
+vi.mock('./utils')
+vi.mock('./dom')
+
+// Sample translations for testing
+const englishTranslations = {
+  hero: {
+    title: 'Welcome to Disrupt',
+    description: 'Build the future'
+  },
+  contact: {
+    form: {
+      title: 'Contact Us',
+      subtitle: 'Get in touch',
+      labels: {
+        name: 'Name',
+        email: 'Email*',
+        company: 'Company*',
+        message: 'Message',
+        placeholder: 'Your message',
+        privacyPolicy: 'I agree'
+      },
+      button: {
+        submit: 'Submit',
+        submitting: 'Submitting...'
+      },
+      validation: {
+        emailRequired: 'Email required',
+        emailInvalid: 'Invalid email',
+        companyRequired: 'Company required',
+        privacyRequired: 'Privacy required'
+      },
+      messages: {
+        successTitle: 'Success!',
+        successDescription: 'Message sent',
+        errorTitle: 'Error',
+        errorFallback: 'Try again'
+      }
+    },
+    info: {
+      title: 'Contact Info',
+      subtitle: 'Reach out',
+      contactLabel: 'Contact',
+      followLabel: 'Follow',
+      comingSoon: 'Coming soon',
+      emailSubject: 'Inquiry'
+    }
+  },
+  features: {
+    title: 'Features',
+    subtitle: 'What we offer',
+    cards: {
+      hours: {
+        title: 'Fast',
+        description: 'Quick results'
+      },
+      costs: {
+        title: 'Affordable',
+        description: 'Cost effective'
+      },
+      automation: {
+        title: 'Automated',
+        description: 'Smart automation'
+      }
+    }
+  },
+  header: {
+    logo: 'Disrupt',
+    bookCall: 'Book Call'
+  },
+  footer: {
+    company: 'Disrupt Inc.',
+    description: 'Innovation company',
+    legal: {
+      privacy: 'Privacy Policy',
+      terms: 'Terms of Service'
+    },
+    copyright: 'All rights reserved'
+  },
+  legal: {
+    privacy: {
+      title: 'Privacy Policy',
+      lastUpdated: 'Updated: 2025',
+      sections: {
+        intro: 'Privacy intro',
+        whoWeAre: {
+          title: 'Who We Are',
+          content: 'About us'
+        },
+        scope: {
+          title: 'Scope',
+          intro: 'This applies to',
+          applies: ['Users', 'Visitors'],
+          processor: 'Data processor info'
+        },
+        dataCollected: {
+          title: 'Data Collection',
+          intro: 'We collect',
+          types: ['Email', 'Name']
+        }
+      }
+    },
+    terms: {
+      title: 'Terms of Service',
+      lastUpdated: 'Updated: 2025'
+    }
+  }
+}
+
+const spanishTranslations = {
+  ...englishTranslations,
+  hero: {
+    title: 'Bienvenido a Disrupt',
+    description: 'Construye el futuro'
+  },
+  contact: {
+    ...englishTranslations.contact,
+    form: {
+      ...englishTranslations.contact.form,
+      title: 'Contáctanos',
+      subtitle: 'Ponte en contacto'
+    }
+  }
+}
+
+// Test components
+function TestApp() {
+  const { currentLanguage, setLanguage, t, isRTL } = useI18n()
+  
+  return (
+    <div data-testid="app">
+      <div data-testid="current-language">{currentLanguage}</div>
+      <div data-testid="hero-title">{t('hero.title')}</div>
+      <div data-testid="contact-title">{t('contact.form.title')}</div>
+      <div data-testid="is-rtl">{isRTL ? 'true' : 'false'}</div>
+      
+      <button data-testid="switch-to-spanish" onClick={() => setLanguage('es')}>
+        Switch to Spanish
+      </button>
+      <button data-testid="switch-to-arabic" onClick={() => setLanguage('ar')}>
+        Switch to Arabic
+      </button>
+      <button data-testid="switch-to-english" onClick={() => setLanguage('en')}>
+        Switch to English
+      </button>
+    </div>
+  )
+}
+
+describe('i18n Integration Tests', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+    
+    // Mock storage module
+    vi.mocked(storageModule.retrieveStoredLanguage).mockReturnValue({
+      language: 'en',
+      source: 'default'
+    })
+    vi.mocked(storageModule.persistLanguagePreference).mockReturnValue(true)
+    
+    // Mock utils module
+    vi.mocked(utilsModule.detectBrowserLanguage).mockReturnValue('en')
+    
+    // Mock dom module
+    vi.mocked(domModule.updateDocumentLanguageAttributes).mockImplementation(() => {})
+    
+    // Mock translations loading
+    vi.mocked(translationsModule.loadTranslations).mockImplementation(async (language) => {
+      const translations = language === 'es' ? spanishTranslations : englishTranslations
+      return {
+        translations,
+        loadedLanguage: language,
+        wasSuccessful: true
+      }
+    })
+    
+    // Mock translation function creation
+    vi.mocked(utilsModule.createTranslationFunction).mockImplementation((translations) => {
+      return (key: string) => {
+        const keys = key.split('.')
+        let value: any = translations
+        
+        for (const k of keys) {
+          value = value?.[k]
+        }
+        
+        return typeof value === 'string' ? value : `Missing: ${key}`
+      }
+    })
+    
+    vi.mocked(utilsModule.createLoadingTranslationFunction).mockReturnValue(
+      (key: string) => `Loading ${key}`
+    )
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('should complete full initialization flow', async () => {
+    render(
+      <I18nProvider>
+        <TestApp />
+      </I18nProvider>
+    )
+    
+    // Should show loading initially
+    expect(screen.getByText('Loading...')).toBeInTheDocument()
+    
+    // Wait for initialization to complete
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+    })
+    
+    // Should have initialized with English
+    expect(screen.getByTestId('current-language')).toHaveTextContent('en')
+    expect(screen.getByTestId('hero-title')).toHaveTextContent('Welcome to Disrupt')
+    expect(screen.getByTestId('contact-title')).toHaveTextContent('Contact Us')
+    expect(screen.getByTestId('is-rtl')).toHaveTextContent('false')
+    
+    // Should have called initialization functions
+    expect(storageModule.retrieveStoredLanguage).toHaveBeenCalled()
+    expect(translationsModule.loadTranslations).toHaveBeenCalledWith('en')
+    expect(domModule.updateDocumentLanguageAttributes).toHaveBeenCalledWith('en')
+  })
+
+  it('should handle complete language switching flow', async () => {
+    const user = userEvent.setup()
+    
+    render(
+      <I18nProvider>
+        <TestApp />
+      </I18nProvider>
+    )
+    
+    // Wait for initial load
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+    })
+    
+    // Should start with English
+    expect(screen.getByTestId('hero-title')).toHaveTextContent('Welcome to Disrupt')
+    expect(screen.getByTestId('contact-title')).toHaveTextContent('Contact Us')
+    
+    // Switch to Spanish
+    await user.click(screen.getByTestId('switch-to-spanish'))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('current-language')).toHaveTextContent('es')
+      expect(screen.getByTestId('hero-title')).toHaveTextContent('Bienvenido a Disrupt')
+      expect(screen.getByTestId('contact-title')).toHaveTextContent('Contáctanos')
+    })
+    
+    // Should have persisted language preference
+    expect(storageModule.persistLanguagePreference).toHaveBeenCalledWith('es')
+    
+    // Should have loaded Spanish translations
+    expect(translationsModule.loadTranslations).toHaveBeenCalledWith('es')
+    
+    // Should have updated document attributes
+    expect(domModule.updateDocumentLanguageAttributes).toHaveBeenCalledWith('es')
+  })
+
+  it('should handle RTL language switching correctly', async () => {
+    const user = userEvent.setup()
+    
+    render(
+      <I18nProvider>
+        <TestApp />
+      </I18nProvider>
+    )
+    
+    // Wait for initial load
+    await waitFor(() => {
+      expect(screen.queryByText('Loading..')).not.toBeInTheDocument()
+    })
+    
+    // Should start with LTR
+    expect(screen.getByTestId('is-rtl')).toHaveTextContent('false')
+    
+    // Switch to Arabic (RTL)
+    await user.click(screen.getByTestId('switch-to-arabic'))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('current-language')).toHaveTextContent('ar')
+      expect(screen.getByTestId('is-rtl')).toHaveTextContent('true')
+    })
+    
+    // Switch back to English (LTR)
+    await user.click(screen.getByTestId('switch-to-english'))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('current-language')).toHaveTextContent('en')
+      expect(screen.getByTestId('is-rtl')).toHaveTextContent('false')
+    })
+  })
+
+  it('should handle stored language preference on initialization', async () => {
+    // Mock stored Spanish preference
+    vi.mocked(storageModule.retrieveStoredLanguage).mockReturnValue({
+      language: 'es',
+      source: 'stored'
+    })
+    
+    render(
+      <I18nProvider>
+        <TestApp />
+      </I18nProvider>
+    )
+    
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+    })
+    
+    // Should have initialized with Spanish
+    expect(screen.getByTestId('current-language')).toHaveTextContent('es')
+    expect(screen.getByTestId('hero-title')).toHaveTextContent('Bienvenido a Disrupt')
+    
+    // Should have loaded Spanish translations directly
+    expect(translationsModule.loadTranslations).toHaveBeenCalledWith('es')
+  })
+
+  it('should fallback to browser language when no stored preference', async () => {
+    // Mock browser language detection
+    vi.mocked(utilsModule.detectBrowserLanguage).mockReturnValue('es')
+    vi.mocked(storageModule.retrieveStoredLanguage).mockReturnValue({
+      language: 'en',
+      source: 'default'
+    })
+    
+    render(
+      <I18nProvider>
+        <TestApp />
+      </I18nProvider>
+    )
+    
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+    })
+    
+    // Should have used browser language detection
+    expect(utilsModule.detectBrowserLanguage).toHaveBeenCalled()
+    expect(translationsModule.loadTranslations).toHaveBeenCalledWith('es')
+  })
+
+  it('should handle translation loading failures gracefully', async () => {
+    // Mock translation loading failure
+    vi.mocked(translationsModule.loadTranslations).mockRejectedValue(
+      new Error('Network error')
+    )
+    
+    render(
+      <I18nProvider>
+        <TestApp />
+      </I18nProvider>
+    )
+    
+    // Should still complete loading (with loading translations)
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+    })
+    
+    // Should have fallback translation function
+    expect(utilsModule.createLoadingTranslationFunction).toHaveBeenCalled()
+  })
+
+  it('should handle rapid language switching', async () => {
+    const user = userEvent.setup()
+    
+    render(
+      <I18nProvider>
+        <TestApp />
+      </I18nProvider>
+    )
+    
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+    })
+    
+    // Rapidly switch languages
+    await user.click(screen.getByTestId('switch-to-spanish'))
+    await user.click(screen.getByTestId('switch-to-arabic'))
+    await user.click(screen.getByTestId('switch-to-english'))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('current-language')).toHaveTextContent('en')
+    })
+    
+    // Should have made all the persistence calls
+    expect(storageModule.persistLanguagePreference).toHaveBeenCalledWith('es')
+    expect(storageModule.persistLanguagePreference).toHaveBeenCalledWith('ar')
+    expect(storageModule.persistLanguagePreference).toHaveBeenCalledWith('en')
+  })
+
+  it('should maintain translation consistency during language switches', async () => {
+    const user = userEvent.setup()
+    
+    render(
+      <I18nProvider>
+        <TestApp />
+      </I18nProvider>
+    )
+    
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+    })
+    
+    // Verify English translations
+    expect(screen.getByTestId('hero-title')).toHaveTextContent('Welcome to Disrupt')
+    expect(screen.getByTestId('contact-title')).toHaveTextContent('Contact Us')
+    
+    // Switch to Spanish
+    await user.click(screen.getByTestId('switch-to-spanish'))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('hero-title')).toHaveTextContent('Bienvenido a Disrupt')
+      expect(screen.getByTestId('contact-title')).toHaveTextContent('Contáctanos')
+    })
+    
+    // Switch back to English
+    await user.click(screen.getByTestId('switch-to-english'))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('hero-title')).toHaveTextContent('Welcome to Disrupt')
+      expect(screen.getByTestId('contact-title')).toHaveTextContent('Contact Us')
+    })
+  })
+
+  it('should handle storage errors gracefully', async () => {
+    // Mock storage error
+    vi.mocked(storageModule.persistLanguagePreference).mockReturnValue(false)
+    const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    
+    const user = userEvent.setup()
+    
+    render(
+      <I18nProvider>
+        <TestApp />
+      </I18nProvider>
+    )
+    
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+    })
+    
+    // Switch language despite storage error
+    await user.click(screen.getByTestId('switch-to-spanish'))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('current-language')).toHaveTextContent('es')
+    })
+    
+    // Language should still switch even if persistence fails
+    expect(storageModule.persistLanguagePreference).toHaveBeenCalledWith('es')
+    
+    consoleSpy.mockRestore()
+  })
+
+  it('should update document attributes consistently', async () => {
+    const user = userEvent.setup()
+    
+    render(
+      <I18nProvider>
+        <TestApp />
+      </I18nProvider>
+    )
+    
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+    })
+    
+    // Initial document update
+    expect(domModule.updateDocumentLanguageAttributes).toHaveBeenCalledWith('en')
+    
+    // Switch to Spanish
+    await user.click(screen.getByTestId('switch-to-spanish'))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('current-language')).toHaveTextContent('es')
+    })
+    
+    expect(domModule.updateDocumentLanguageAttributes).toHaveBeenCalledWith('es')
+    
+    // Switch to Arabic
+    await user.click(screen.getByTestId('switch-to-arabic'))
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('current-language')).toHaveTextContent('ar')
+    })
+    
+    expect(domModule.updateDocumentLanguageAttributes).toHaveBeenCalledWith('ar')
+  })
+})

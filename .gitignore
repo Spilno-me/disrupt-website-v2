@@ -3,3 +3,9 @@ dist/
 .DS_Store
 .env
 .env.local
+
+# Local SDK and build artifacts
+google-cloud-sdk/
+deploy-package/
+*.pem
+SSH_Public

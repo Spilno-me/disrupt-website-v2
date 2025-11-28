@@ -1,0 +1,206 @@
+import { describe, it, expect, beforeAll, afterAll } from 'vitest'
+import { EmailService, EmailPayload } from './emailService'
+
+// Integration tests - these will send real emails
+describe('EmailService Integration Tests', () => {
+  const INTEGRATION_TEST_EMAIL = 'contact@disruptinc.io'
+  
+  // Test only if backend is available
+  beforeAll(async () => {
+    // Check if backend is running
+    try {
+      const response = await fetch('http://localhost:3001/health')
+      if (!response.ok) {
+        throw new Error('Backend not available')
+      }
+    } catch (error) {
+      console.warn('Backend not running, skipping integration tests')
+      // Skip tests if backend is not available
+      process.exit(0)
+    }
+  })
+
+  describe('Real Email Sending', () => {
+    it('should send test email to contact@disruptinc.io', async () => {
+      const testPayload: EmailPayload = {
+        name: 'Test User',
+        email: 'test@example.com',
+        company: 'Test Company Ltd.',
+        message: 'This is an automated test email from the integration test suite. Please ignore.'
+      }
+
+      const result = await EmailService.sendContactForm(testPayload)
+
+      expect(result).toBeDefined()
+      expect(result.success).toBe(true)
+      expect(result.message).toBeTruthy()
+    }, 15000) // 15 second timeout for real email sending
+
+    it('should handle real server validation errors', async () => {
+      const invalidPayload: EmailPayload = {
+        name: 'Test User',
+        email: 'invalid-email-address',
+        company: 'Test Company',
+        message: 'Test message'
+      }
+
+      await expect(EmailService.sendContactForm(invalidPayload))
+        .rejects
+        .toThrow()
+    })
+
+    it('should send email with minimal required fields', async () => {
+      const minimalPayload: EmailPayload = {
+        email: 'minimal@example.com',
+        company: 'Minimal Test Co'
+      }
+
+      const result = await EmailService.sendContactForm(minimalPayload)
+
+      expect(result.success).toBe(true)
+    }, 15000)
+
+    it('should send email with all fields populated', async () => {
+      const completePayload: EmailPayload = {
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        company: 'Complete Test Company',
+        message: 'This is a complete test message with all fields populated. Testing email integration.'
+      }
+
+      const result = await EmailService.sendContactForm(completePayload)
+
+      expect(result.success).toBe(true)
+      expect(result.message).toContain('success')
+    }, 15000)
+
+    it('should handle special characters in email content', async () => {
+      const specialCharPayload: EmailPayload = {
+        name: 'José María',
+        email: 'jose.maria@example.com',
+        company: 'Spëcial Châractërs & Co.',
+        message: 'Testing special characters: áéíóú, ñ, ç, €, £, ¥, 中文, العربية'
+      }
+
+      const result = await EmailService.sendContactForm(specialCharPayload)
+
+      expect(result.success).toBe(true)
+    }, 15000)
+
+    it('should handle long message content', async () => {
+      const longMessage = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '.repeat(50)
+      
+      const longPayload: EmailPayload = {
+        name: 'Long Message Test',
+        email: 'longtest@example.com',
+        company: 'Long Content Testing Ltd.',
+        message: longMessage
+      }
+
+      const result = await EmailService.sendContactForm(longPayload)
+
+      expect(result.success).toBe(true)
+    }, 20000)
+
+    it('should respect timeout configuration in production', async () => {
+      const testPayload: EmailPayload = {
+        name: 'Timeout Test',
+        email: 'timeout@example.com',
+        company: 'Timeout Testing',
+        message: 'Testing timeout configuration'
+      }
+
+      // Test with very short timeout - should fail
+      await expect(
+        EmailService.sendContactForm(testPayload, { timeout: 1 })
+      ).rejects.toThrow('timeout')
+    })
+  })
+
+  describe('Backend Health Check', () => {
+    it('should confirm backend is healthy', async () => {
+      const response = await fetch('http://localhost:3001/health')
+      const data = await response.json()
+
+      expect(response.ok).toBe(true)
+      expect(data.status).toBe('OK')
+      expect(data.timestamp).toBeTruthy()
+    })
+
+    it('should confirm email endpoint exists', async () => {
+      // Just check that the endpoint exists (may fail due to validation, but shouldn't 404)
+      const response = await fetch('http://localhost:3001/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+      })
+
+      // Should not be 404 - endpoint should exist
+      expect(response.status).not.toBe(404)
+    })
+  })
+
+  describe('Error Scenarios', () => {
+    it('should handle backend downtime gracefully', async () => {
+      // Test against non-existent endpoint
+      const originalBaseUrl = process.env.NODE_ENV === 'production' 
+        ? 'https://api.disruptinc.io' 
+        : 'http://localhost:3001'
+
+      // This will test the timeout/retry logic
+      const testPayload: EmailPayload = {
+        name: 'Downtime Test',
+        email: 'downtime@example.com',
+        company: 'Downtime Testing',
+        message: 'Testing backend downtime scenario'
+      }
+
+      // Should either succeed or fail gracefully
+      try {
+        await EmailService.sendContactForm(testPayload)
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error)
+        expect(error.message).toBeTruthy()
+      }
+    })
+  })
+})
+
+// Performance tests
+describe('EmailService Performance', () => {
+  it('should handle concurrent email requests', async () => {
+    const requests = Array.from({ length: 5 }, (_, i) => {
+      const payload: EmailPayload = {
+        name: `Concurrent Test ${i + 1}`,
+        email: `concurrent${i + 1}@example.com`,
+        company: `Concurrent Testing ${i + 1}`,
+        message: `Concurrent test message ${i + 1}`
+      }
+      return EmailService.sendContactForm(payload)
+    })
+
+    const results = await Promise.allSettled(requests)
+    
+    // At least some should succeed
+    const succeeded = results.filter(r => r.status === 'fulfilled').length
+    expect(succeeded).toBeGreaterThan(0)
+  }, 30000)
+
+  it('should complete email sending within reasonable time', async () => {
+    const start = Date.now()
+    
+    const payload: EmailPayload = {
+      name: 'Performance Test',
+      email: 'performance@example.com',
+      company: 'Performance Testing Ltd.',
+      message: 'Testing email sending performance'
+    }
+
+    await EmailService.sendContactForm(payload)
+    
+    const duration = Date.now() - start
+    
+    // Should complete within 10 seconds
+    expect(duration).toBeLessThan(10000)
+  }, 15000)
+})

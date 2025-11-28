@@ -5,7 +5,7 @@
 | Item | Value |
 |------|-------|
 | **Project** | Disrupt Inc. Corporate Website |
-| **Repository** | https://github.com/Spilno-me/disrupt-website |
+| **Repository** | https://github.com/Spilno-me/disrupt-website-v2 |
 | **Production URL** | https://disruptinc.io |
 | **Stack** | React + TypeScript + Vite (frontend), Node.js + Express (backend) |
 
