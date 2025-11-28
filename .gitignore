@@ -7,3 +7,5 @@ dist/
 # Local SDK and build artifacts
 google-cloud-sdk/
 deploy-package/
+*.pem
+SSH_Public
