@@ -247,7 +247,7 @@ jobs:
           echo "Deploying backend..."
 
           # Upload backend files (excluding node_modules)
-          scp -r backend-dist/backend/* ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }}:${{ env.BACKEND_PATH }}/
+          scp -r backend-dist/* ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }}:${{ env.BACKEND_PATH }}/
 
           # Install dependencies and setup on server
           ssh ${{ env.SERVER_USER }}@${{ env.SERVER_HOST }} "
