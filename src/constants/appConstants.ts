@@ -1,6 +1,6 @@
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.MODE === 'production' 
-    ? 'https://disruptinc.io' 
+  BASE_URL: import.meta.env.MODE === 'production'
+    ? ''
     : 'http://localhost:3001',
   ENDPOINTS: {
     SEND_EMAIL: '/api/send-email'
