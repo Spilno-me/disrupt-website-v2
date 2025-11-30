@@ -8,8 +8,8 @@ import {
   SectionHeading,
   TwoColumnLayout,
   Column,
-  SectionImage,
 } from '@/components/ui/SectionLayout'
+import { ResponsiveImage } from '@/components/ui/ResponsiveImage'
 import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================
@@ -74,10 +74,12 @@ export function WhoWeHelpSection() {
 
           {/* Image - Right side on desktop, After header on mobile */}
           <Column className="order-first lg:order-none">
-            <SectionImage
-              sources={optimizedImages.whoWeHelp}
-              alt="Who we help visualization"
-            />
+            <div className="-mx-4 sm:mx-0">
+              <ResponsiveImage
+                images={optimizedImages.whoWeHelp}
+                alt="Who we help visualization"
+              />
+            </div>
           </Column>
         </TwoColumnLayout>
       </SectionContainer>

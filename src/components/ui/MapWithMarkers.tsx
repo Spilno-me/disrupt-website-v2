@@ -561,17 +561,15 @@ export function MapWithMarkers() {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-[520px] rounded-[16px] overflow-hidden select-none ${
-        isMobile ? 'cursor-default' : 'cursor-grab active:cursor-grabbing'
-      }`}
-      style={{ touchAction: isMobile ? 'auto' : 'pan-y' }}
+      className="relative w-full h-[520px] rounded-[16px] overflow-hidden select-none cursor-grab active:cursor-grabbing"
+      style={{ touchAction: 'pan-y' }}
       data-element="contact-map"
     >
       {/* Map copies for infinite scroll - Motion powered */}
       <motion.div
         className="absolute inset-0 flex"
         style={{ x }}
-        drag={isMobile ? false : 'x'}
+        drag="x"
         dragConstraints={{ left: -Infinity, right: Infinity }}
         dragElastic={0}
         dragMomentum={false}

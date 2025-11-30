@@ -5,8 +5,8 @@ import {
   SectionHeading,
   TwoColumnLayout,
   Column,
-  SectionImage,
 } from '@/components/ui/SectionLayout'
+import { ResponsiveImage } from '@/components/ui/ResponsiveImage'
 import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================
@@ -38,10 +38,12 @@ export function FutureCapabilitiesSection() {
         <TwoColumnLayout reverse>
           {/* Image - Left on desktop, After header on mobile */}
           <Column className="order-first lg:order-none">
-            <SectionImage
-              sources={optimizedImages.feature5}
-              alt="Construction worker using tablet"
-            />
+            <div className="-mx-4 sm:mx-0">
+              <ResponsiveImage
+                images={optimizedImages.feature5}
+                alt="Construction worker using tablet"
+              />
+            </div>
           </Column>
 
           {/* Content - Right on desktop */}

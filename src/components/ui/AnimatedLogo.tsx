@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { motion, useAnimation } from 'motion/react'
-import { scrollToTop } from '@/utils/navigation'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import './AnimatedLogo.css'
 
 // =============================================================================
@@ -222,6 +222,7 @@ export function AnimatedLogo({
   const [isHovered, setIsHovered] = useState(false)
   const [isClickAnimating, setIsClickAnimating] = useState(false)
   const clickLockRef = useRef(false)
+  const isMobile = useIsMobile()
 
   const handleClick = useCallback(() => {
     if (clickLockRef.current) return
@@ -229,7 +230,7 @@ export function AnimatedLogo({
 
     setIsClickAnimating(true)
 
-    scrollToTop()
+    // Just trigger the onClick - let parent handle scroll/navigation
     onClick?.()
 
     // Reset click animation state after animation completes
@@ -350,12 +351,12 @@ export function AnimatedLogo({
           fill="#F70D1A"
         />
 
-        {/* Floating pixel rectangles - Animated with Motion */}
+        {/* Floating pixel rectangles - Animated with Motion (animation disabled on mobile) */}
         {PIXEL_CONFIGS.map((config) => (
           <AnimatedPixel
             key={config.id}
             config={config}
-            isAnimating={isAnimating}
+            isAnimating={isMobile ? false : isAnimating}
           />
         ))}
       </svg>

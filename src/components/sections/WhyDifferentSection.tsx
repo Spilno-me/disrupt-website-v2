@@ -7,8 +7,8 @@ import {
   SectionHeading,
   TwoColumnLayout,
   Column,
-  SectionImage,
 } from '@/components/ui/SectionLayout'
+import { ResponsiveImage } from '@/components/ui/ResponsiveImage'
 import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================
@@ -65,10 +65,12 @@ export function WhyDifferentSection() {
 
           {/* Image - Left on desktop, After header on mobile */}
           <Column className="order-first lg:order-none">
-            <SectionImage
-              sources={optimizedImages.feature4}
-              alt="Why we're different visualization"
-            />
+            <div className="-mx-4 sm:mx-0">
+              <ResponsiveImage
+                images={optimizedImages.feature4}
+                alt="Why we're different visualization"
+              />
+            </div>
           </Column>
         </TwoColumnLayout>
       </SectionContainer>

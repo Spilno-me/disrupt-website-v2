@@ -1,8 +1,9 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 import { ANIMATION, COLORS, SPACING, GRADIENTS } from '@/constants/designTokens'
 import { optimizedImages } from '@/assets/optimized'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import './HeroParticles.css'
 
 // =============================================================================
@@ -60,6 +61,10 @@ interface MouseParticle {
   animationIndex: number
 }
 
+// Mobile particle settings
+const MOBILE_PARTICLE_COUNT = 8
+const MOBILE_PARTICLE_SCALE = 0.5
+
 export function HeroSection() {
   const [mouseParticles, setMouseParticles] = useState<MouseParticle[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -67,6 +72,18 @@ export function HeroSection() {
   const heroFrameRef = useRef<HTMLDivElement>(null)
   const particleIdRef = useRef(0)
   const lastSpawnRef = useRef(0)
+  const isMobile = useIsMobile()
+
+  // Filter and scale particles for mobile
+  const displayParticles = useMemo(() => {
+    if (isMobile) {
+      return STATIC_PARTICLES.slice(0, MOBILE_PARTICLE_COUNT).map(p => ({
+        ...p,
+        size: Math.round(p.size * MOBILE_PARTICLE_SCALE),
+      }))
+    }
+    return STATIC_PARTICLES
+  }, [isMobile])
 
   // Title slideshow
   useEffect(() => {
@@ -133,7 +150,7 @@ export function HeroSection() {
       >
         <div
           ref={heroFrameRef}
-          className="w-full h-[380px] sm:h-[420px] lg:h-[499px] mx-4 lg:mx-0 rounded-b-[10px] overflow-hidden relative"
+          className="w-full h-[380px] sm:h-[420px] lg:h-[499px] mx-0 sm:mx-4 lg:mx-0 rounded-none sm:rounded-b-[10px] overflow-hidden relative"
           style={{ maxWidth: SPACING.heroFrameMaxWidth }}
           data-element="hero-bg-frame"
         >
@@ -172,7 +189,7 @@ export function HeroSection() {
             <img
               src={optimizedImages.heroFrame.desktop.fallback}
               alt=""
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-[center_30%] sm:object-center"
               onLoad={() => setImageLoaded(true)}
             />
           </picture>
@@ -183,10 +200,10 @@ export function HeroSection() {
             style={{ background: GRADIENTS.heroOverlay }}
           />
 
-          {/* Static floating particles - hidden on small mobile, wait for image to load */}
+          {/* Static floating particles - wait for image to load */}
           {imageLoaded && (
-            <div className="absolute inset-0 pointer-events-none hidden sm:block">
-              {STATIC_PARTICLES.map((particle, index) => (
+            <div className="absolute inset-0 pointer-events-none">
+              {displayParticles.map((particle, index) => (
                 <motion.div
                   key={index}
                   className="hero-particle"
@@ -246,7 +263,7 @@ export function HeroSection() {
         >
           {/* Text Frame - Motion Animation */}
           <div
-            className="relative z-10 text-center w-full h-[60px] sm:h-[80px] lg:h-[100px]"
+            className="relative z-10 text-center w-full h-[80px] sm:h-[80px] lg:h-[100px]"
             data-element="hero-titles"
           >
             <AnimatePresence mode="wait">
@@ -256,7 +273,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 30 }}
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
-                className="absolute inset-0 flex items-center justify-center font-display font-bold text-white text-[24px] sm:text-[32px] lg:text-[48px] leading-[36px] sm:leading-[48px] lg:leading-[60px] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px]"
+                className="absolute inset-0 flex items-center justify-center font-display font-bold text-white text-[32px] sm:text-[32px] lg:text-[48px] leading-[44px] sm:leading-[48px] lg:leading-[60px] tracking-[2.5px] sm:tracking-[3px] lg:tracking-[4px]"
               >
                 {HERO_TITLES[currentIndex]}
               </motion.h1>
@@ -265,7 +282,7 @@ export function HeroSection() {
 
           {/* Subtitle - centered below heading */}
           <p
-            className="mt-4 sm:mt-6 text-center text-white font-semibold font-sans text-sm sm:text-base lg:text-[18px] leading-5 sm:leading-6 tracking-[0.5px] sm:tracking-[1px] lg:tracking-[2px] max-w-[320px] sm:max-w-none z-10"
+            className="mt-6 sm:mt-8 text-center text-white font-semibold font-sans text-base sm:text-base lg:text-[18px] leading-6 sm:leading-6 tracking-[1px] sm:tracking-[1px] lg:tracking-[2px] max-w-[340px] sm:max-w-none z-10"
             data-element="hero-subtitle"
           >
             Compliance should make workplaces safer and decisions smarter — not bury teams in forms.

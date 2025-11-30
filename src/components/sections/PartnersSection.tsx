@@ -24,24 +24,31 @@ export function PartnersSection() {
       <SectionContainer className="relative z-[1]">
         {/* Mobile: Header first */}
         <div className="lg:hidden">
-          <SectionHeading title="Partners and Community" />
+          <SectionHeading
+            title="Partners and Community"
+            subtitle="Building the future of compliance together."
+          />
         </div>
 
         <TwoColumnLayout>
           {/* Image - Left on desktop */}
           <Column className="order-first">
-            <ResponsiveImage
-              images={aboutImages.partners}
-              alt="Partners and Community"
-              className="w-full h-auto rounded-[14px] object-cover"
-            />
+            <div className="-mx-4 sm:mx-0">
+              <ResponsiveImage
+                images={aboutImages.partners}
+                alt="Partners and Community"
+              />
+            </div>
           </Column>
 
           {/* Content - Right on desktop */}
           <Column className="flex flex-col">
             {/* Desktop: Header inside column */}
             <div className="hidden lg:block">
-              <SectionHeading title="Partners and Community" />
+              <SectionHeading
+                title="Partners and Community"
+                subtitle="Building the future of compliance together."
+              />
             </div>
 
             {/* Description */}

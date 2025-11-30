@@ -36,7 +36,10 @@ export function OurValuesSection() {
       <SectionContainer className="relative z-[1]">
         {/* Mobile: Header first */}
         <div className="lg:hidden">
-          <SectionHeading title="Our Values" />
+          <SectionHeading
+            title="Our Values"
+            subtitle="The four S's that drive everything we do."
+          />
         </div>
 
         <TwoColumnLayout reverse>
@@ -44,7 +47,10 @@ export function OurValuesSection() {
           <Column className="flex flex-col">
             {/* Desktop: Header inside column */}
             <div className="hidden lg:block">
-              <SectionHeading title="Our Values" />
+              <SectionHeading
+                title="Our Values"
+                subtitle="The four S's that drive everything we do."
+              />
             </div>
 
             <ul className="flex flex-col gap-4">
@@ -61,11 +67,12 @@ export function OurValuesSection() {
 
           {/* Image - Left on desktop */}
           <Column className="order-first lg:order-none">
-            <ResponsiveImage
-              images={aboutImages.ourValues}
-              alt="Our Values"
-              className="w-full h-auto rounded-[14px] object-cover"
-            />
+            <div className="-mx-4 sm:mx-0">
+              <ResponsiveImage
+                images={aboutImages.ourValues}
+                alt="Our Values"
+              />
+            </div>
           </Column>
         </TwoColumnLayout>
       </SectionContainer>

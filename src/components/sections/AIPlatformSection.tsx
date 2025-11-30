@@ -1,11 +1,10 @@
-import { ArrowRight } from 'lucide-react'
 import {
   SectionContainer,
   SectionHeading,
   TwoColumnLayout,
   Column,
-  SectionImage,
 } from '@/components/ui/SectionLayout'
+import { ResponsiveImage } from '@/components/ui/ResponsiveImage'
 import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================
@@ -38,32 +37,25 @@ export function AIPlatformSection() {
               />
             </div>
 
-            {/* Description - Below image on mobile */}
+            {/* Description */}
             <p className="text-muted text-base lg:text-lg leading-[1.6] mb-4">
               That's why we built Disrupt — an AI-native platform that reduces admin, prevents incidents, and adapts to any compliance challenge.
             </p>
 
             {/* Subtitle - Bold */}
-            <p className="text-muted text-base lg:text-lg leading-[1.6] font-semibold mb-6">
+            <p className="text-muted text-base lg:text-lg leading-[1.6] font-semibold">
               Starting with EHS, architected for the enterprise.
             </p>
-
-            {/* CTA Link */}
-            <a
-              href="#learn-more"
-              className="inline-flex items-center gap-2 text-teal hover:text-teal/80 transition-colors font-medium"
-            >
-              Learn more
-              <ArrowRight className="w-4 h-4 arrow-bounce" />
-            </a>
           </Column>
 
           {/* Image - Left on desktop, After header on mobile */}
           <Column className="order-first lg:order-none">
-            <SectionImage
-              sources={optimizedImages.feature1}
-              alt="AI-native platform visualization"
-            />
+            <div className="-mx-4 sm:mx-0">
+              <ResponsiveImage
+                images={optimizedImages.feature1}
+                alt="AI-native platform visualization"
+              />
+            </div>
           </Column>
         </TwoColumnLayout>
       </SectionContainer>

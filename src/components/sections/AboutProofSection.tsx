@@ -44,9 +44,10 @@ export function AboutProofSection() {
   return (
     <BlobSection className="py-8 sm:py-11 lg:py-16 border-y-dashed-figma">
       <SectionContainer>
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col lg:items-center lg:text-center">
           <SectionHeading
             title="Proof at a Glance"
+            subtitle="Numbers that speak for themselves."
             centered
           />
 
@@ -62,11 +63,12 @@ export function AboutProofSection() {
 
             {/* Image - Right on desktop, After header on mobile */}
             <Column width="45%" className="order-first lg:order-none">
-              <ResponsiveImage
-                images={aboutImages.proofAtGlance}
-                alt="Proof at a Glance"
-                className="w-full h-auto rounded-[14px] object-cover"
-              />
+              <div className="-mx-4 sm:mx-0">
+                <ResponsiveImage
+                  images={aboutImages.proofAtGlance}
+                  alt="Proof at a Glance"
+                />
+              </div>
             </Column>
           </TwoColumnLayout>
         </div>

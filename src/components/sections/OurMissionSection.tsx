@@ -24,24 +24,31 @@ export function OurMissionSection() {
       <SectionContainer className="relative z-[1]">
         {/* Mobile: Header first */}
         <div className="lg:hidden">
-          <SectionHeading title="Our Mission" />
+          <SectionHeading
+            title="Our Mission"
+            subtitle="Safety first. Admin last."
+          />
         </div>
 
         <TwoColumnLayout>
           {/* Image - Left on desktop */}
           <Column className="order-first">
-            <ResponsiveImage
-              images={aboutImages.ourMission}
-              alt="Our Mission"
-              className="w-full h-auto rounded-[14px] object-cover"
-            />
+            <div className="-mx-4 sm:mx-0">
+              <ResponsiveImage
+                images={aboutImages.ourMission}
+                alt="Our Mission"
+              />
+            </div>
           </Column>
 
           {/* Content - Right on desktop */}
           <Column className="flex flex-col">
             {/* Desktop: Header inside column */}
             <div className="hidden lg:block">
-              <SectionHeading title="Our Mission" />
+              <SectionHeading
+                title="Our Mission"
+                subtitle="Safety first. Admin last."
+              />
             </div>
 
             {/* Description */}

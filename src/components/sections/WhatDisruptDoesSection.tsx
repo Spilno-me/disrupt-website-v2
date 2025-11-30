@@ -53,7 +53,7 @@ export function WhatDisruptDoesSection() {
           />
 
           {/* Feature Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-24 sm:gap-8 lg:gap-10 w-full">
             {FEATURES.map((feature) => (
               <FeatureCard key={feature.title} {...feature} />
             ))}

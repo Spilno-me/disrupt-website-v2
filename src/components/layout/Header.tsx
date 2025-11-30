@@ -1,9 +1,23 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { animate } from 'motion/react'
 import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
 import { COMPANY_INFO } from '@/constants/appConstants'
-import { navigateToHome, scrollToElement } from '@/utils/navigation'
+import { scrollToElement } from '@/utils/navigation'
 import { MobileMenu } from '@/components/ui/mobile-menu'
 import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import { useIsMobile } from '@/hooks/useIsMobile'
+
+// Smooth scroll to top using motion library
+function smoothScrollToTop(): void {
+  const startPosition = window.scrollY
+  if (startPosition === 0) return
+
+  animate(startPosition, 0, {
+    duration: 1.4,
+    ease: [0.4, 0, 0.1, 1], // slower acceleration, gentle brake at end
+    onUpdate: (value) => window.scrollTo(0, value),
+  })
+}
 
 interface HeaderProps {
   showContactButton?: boolean
@@ -23,18 +37,42 @@ export function Header({
   onLogoClick
 }: HeaderProps) {
   const location = useLocation()
+  const navigate = useNavigate()
+  const isMobile = useIsMobile()
 
   const handleLogoClick = () => {
     if (onLogoClick) {
       onLogoClick()
+      return
+    }
+
+    // Always scroll to top of current page
+    if (isMobile) {
+      smoothScrollToTop()
     } else {
-      navigateToHome()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
 
   const handleContactClick = () => {
     if (onContactClick) {
       onContactClick()
+    } else if (isMobile) {
+      // Delay scroll on mobile to let menu close first
+      setTimeout(() => {
+        const element = document.getElementById('contact')
+        if (element) {
+          const headerHeight = 82
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY
+          const offsetPosition = elementPosition - headerHeight
+
+          animate(window.scrollY, offsetPosition, {
+            duration: 0.8,
+            ease: [0.4, 0, 0.1, 1],
+            onUpdate: (value) => window.scrollTo(0, value),
+          })
+        }
+      }, 350)
     } else {
       scrollToElement('contact')
     }

@@ -5,8 +5,8 @@ import {
   SectionHeading,
   TwoColumnLayout,
   Column,
-  SectionImage,
 } from '@/components/ui/SectionLayout'
+import { ResponsiveImage } from '@/components/ui/ResponsiveImage'
 import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================
@@ -44,7 +44,7 @@ export function ProofSection() {
   return (
     <BlobSection className="py-8 sm:py-11 lg:py-16">
       <SectionContainer>
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col lg:items-center lg:text-center">
           <SectionHeading
             title="Proof at a Glance"
             subtitle="Real Impact. Measurable Outcomes."
@@ -63,10 +63,13 @@ export function ProofSection() {
 
             {/* Image - Right on desktop, After header on mobile */}
             <Column width="45%" className="order-first lg:order-none">
-              <SectionImage
-                sources={optimizedImages.feature2}
-                alt="Proof metrics visualization"
-              />
+              <div className="-mx-4 sm:mx-0">
+                <ResponsiveImage
+                  images={optimizedImages.feature2}
+                  alt="Proof metrics visualization"
+                  className="object-[center_20%] sm:object-center"
+                />
+              </div>
             </Column>
           </TwoColumnLayout>
         </div>

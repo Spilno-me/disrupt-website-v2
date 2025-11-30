@@ -1,5 +1,4 @@
 import { ReactNode, useState, useRef, useEffect } from 'react'
-import { SHADOWS } from '@/constants/designTokens'
 import { SkeletonImage } from './Skeleton'
 import { cn } from '@/lib/utils'
 
@@ -145,14 +144,14 @@ export function SectionImage({
     return (
       <div
         className={cn(
-          'w-full rounded-[16px] bg-muted/20 flex items-center justify-center',
+          'w-full rounded-none sm:rounded-[16px] bg-muted/20 flex items-center justify-center',
+          'shadow-none sm:shadow-[0_4px_20px_rgba(0,0,0,0.08)]',
           aspectRatio === 'square' && 'aspect-square',
           aspectRatio === '4/3' && 'aspect-[4/3]',
           aspectRatio === '16/9' && 'aspect-video',
           aspectRatio === 'auto' && 'h-[300px]',
           className
         )}
-        style={{ boxShadow: SHADOWS.image }}
       >
         <span className="text-muted text-sm">Image unavailable</span>
       </div>
@@ -164,8 +163,12 @@ export function SectionImage({
     return (
       <div
         ref={containerRef}
-        className={cn('relative overflow-hidden rounded-[16px]', className)}
-        style={{ boxShadow: SHADOWS.image }}
+        className={cn(
+          'relative overflow-hidden rounded-none sm:rounded-[16px]',
+          'shadow-none sm:shadow-[0_4px_20px_rgba(0,0,0,0.08)]',
+          'h-[280px] sm:h-auto',  // Fixed height on mobile, auto on tablet+
+          className
+        )}
       >
         {!isLoaded && (
           <SkeletonImage
@@ -215,7 +218,7 @@ export function SectionImage({
               onLoad={() => setIsLoaded(true)}
               onError={() => setHasError(true)}
               className={cn(
-                'w-full h-auto object-cover transition-opacity duration-500',
+                'w-full h-full object-contain sm:object-cover sm:h-auto transition-opacity duration-500',
                 isLoaded ? 'opacity-100' : 'opacity-0'
               )}
             />
@@ -229,8 +232,12 @@ export function SectionImage({
   return (
     <div
       ref={containerRef}
-      className={cn('relative overflow-hidden rounded-[16px]', className)}
-      style={{ boxShadow: SHADOWS.image }}
+      className={cn(
+        'relative overflow-hidden rounded-none sm:rounded-[16px]',
+        'shadow-none sm:shadow-[0_4px_20px_rgba(0,0,0,0.08)]',
+        'h-[280px] sm:h-auto',  // Fixed height on mobile, auto on tablet+
+        className
+      )}
     >
       {!isLoaded && (
         <SkeletonImage
@@ -248,7 +255,7 @@ export function SectionImage({
           onLoad={() => setIsLoaded(true)}
           onError={() => setHasError(true)}
           className={cn(
-            'w-full h-auto object-cover transition-opacity duration-500',
+            'w-full h-full object-contain sm:object-cover sm:h-auto transition-opacity duration-500',
             isLoaded ? 'opacity-100' : 'opacity-0'
           )}
         />
@@ -287,7 +294,8 @@ export function SectionHeading({
   hideSeparatorOnMobile = true,
   className = '',
 }: SectionHeadingProps) {
-  const alignClass = centered ? 'items-center text-center' : ''
+  // Left-aligned on mobile, optionally centered on desktop
+  const alignClass = centered ? 'lg:items-center lg:text-center' : ''
   const separatorClass = hideSeparatorOnMobile ? 'hidden sm:block' : ''
 
   return (

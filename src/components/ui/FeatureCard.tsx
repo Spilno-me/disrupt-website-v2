@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion, useMotionValue, useSpring, animate } from 'motion/react'
+import { motion, useMotionValue, useSpring, animate, useInView } from 'motion/react'
 import { ElectricLucideIcon, IconName } from '@/components/ui/ElectricLucideIcon'
 import { useIsMobile } from '@/hooks'
 
@@ -47,6 +47,33 @@ export function FeatureCard({
   const [isHovered, setIsHovered] = useState(false)
   const isMobile = useIsMobile()
 
+  // Ref for scroll detection on mobile
+  const cardRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(cardRef, {
+    amount: 0.5, // Trigger when 50% visible
+    margin: "-15% 0px -15% 0px",
+  })
+
+  // Debounced active state to prevent glitchy rapid toggling
+  const [debouncedInView, setDebouncedInView] = useState(false)
+  const debounceRef = useRef<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    if (isInView) {
+      // Activate immediately
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+      setDebouncedInView(true)
+    } else {
+      // Delay deactivation to prevent glitches
+      debounceRef.current = setTimeout(() => {
+        setDebouncedInView(false)
+      }, 150)
+    }
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current)
+    }
+  }, [isInView])
+
   // Motion values for rotation
   const rotation = useMotionValue(0)
   const smoothRotation = useSpring(rotation, SPRING_CONFIG)
@@ -54,11 +81,12 @@ export function FeatureCard({
   // Animation control ref
   const animationRef = useRef<ReturnType<typeof animate> | null>(null)
 
-  // Handle hover state changes
-  useEffect(() => {
-    if (isMobile) return
+  // Determine if animation should be active
+  const isActive = isMobile ? debouncedInView : isHovered
 
-    if (isHovered) {
+  // Handle animation state changes
+  useEffect(() => {
+    if (isActive) {
       // Start continuous rotation
       const currentRotation = rotation.get()
       animationRef.current = animate(rotation, currentRotation + 360000, {
@@ -79,7 +107,7 @@ export function FeatureCard({
         animationRef.current.stop()
       }
     }
-  }, [isHovered, isMobile, rotation])
+  }, [isActive, rotation])
 
   const handleMouseEnter = () => {
     if (isMobile) return
@@ -93,6 +121,7 @@ export function FeatureCard({
 
   return (
     <div
+      ref={cardRef}
       className="flex flex-col items-center text-center gap-4 sm:gap-6 cursor-pointer"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -122,13 +151,13 @@ export function FeatureCard({
           style={{ backgroundColor: circleColor }}
         >
           <motion.div
-            animate={{ scale: isHovered ? 1.1 : 1 }}
+            animate={{ scale: isActive ? 1.1 : 1 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
           >
             <ElectricLucideIcon
               name={iconName}
               size={48}
-              isActive={isHovered}
+              isActive={isActive}
             />
           </motion.div>
         </div>
@@ -139,31 +168,27 @@ export function FeatureCard({
         {title}
       </h3>
 
-      {/* Description - animated on desktop (hover), always visible on mobile/tablet */}
+      {/* Description - animated on hover (desktop) or scroll into view (mobile) */}
       <motion.div
         className="overflow-hidden"
         initial={false}
         animate={{
-          maxHeight: isHovered || isMobile ? 160 : 0,
-          opacity: isHovered || isMobile ? 1 : 0,
+          maxHeight: isActive ? 160 : 0,
+          opacity: isActive ? 1 : 0,
         }}
         transition={{
-          duration: 0.5,
+          duration: 0.4,
           ease: [0.34, 1.56, 0.64, 1],
-        }}
-        style={{
-          maxHeight: isMobile ? 160 : undefined,
-          opacity: isMobile ? 1 : undefined,
         }}
       >
         <motion.p
           className="text-muted leading-relaxed text-sm sm:text-base max-w-[280px]"
           initial={false}
           animate={{
-            y: isHovered || isMobile ? 0 : 16,
+            y: isActive ? 0 : -20,
           }}
           transition={{
-            duration: 0.5,
+            duration: 0.4,
             ease: [0.34, 1.56, 0.64, 1],
           }}
         >

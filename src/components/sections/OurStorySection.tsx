@@ -20,7 +20,10 @@ export function OurStorySection() {
       <SectionContainer>
         {/* Mobile: Header first */}
         <div className="lg:hidden">
-          <SectionHeading title="Our Story" />
+          <SectionHeading
+            title="Our Story"
+            subtitle="Compliance reimagined from the ground up."
+          />
         </div>
 
         <TwoColumnLayout>
@@ -28,7 +31,10 @@ export function OurStorySection() {
           <Column className="flex flex-col">
             {/* Desktop: Header inside column */}
             <div className="hidden lg:block">
-              <SectionHeading title="Our Story" />
+              <SectionHeading
+                title="Our Story"
+                subtitle="Compliance reimagined from the ground up."
+              />
             </div>
 
             {/* Description */}
@@ -49,13 +55,14 @@ export function OurStorySection() {
             </p>
           </Column>
 
-          {/* Image - Right on desktop */}
-          <Column>
-            <ResponsiveImage
-              images={aboutImages.ourStory}
-              alt="Our Story"
-              className="w-full h-auto rounded-[14px] object-cover"
-            />
+          {/* Image - Right on desktop, First on mobile (after title) */}
+          <Column className="order-first lg:order-none">
+            <div className="-mx-4 sm:mx-0">
+              <ResponsiveImage
+                images={aboutImages.ourStory}
+                alt="Our Story"
+              />
+            </div>
           </Column>
         </TwoColumnLayout>
       </SectionContainer>

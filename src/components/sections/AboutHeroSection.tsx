@@ -19,13 +19,13 @@ export function AboutHeroSection() {
 
       {/* Hero Container - dark background with content */}
       <div
-        className="relative z-[1] mx-auto px-4 lg:px-0"
+        className="relative z-[1] mx-auto px-0 sm:px-4 lg:px-0"
         style={{ maxWidth: SPACING.heroFrameMaxWidth }}
         data-element="about-hero-container"
       >
         {/* Dark Hero Frame */}
         <div
-          className="relative w-full min-h-[500px] lg:min-h-[560px] rounded-b-[10px] overflow-hidden bg-black"
+          className="relative w-full min-h-[500px] lg:min-h-[560px] rounded-none sm:rounded-b-[10px] overflow-hidden bg-black"
           data-element="about-hero-frame"
         >
           {/* Background Image - positioned to left */}
