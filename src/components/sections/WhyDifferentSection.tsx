@@ -6,12 +6,11 @@ import { scrollToElement } from '@/utils/navigation'
 export function WhyDifferentSection() {
   return (
     <section
-      className="bg-[#FBFBF3] py-11 border-y-dashed-figma"
+      className="bg-[#FBFBF3] py-8 sm:py-11 lg:py-16 border-y-dashed-figma"
       data-element="why-different-section"
     >
-      {/* Figma: max-width 1440px, gap 64px */}
-      <div className="max-w-[1440px] mx-auto px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
+        <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-10 lg:gap-16">
           {/* Content - Left side - Figma: gap 32px */}
           <div className="w-full lg:w-1/2 flex flex-col" data-element="why-different-content">
             {/* Header */}
@@ -21,7 +20,7 @@ export function WhyDifferentSection() {
             <p className="text-base lg:text-lg font-display font-medium text-[#08A4BD] mb-4">
               Not Another Tool. A New Model.
             </p>
-            <div className="separator-dashed mb-8" />
+            <div className="separator-dashed mb-8 hidden sm:block" />
 
             {/* Description */}
             <div className="flex flex-col gap-4 mb-6">
@@ -36,7 +35,7 @@ export function WhyDifferentSection() {
             {/* CTA Button - h-9 (36px), bg-[#2D3142], rounded-[12px] */}
             <Button
               onClick={() => scrollToElement('contact')}
-              className="w-fit h-9 bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-[12px] px-4 py-2 gap-2 text-sm font-medium"
+              className="w-fit h-11 sm:h-9 bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-[12px] px-6 sm:px-4 py-2 gap-2 text-base sm:text-sm font-medium"
             >
               Contact us
               <ArrowRight className="w-4 h-4" />

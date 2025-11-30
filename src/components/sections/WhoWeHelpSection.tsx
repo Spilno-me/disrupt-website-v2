@@ -7,9 +7,9 @@ import whoWeHelpImage from '@/assets/figma/who-we-help-image.png'
 
 export function WhoWeHelpSection() {
   return (
-    <BlobSection className="py-16">
-      <div className="max-w-[1440px] mx-auto px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+    <BlobSection className="py-8 sm:py-12 lg:py-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
+        <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-10 lg:gap-16">
           {/* Content - Left side */}
           <div className="w-full lg:w-1/2">
             {/* Main Heading */}
@@ -21,7 +21,7 @@ export function WhoWeHelpSection() {
             <p className="text-base lg:text-lg font-display font-medium text-[#08A4BD] mb-4">
               One Platform. Two Wins.
             </p>
-            <div className="separator-dashed mb-8" />
+            <div className="separator-dashed mb-8 hidden sm:block" />
 
             {/* Bullet Points */}
             <div className="flex flex-col gap-4 mb-8">

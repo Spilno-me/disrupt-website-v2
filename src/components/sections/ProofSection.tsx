@@ -28,18 +28,18 @@ const proofItems = [
 
 export function ProofSection() {
   return (
-    <BlobSection className="py-11">
-      <div className="max-w-[1440px] mx-auto px-6">
+    <BlobSection className="py-8 sm:py-11 lg:py-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
         <div className="flex flex-col items-center text-center">
-          <h2 className="text-2xl lg:text-[32px] font-display font-semibold text-[#2D3142] leading-tight mb-1">
+          <h2 className="text-xl sm:text-2xl lg:text-[32px] font-display font-semibold text-[#2D3142] leading-tight mb-1">
             Proof at a Glance
           </h2>
-          <p className="text-base lg:text-lg font-display font-medium text-[#08A4BD] mb-4">
+          <p className="text-sm sm:text-base lg:text-lg font-display font-medium text-[#08A4BD] mb-4">
             Real Impact. Measurable Outcomes.
           </p>
-          <div className="separator-dashed w-full max-w-md mb-8 lg:mb-12" />
+          <div className="separator-dashed w-full max-w-md mb-6 sm:mb-8 lg:mb-12 hidden sm:block" />
 
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full text-left">
+          <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-10 lg:gap-16 w-full text-left">
             <div className="w-full lg:w-[55%] flex flex-col gap-4">
               {proofItems.map((item) => (
                 <CheckListItem key={item.label} {...item} />

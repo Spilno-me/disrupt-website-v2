@@ -119,7 +119,7 @@ export function Header({
               {showContactButton && (
                 <button
                   onClick={handleContactClick}
-                  className="w-full h-9 px-4 py-2 rounded-[12px] text-[14px] font-medium cursor-pointer bg-[#2D3142] text-white"
+                  className="w-full h-11 px-4 py-2 rounded-[12px] text-base font-medium cursor-pointer bg-[#2D3142] text-white"
                 >
                   Contact us
                 </button>

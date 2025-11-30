@@ -86,7 +86,7 @@ export function HeroSection() {
 
   return (
     <section
-      className="relative mt-[82px] mb-[56px]"
+      className="relative mt-[82px] mb-8 lg:mb-[56px]"
       data-element="hero-section"
       onMouseMove={handleMouseMove}
     >
@@ -98,7 +98,7 @@ export function HeroSection() {
       >
         <div
           ref={heroFrameRef}
-          className="w-[1358px] h-[499px] rounded-b-[10px] overflow-hidden relative"
+          className="w-full max-w-[1358px] h-[380px] sm:h-[420px] lg:h-[499px] mx-4 lg:mx-0 rounded-b-[10px] overflow-hidden relative"
           data-element="hero-bg-frame"
         >
           <img
@@ -107,8 +107,8 @@ export function HeroSection() {
             className="w-full h-full object-cover"
           />
 
-          {/* Static floating particles */}
-          <div className="absolute inset-0 pointer-events-none">
+          {/* Static floating particles - hidden on small mobile */}
+          <div className="absolute inset-0 pointer-events-none hidden sm:block">
             {particles.map((particle, index) => (
               <div
                 key={index}
@@ -124,8 +124,8 @@ export function HeroSection() {
             ))}
           </div>
 
-          {/* Mouse-generated particles */}
-          <div className="absolute inset-0 pointer-events-none">
+          {/* Mouse-generated particles - desktop only */}
+          <div className="absolute inset-0 pointer-events-none hidden lg:block">
             {mouseParticles.map(particle => (
               <div
                 key={particle.id}
@@ -144,29 +144,29 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Content wrapper - matches hero image width */}
+      {/* Content wrapper - responsive sizing */}
       <div
-        className="mx-auto relative z-[1] flex flex-col w-[1358px] max-w-[calc(100%-72px)] h-[499px] pointer-events-none"
+        className="mx-auto relative z-[1] flex flex-col w-full max-w-[1358px] h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 lg:px-0"
         data-element="hero-wrapper"
       >
-        {/* Container - padding 36px, gap 53px */}
+        {/* Container - responsive padding and gap */}
         <div
-          className="w-full flex flex-col relative h-full px-[36px] pb-[36px] gap-[53px]"
+          className="w-full flex flex-col relative h-full px-4 sm:px-6 lg:px-[36px] pb-6 lg:pb-[36px] gap-6 sm:gap-8 lg:gap-[53px]"
           data-element="hero-container"
         >
           {/* Text Frame */}
           <div
-            className="relative z-10 self-stretch shrink-0 pt-[30px]"
+            className="relative z-10 self-stretch shrink-0 pt-4 sm:pt-6 lg:pt-[30px]"
             data-element="hero-titles"
           >
-            <div className="w-[1288px] max-w-full h-[279px] flex flex-col items-start">
-              <h1 className="font-display font-bold text-[#FBFBF3] text-[36px] leading-[60px] tracking-[4px]">
+            <div className="max-w-full flex flex-col items-start">
+              <h1 className="font-display font-bold text-[#FBFBF3] text-[20px] sm:text-[28px] lg:text-[36px] leading-[36px] sm:leading-[48px] lg:leading-[60px] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px]">
                 Protect People
               </h1>
-              <h1 className="font-display font-bold text-[#FBFBF3] text-[36px] leading-[60px] tracking-[4px]">
+              <h1 className="font-display font-bold text-[#FBFBF3] text-[20px] sm:text-[28px] lg:text-[36px] leading-[36px] sm:leading-[48px] lg:leading-[60px] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px]">
                 Empower Strategy
               </h1>
-              <h1 className="font-display font-bold text-[#FBFBF3] text-[36px] leading-[60px] tracking-[4px]">
+              <h1 className="font-display font-bold text-[#FBFBF3] text-[20px] sm:text-[28px] lg:text-[36px] leading-[36px] sm:leading-[48px] lg:leading-[60px] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px]">
                 Cut the Admin
               </h1>
             </div>
@@ -178,7 +178,7 @@ export function HeroSection() {
             data-element="hero-subtitle-wrapper"
           >
             <p
-              className="text-[#FBFBF3] font-bold font-sans text-[20px] leading-[32px] tracking-[4px]"
+              className="text-[#FBFBF3] font-bold font-sans text-sm sm:text-base lg:text-[20px] leading-6 sm:leading-7 lg:leading-[32px] tracking-[1px] sm:tracking-[2px] lg:tracking-[4px]"
               data-element="hero-subtitle"
             >
               Compliance should make workplaces safer and decisions smarter — not bury teams in forms.

@@ -142,24 +142,24 @@ const features = [
 
 export function WhatDisruptDoesSection() {
   return (
-    <section className="bg-[#FBFBF3] py-16 lg:py-24 border-y-dashed-figma" data-element="what-disrupt-does-section">
-      <div className="max-w-[1440px] mx-auto px-6">
-        <div className="flex flex-col items-center gap-12 lg:gap-16">
+    <section className="bg-[#FBFBF3] py-8 sm:py-12 lg:py-24 border-y-dashed-figma" data-element="what-disrupt-does-section">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
+        <div className="flex flex-col items-center gap-8 sm:gap-12 lg:gap-16">
           {/* Header */}
           <div className="flex flex-col items-center text-center">
-            <h2 className="text-2xl lg:text-[32px] font-display font-semibold text-[#2D3142] leading-tight mb-1">
+            <h2 className="text-xl sm:text-2xl lg:text-[32px] font-display font-semibold text-[#2D3142] leading-tight mb-1">
               What Disrupt does
             </h2>
             <div className="flex flex-col items-center">
-              <p className="text-base lg:text-lg font-display font-medium text-[#08A4BD] mb-4 whitespace-nowrap">
+              <p className="text-sm sm:text-base lg:text-lg font-display font-medium text-[#08A4BD] mb-4">
                 AI That Works Like a Consultant. Scales Like Software.
               </p>
-              <div className="separator-dashed w-full" />
+              <div className="separator-dashed w-full hidden sm:block" />
             </div>
           </div>
 
           {/* Feature Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 w-full">
             {features.map((feature) => (
               <FeatureCard
                 key={feature.title}

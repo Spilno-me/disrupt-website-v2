@@ -5,10 +5,11 @@ import featureImage from '@/assets/figma/feature-5-image.png'
 
 export function FutureCapabilitiesSection() {
   return (
-    <BlobSection className="py-16">
-      <div className="max-w-[1440px] mx-auto px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-          <div className="w-full lg:w-1/2">
+    <BlobSection className="py-8 sm:py-12 lg:py-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
+        <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-10 lg:gap-16">
+          {/* Image - Left on desktop, below text on mobile */}
+          <div className="w-full lg:w-1/2 order-2 lg:order-1">
             <img
               src={featureImage}
               alt="Construction worker using tablet"
@@ -16,7 +17,8 @@ export function FutureCapabilitiesSection() {
             />
           </div>
 
-          <div className="w-full lg:w-1/2">
+          {/* Content - Right on desktop, first on mobile */}
+          <div className="w-full lg:w-1/2 order-1 lg:order-2">
             <h2 className="text-2xl lg:text-[32px] font-display font-semibold text-[#2D3142] leading-tight mb-1">
               EHS First. Enterprise Always.
             </h2>
@@ -24,7 +26,7 @@ export function FutureCapabilitiesSection() {
             <p className="text-base lg:text-lg font-display font-medium text-[#08A4BD] mb-4">
               Starting with EHS — building a platform that grows.
             </p>
-            <div className="separator-dashed mb-8" />
+            <div className="separator-dashed mb-8 hidden sm:block" />
 
             <div className="flex flex-col gap-4">
               <CheckListItem label="Sustainability reporting" text="with one-click outputs." boldLabel={false} />

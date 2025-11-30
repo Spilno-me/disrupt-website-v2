@@ -29,7 +29,7 @@ export function ContactForm() {
 
         <Button
           type="submit"
-          className="w-full h-9 bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-[12px] py-2 text-sm font-medium"
+          className="w-full h-12 sm:h-10 bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-[12px] py-2 text-base sm:text-sm font-medium"
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting ? 'Sending...' : 'Book a Demo'}

@@ -24,15 +24,15 @@ export function CheckListItem({
   const textColorClass = textColor === 'dark' ? 'text-[#2D3142]' : 'text-[#6B7280]'
 
   return (
-    <div className="flex items-start gap-4">
+    <div className="flex items-start gap-3 sm:gap-4">
       {/* Checkmark icon */}
       <Check
-        className="w-6 h-6 text-[#08A4BD] flex-shrink-0 mt-1"
+        className="w-5 h-5 sm:w-6 sm:h-6 text-[#08A4BD] flex-shrink-0 mt-0.5 sm:mt-1"
         strokeWidth={2.5}
       />
 
       {/* Text content */}
-      <p className={`${textColorClass} text-lg leading-relaxed`}>
+      <p className={`${textColorClass} text-base sm:text-lg leading-relaxed`}>
         {boldLabel ? (
           <>
             <span className="font-semibold">{label}</span> {text}
