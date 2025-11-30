@@ -71,7 +71,10 @@ export function GridBlobBackground({ scale = 1 }: GridBlobBackgroundProps) {
     if (!canvas || !container) return
 
     const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    if (!ctx) {
+      console.warn('GridBlobCanvas: Unable to get 2D canvas context. Canvas effects will be disabled.')
+      return
+    }
 
     offscreenRef.current = document.createElement('canvas')
 

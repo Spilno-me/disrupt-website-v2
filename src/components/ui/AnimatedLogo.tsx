@@ -6,28 +6,17 @@ interface AnimatedLogoProps {
   onClick?: () => void
   alt?: string
   showTagline?: boolean
-  disableHoverAnimation?: boolean
 }
 
-export function AnimatedLogo({ className = '', onClick, alt = 'Disrupt Logo', showTagline = true, disableHoverAnimation = false }: AnimatedLogoProps) {
+export function AnimatedLogo({ className = '', onClick, alt = 'Disrupt Logo', showTagline = true }: AnimatedLogoProps) {
   const [isHovered, setIsHovered] = useState(false)
-  const [isClicked, setIsClicked] = useState(false)
-  const shouldAnimate = disableHoverAnimation ? isClicked : isHovered
-
-  const handleClick = () => {
-    if (disableHoverAnimation) {
-      setIsClicked(true)
-      setTimeout(() => setIsClicked(false), 600) // Animation duration
-    }
-    onClick?.()
-  }
 
   return (
     <div
       className={`animated-logo-container ${className}`}
-      onMouseEnter={disableHoverAnimation ? undefined : () => setIsHovered(true)}
-      onMouseLeave={disableHoverAnimation ? undefined : () => setIsHovered(false)}
-      onClick={handleClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
       role="img"
       aria-label={alt}
     >
@@ -68,7 +57,7 @@ export function AnimatedLogo({ className = '', onClick, alt = 'Disrupt Logo', sh
 
         {/* Floating pixel rectangles - RED (fixed paths) */}
         <rect
-          className={`pixel-rect pixel-red-1 ${shouldAnimate ? 'animate' : ''}`}
+          className={`pixel-rect pixel-red-1 ${isHovered ? 'animate' : ''}`}
           x="11.1907"
           y="23.1428"
           width="3.9496"
@@ -77,12 +66,12 @@ export function AnimatedLogo({ className = '', onClick, alt = 'Disrupt Logo', sh
           fill="#F70D1A"
         />
         <path
-          className={`pixel-rect pixel-red-2 ${shouldAnimate ? 'animate' : ''}`}
+          className={`pixel-rect pixel-red-2 ${isHovered ? 'animate' : ''}`}
           d="M5.9245 15.9588C5.9245 15.666 6.16786 15.4287 6.46807 15.4287H9.33059C9.63079 15.4287 9.87416 15.666 9.87416 15.9588V18.7558C9.87416 19.0485 9.63079 19.2859 9.33059 19.2859H6.46807C6.16786 19.2859 5.9245 19.0485 5.9245 18.7558V15.9588Z"
           fill="#F70D1A"
         />
         <path
-          className={`pixel-rect pixel-red-3 ${shouldAnimate ? 'animate' : ''}`}
+          className={`pixel-rect pixel-red-3 ${isHovered ? 'animate' : ''}`}
           d="M7.89929 30.2783C7.89929 29.888 8.22378 29.5715 8.62405 29.5715H12.4407C12.841 29.5715 13.1655 29.888 13.1655 30.2783V34.0076C13.1655 34.398 12.841 34.7144 12.4407 34.7144H8.62405C8.22377 34.7144 7.89929 34.398 7.89929 34.0076V30.2783Z"
           fill="#F70D1A"
         />
@@ -95,37 +84,37 @@ export function AnimatedLogo({ className = '', onClick, alt = 'Disrupt Logo', sh
 
         {/* Floating pixel rectangles - DARK (exact original paths) */}
         <path
-          className={`pixel-rect pixel-dark-1 ${shouldAnimate ? 'animate' : ''}`}
+          className={`pixel-rect pixel-dark-1 ${isHovered ? 'animate' : ''}`}
           d="M13.1655 18.3534C13.1655 18.1582 13.3278 18 13.5279 18H15.4363C15.6364 18 15.7986 18.1582 15.7986 18.3534V20.218C15.7986 20.4132 15.6364 20.5714 15.4363 20.5714H13.5279C13.3278 20.5714 13.1655 20.4132 13.1655 20.218V18.3534Z"
           fill="#2D3142"
         />
         <path
-          className={`pixel-rect pixel-dark-2 ${shouldAnimate ? 'animate' : ''}`}
+          className={`pixel-rect pixel-dark-2 ${isHovered ? 'animate' : ''}`}
           d="M3.94965 12.4794C3.94965 12.333 4.07133 12.2144 4.22143 12.2144H5.65269C5.80279 12.2144 5.92447 12.333 5.92447 12.4794V13.8779C5.92447 14.0243 5.80279 14.1429 5.65269 14.1429H4.22143C4.07133 14.1429 3.94965 14.0243 3.94965 13.8779V12.4794Z"
           fill="#2D3142"
         />
         <path
-          className={`pixel-rect pixel-dark-3 ${shouldAnimate ? 'animate' : ''}`}
+          className={`pixel-rect pixel-dark-3 ${isHovered ? 'animate' : ''}`}
           d="M3.94965 27.265C3.94965 27.1187 4.07133 27 4.22143 27H5.65269C5.80279 27 5.92447 27.1187 5.92447 27.265V28.6635C5.92447 28.8099 5.80279 28.9286 5.65269 28.9286H4.22143C4.07133 28.9286 3.94965 28.8099 3.94965 28.6635V27.265Z"
           fill="#2D3142"
         />
         <path
-          className={`pixel-rect pixel-dark-4 ${shouldAnimate ? 'animate' : ''}`}
+          className={`pixel-rect pixel-dark-4 ${isHovered ? 'animate' : ''}`}
           d="M6.58276 24.6937C6.58276 24.5474 6.70445 24.4287 6.85455 24.4287H8.28581C8.43591 24.4287 8.55759 24.5474 8.55759 24.6937V26.0922C8.55759 26.2386 8.43591 26.3573 8.28581 26.3573H6.85455C6.70444 26.3573 6.58276 26.2386 6.58276 26.0922V24.6937Z"
           fill="#2D3142"
         />
         <path
-          className={`pixel-rect pixel-dark-5 ${shouldAnimate ? 'animate' : ''}`}
+          className={`pixel-rect pixel-dark-5 ${isHovered ? 'animate' : ''}`}
           d="M7.89929 9.06395C7.89929 8.67361 8.22378 8.35718 8.62405 8.35718H12.4407C12.841 8.35718 13.1655 8.67361 13.1655 9.06394V12.7933C13.1655 13.1836 12.841 13.5 12.4407 13.5H8.62405C8.22377 13.5 7.89929 13.1836 7.89929 12.7933V9.06395Z"
           fill="#2D3142"
         />
         <path
-          className={`pixel-rect pixel-dark-6 ${shouldAnimate ? 'animate' : ''}`}
+          className={`pixel-rect pixel-dark-6 ${isHovered ? 'animate' : ''}`}
           d="M0.658264 18.3534C0.658264 18.1582 0.820506 18 1.02064 18H2.92899C3.12913 18 3.29137 18.1582 3.29137 18.3534V20.218C3.29137 20.4132 3.12913 20.5714 2.92899 20.5714H1.02064C0.820505 20.5714 0.658264 20.4132 0.658264 20.218V18.3534Z"
           fill="#2D3142"
         />
         <path
-          className={`pixel-rect pixel-dark-7 ${shouldAnimate ? 'animate' : ''}`}
+          className={`pixel-rect pixel-dark-7 ${isHovered ? 'animate' : ''}`}
           d="M4.60791 20.9249C4.60791 20.7297 4.77015 20.5715 4.97029 20.5715H6.87864C7.07877 20.5715 7.24101 20.7297 7.24101 20.9249V22.7896C7.24101 22.9847 7.07877 23.143 6.87864 23.143H4.97029C4.77015 23.143 4.60791 22.9847 4.60791 22.7896V20.9249Z"
           fill="#2D3142"
         />

@@ -1,41 +1,56 @@
 import { BlobSection } from '@/components/ui/GridBlobCanvas'
 import { CheckListItem } from '@/components/ui/CheckListItem'
-import { SHADOWS } from '@/constants/designTokens'
+import {
+  SectionContainer,
+  SectionHeading,
+  TwoColumnLayout,
+  Column,
+  SectionImage,
+} from '@/components/ui/SectionLayout'
 import featureImage from '@/assets/figma/feature-5-image.png'
+
+// =============================================================================
+// DATA
+// =============================================================================
+
+const FUTURE_CAPABILITIES = [
+  { label: 'Sustainability reporting', text: 'with one-click outputs.' },
+  { label: 'Risk and operations', text: 'with predictive alerts.' },
+  { label: 'Finance and quality', text: 'with AI-driven workflows.' },
+] as const
+
+// =============================================================================
+// COMPONENT
+// =============================================================================
 
 export function FutureCapabilitiesSection() {
   return (
     <BlobSection className="py-8 sm:py-12 lg:py-16">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-10 lg:gap-16">
-          {/* Image - Left on desktop, below text on mobile */}
-          <div className="w-full lg:w-1/2 order-2 lg:order-1">
-            <img
+      <SectionContainer>
+        <TwoColumnLayout reverse>
+          {/* Image - Left on desktop */}
+          <Column>
+            <SectionImage
               src={featureImage}
               alt="Construction worker using tablet"
-              className="w-full h-auto rounded-[16px] object-cover shadow-[0_6px_12px_-2px_rgba(0,0,0,0.3),0_20px_50px_-8px_rgba(0,0,0,0.2)]"
             />
-          </div>
+          </Column>
 
-          {/* Content - Right on desktop, first on mobile */}
-          <div className="w-full lg:w-1/2 order-1 lg:order-2">
-            <h2 className="text-2xl lg:text-[32px] font-display font-semibold text-[#2D3142] leading-tight mb-1">
-              EHS First. Enterprise Always.
-            </h2>
-
-            <p className="text-base lg:text-lg font-display font-medium text-[#08A4BD] mb-4">
-              Starting with EHS — building a platform that grows.
-            </p>
-            <div className="separator-dashed mb-8 hidden sm:block" />
+          {/* Content - Right on desktop */}
+          <Column>
+            <SectionHeading
+              title="EHS First. Enterprise Always."
+              subtitle="Starting with EHS — building a platform that grows."
+            />
 
             <div className="flex flex-col gap-4">
-              <CheckListItem label="Sustainability reporting" text="with one-click outputs." boldLabel={false} />
-              <CheckListItem label="Risk and operations" text="with predictive alerts." boldLabel={false} />
-              <CheckListItem label="Finance and quality" text="with AI-driven workflows." boldLabel={false} />
+              {FUTURE_CAPABILITIES.map((item) => (
+                <CheckListItem key={item.label} {...item} boldLabel={false} />
+              ))}
             </div>
-          </div>
-        </div>
-      </div>
+          </Column>
+        </TwoColumnLayout>
+      </SectionContainer>
     </BlobSection>
   )
 }

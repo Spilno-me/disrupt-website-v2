@@ -218,12 +218,10 @@ interface LocationMarkerProps {
   isMain?: boolean
   mapOffset: number
   mapWidth: number
-  scale?: number
 }
 
-function LocationMarker({ x, y, country, isMain = false, mapOffset, mapWidth, scale = 1 }: LocationMarkerProps) {
-  const baseSize = isMain ? 64 : 44
-  const size = baseSize * scale
+function LocationMarker({ x, y, country, isMain = false, mapOffset, mapWidth }: LocationMarkerProps) {
+  const size = isMain ? 64 : 44
   const [isHovered, setIsHovered] = useState(false)
   const countryName = COUNTRY_NAMES[country] || country
 
@@ -244,9 +242,9 @@ function LocationMarker({ x, y, country, isMain = false, mapOffset, mapWidth, sc
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Tooltip - hidden on small screens */}
+      {/* Tooltip */}
       <div
-        className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#2D3142] text-white text-xs font-medium px-2 py-1 rounded transition-all duration-300 hidden sm:block ${
+        className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#2D3142] text-white text-xs font-medium px-2 py-1 rounded transition-all duration-300 ${
           isHovered
             ? 'opacity-100 -top-8 scale-100'
             : 'opacity-0 top-0 scale-75 pointer-events-none'
@@ -311,7 +309,6 @@ export function MapWithMarkers() {
   const [offsetX, setOffsetX] = useState(0)
   const [mapWidth, setMapWidth] = useState(882)
   const [isInitialized, setIsInitialized] = useState(false)
-  const [markerScale, setMarkerScale] = useState(1)
 
   // All drag/inertia state in refs to avoid stale closures
   const stateRef = useRef({
@@ -391,15 +388,6 @@ export function MapWithMarkers() {
       stateRef.current.previousPosition = centerOffset
       setOffsetX(centerOffset)
       setIsInitialized(true)
-
-      // Set marker scale based on container width
-      if (containerWidth < 640) {
-        setMarkerScale(0.6) // Mobile
-      } else if (containerWidth < 1024) {
-        setMarkerScale(0.8) // Tablet
-      } else {
-        setMarkerScale(1) // Desktop
-      }
     }
   }
 
@@ -491,7 +479,7 @@ export function MapWithMarkers() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[280px] sm:h-[380px] lg:h-[520px] rounded-[12px] sm:rounded-[16px] overflow-hidden cursor-grab active:cursor-grabbing select-none"
+      className="relative w-full h-[520px] rounded-[16px] overflow-hidden cursor-grab active:cursor-grabbing select-none"
       style={{ touchAction: 'pan-y' }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -543,7 +531,6 @@ export function MapWithMarkers() {
                 isMain={marker.isMain}
                 mapOffset={copyIndex * mapWidth}
                 mapWidth={mapWidth}
-                scale={markerScale}
               />
             </div>
           ))

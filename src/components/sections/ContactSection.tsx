@@ -4,7 +4,7 @@ import { BlobSection } from '@/components/ui/GridBlobCanvas'
 
 export function ContactSection() {
   return (
-    <BlobSection id="contact" className="border-y-dashed-figma" data-element="contact-section">
+    <BlobSection id="contact" className="border-y-dashed-figma pb-20 sm:pb-16" data-element="contact-section">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col lg:flex-row border-x-dashed-figma" data-element="contact-wrapper">
           {/* Left side - Form */}

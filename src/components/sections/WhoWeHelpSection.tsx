@@ -2,37 +2,51 @@ import { Button } from '@/components/ui/button'
 import { CheckListItem } from '@/components/ui/CheckListItem'
 import { scrollToElement } from '@/utils/navigation'
 import { BlobSection } from '@/components/ui/GridBlobCanvas'
-import { COLORS, SHADOWS, TYPOGRAPHY, SPACING } from '@/constants/designTokens'
+import {
+  SectionContainer,
+  SectionHeading,
+  TwoColumnLayout,
+  Column,
+  SectionImage,
+} from '@/components/ui/SectionLayout'
 import whoWeHelpImage from '@/assets/figma/who-we-help-image.png'
+
+// =============================================================================
+// DATA
+// =============================================================================
+
+const WHO_WE_HELP_ITEMS = [
+  {
+    label: 'For Companies →',
+    text: 'Free your teams from repetitive admin. Cut costs while training more, preventing incidents, and reaching compliance faster.',
+  },
+  {
+    label: 'For Consultants →',
+    text: 'Slash paperwork. Gain visibility. Spend more time guiding strategy, not chasing data.',
+  },
+] as const
+
+// =============================================================================
+// COMPONENT
+// =============================================================================
 
 export function WhoWeHelpSection() {
   return (
     <BlobSection className="py-8 sm:py-12 lg:py-16">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-10 lg:gap-16">
+      <SectionContainer>
+        <TwoColumnLayout>
           {/* Content - Left side */}
-          <div className="w-full lg:w-1/2">
-            {/* Main Heading */}
-            <h2 className="text-2xl lg:text-[32px] font-display font-semibold text-[#2D3142] leading-tight mb-1">
-              Who We Help
-            </h2>
-
-            {/* Subheading */}
-            <p className="text-base lg:text-lg font-display font-medium text-[#08A4BD] mb-4">
-              One Platform. Two Wins.
-            </p>
-            <div className="separator-dashed mb-8 hidden sm:block" />
+          <Column>
+            <SectionHeading
+              title="Who We Help"
+              subtitle="One Platform. Two Wins."
+            />
 
             {/* Bullet Points */}
             <div className="flex flex-col gap-4 mb-8">
-              <CheckListItem
-                label="For Companies →"
-                text="Free your teams from repetitive admin. Cut costs while training more, preventing incidents, and reaching compliance faster."
-              />
-              <CheckListItem
-                label="For Consultants →"
-                text="Slash paperwork. Gain visibility. Spend more time guiding strategy, not chasing data."
-              />
+              {WHO_WE_HELP_ITEMS.map((item) => (
+                <CheckListItem key={item.label} {...item} />
+              ))}
             </div>
 
             {/* CTA Button */}
@@ -42,18 +56,17 @@ export function WhoWeHelpSection() {
             >
               Contact us
             </Button>
-          </div>
+          </Column>
 
           {/* Image - Right side */}
-          <div className="w-full lg:w-1/2">
-            <img
+          <Column>
+            <SectionImage
               src={whoWeHelpImage}
               alt="Who we help visualization"
-              className="w-full h-auto rounded-[16px] object-cover shadow-[0_6px_12px_-2px_rgba(0,0,0,0.3),0_20px_50px_-8px_rgba(0,0,0,0.2)]"
             />
-          </div>
-        </div>
-      </div>
+          </Column>
+        </TwoColumnLayout>
+      </SectionContainer>
     </BlobSection>
   )
 }

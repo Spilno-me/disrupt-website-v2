@@ -45,6 +45,15 @@ export const SHADOWS = {
 } as const
 
 // =============================================================================
+// GRADIENTS
+// =============================================================================
+
+export const GRADIENTS = {
+  // Hero overlay for text readability
+  heroOverlay: 'linear-gradient(to bottom, transparent 0%, transparent 35%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.45) 100%)',
+} as const
+
+// =============================================================================
 // BORDER RADIUS
 // =============================================================================
 
@@ -65,7 +74,11 @@ export const SPACING = {
 
   // Container max width
   containerMaxWidth: '1440px',
+  heroFrameMaxWidth: '1358px',
   headerMaxWidth: '1359px',
+
+  // Header height (for hero offset)
+  headerHeight: '82px',
 
   // Content gaps
   headingGap: 'mb-1',           // Between heading and subheading
