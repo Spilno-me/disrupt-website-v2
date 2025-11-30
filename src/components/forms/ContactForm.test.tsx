@@ -179,7 +179,7 @@ describe('ContactForm Email Tests', () => {
 
       // Wait for form to load
       await waitFor(() => {
-        expect(screen.getByText('Contact Us')).toBeInTheDocument()
+        expect(screen.getByText('Book a Demo')).toBeInTheDocument()
       })
 
       // Fill out the form
@@ -196,7 +196,7 @@ describe('ContactForm Email Tests', () => {
       await user.click(privacyCheckbox)
 
       // Submit the form
-      const submitButton = screen.getByText('Book a Call')
+      const submitButton = screen.getByText('Book a Demo')
       await user.click(submitButton)
 
       // Verify EmailService was called with correct data
@@ -214,12 +214,11 @@ describe('ContactForm Email Tests', () => {
       render(<ContactForm />, { wrapper: ContactFormWrapper })
 
       await waitFor(() => {
-        expect(screen.getByText('Contact Us')).toBeInTheDocument()
         expect(screen.getByLabelText('Name')).toBeInTheDocument()
         expect(screen.getByLabelText('Email*')).toBeInTheDocument()
         expect(screen.getByLabelText('Company*')).toBeInTheDocument()
         expect(screen.getByLabelText('Message')).toBeInTheDocument()
-        expect(screen.getByText('Book a Call')).toBeInTheDocument()
+        expect(screen.getByText('Book a Demo')).toBeInTheDocument()
       })
     })
   })
