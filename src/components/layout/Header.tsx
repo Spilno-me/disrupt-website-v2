@@ -3,6 +3,7 @@ import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
 import { COMPANY_INFO } from '@/constants/appConstants'
 import { navigateToHome, scrollToElement } from '@/utils/navigation'
 import { MobileMenu } from '@/components/ui/mobile-menu'
+import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 
 interface HeaderProps {
   showContactButton?: boolean
@@ -65,29 +66,42 @@ export function Header({
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-5">
             <div className="flex items-center gap-1">
-              {NAV_ITEMS.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`h-9 px-4 py-2 rounded-[8px] text-sm font-sans font-medium leading-[1.43] transition-colors flex items-center justify-center gap-2 ${
-                    isActiveRoute(item.path)
-                      ? 'text-teal'
-                      : 'text-dark hover:bg-white/10'
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {NAV_ITEMS.map((item) => {
+                const isActive = isActiveRoute(item.path)
+                const link = (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`h-9 px-4 py-2 rounded-[8px] text-sm font-sans font-medium leading-[1.43] transition-colors flex items-center justify-center gap-2 cursor-pointer ${
+                      isActive
+                        ? 'text-muted bg-white/30 backdrop-blur-md'
+                        : 'text-dark hover:bg-white/10'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )
+
+                return isActive ? (
+                  <div key={item.path}>{link}</div>
+                ) : (
+                  <ElectricButtonWrapper key={item.path} className="nav-item">
+                    {link}
+                  </ElectricButtonWrapper>
+                )
+              })}
             </div>
 
             {/* Contact Button */}
             {showContactButton && (
-              <button
-                onClick={handleContactClick}
-                className="h-9 px-4 py-2 rounded-[12px] text-sm font-sans font-medium leading-[1.43] flex items-center justify-center gap-2 transition-colors hover:opacity-90 bg-dark text-white"
-              >
-                Contact us
-              </button>
+              <ElectricButtonWrapper>
+                <button
+                  onClick={handleContactClick}
+                  className="h-9 px-4 py-2 rounded-[12px] text-sm font-sans font-medium leading-[1.43] flex items-center justify-center gap-2 transition-colors hover:opacity-90 bg-dark text-white cursor-pointer"
+                >
+                  Contact us
+                </button>
+              </ElectricButtonWrapper>
             )}
           </div>
 
@@ -112,12 +126,14 @@ export function Header({
 
               {/* Mobile Contact Button */}
               {showContactButton && (
-                <button
-                  onClick={handleContactClick}
-                  className="w-full h-11 px-4 py-2 rounded-[12px] text-base font-medium cursor-pointer bg-dark text-white"
-                >
-                  Contact us
-                </button>
+                <ElectricButtonWrapper className="w-full">
+                  <button
+                    onClick={handleContactClick}
+                    className="w-full h-11 px-4 py-2 rounded-[12px] text-base font-medium cursor-pointer bg-dark text-white"
+                  >
+                    Contact us
+                  </button>
+                </ElectricButtonWrapper>
               )}
             </MobileMenu>
           </div>

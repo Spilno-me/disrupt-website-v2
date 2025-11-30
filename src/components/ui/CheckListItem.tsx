@@ -21,7 +21,7 @@ export function CheckListItem({
   boldLabel = true,
   textColor = 'dark',
 }: CheckListItemProps) {
-  const textColorClass = textColor === 'dark' ? 'text-[#2D3142]' : 'text-[#6B7280]'
+  const textColorClass = textColor === 'dark' ? 'text-dark' : 'text-muted'
 
   return (
     <div className="flex items-start gap-3 sm:gap-4">

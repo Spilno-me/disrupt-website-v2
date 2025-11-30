@@ -2,6 +2,7 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/comp
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
+import { ElectricInputWrapper } from '@/components/ui/ElectricInput'
 import { Control } from 'react-hook-form'
 import { ContactFormData } from '@/schemas/createContactFormSchema'
 import { UI_CONSTANTS, FORM_CONSTANTS } from '@/constants/appConstants'
@@ -37,11 +38,13 @@ function NameField({ control }: ContactFormFieldsProps) {
             {t('contact.form.labels.name')}
           </FormLabel>
           <FormControl>
-            <Input
-              placeholder={t('contact.form.labels.name')}
-              className={`${FORM_CONSTANTS.INPUT_HEIGHTS.MOBILE} ${FORM_CONSTANTS.INPUT_HEIGHTS.DESKTOP} ${FORM_CONSTANTS.TEXT_SIZES.MOBILE}`}
-              {...field}
-            />
+            <ElectricInputWrapper>
+              <Input
+                placeholder={t('contact.form.labels.name')}
+                className={`${FORM_CONSTANTS.INPUT_HEIGHTS.MOBILE} ${FORM_CONSTANTS.INPUT_HEIGHTS.DESKTOP} ${FORM_CONSTANTS.TEXT_SIZES.MOBILE}`}
+                {...field}
+              />
+            </ElectricInputWrapper>
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -63,12 +66,14 @@ function EmailField({ control }: ContactFormFieldsProps) {
             {t('contact.form.labels.email')}
           </FormLabel>
           <FormControl>
-            <Input
-              type="email"
-              placeholder={t('contact.form.labels.email')}
-              className={`${FORM_CONSTANTS.INPUT_HEIGHTS.MOBILE} ${FORM_CONSTANTS.INPUT_HEIGHTS.DESKTOP} ${FORM_CONSTANTS.TEXT_SIZES.MOBILE}`}
-              {...field}
-            />
+            <ElectricInputWrapper>
+              <Input
+                type="email"
+                placeholder={t('contact.form.labels.email')}
+                className={`${FORM_CONSTANTS.INPUT_HEIGHTS.MOBILE} ${FORM_CONSTANTS.INPUT_HEIGHTS.DESKTOP} ${FORM_CONSTANTS.TEXT_SIZES.MOBILE}`}
+                {...field}
+              />
+            </ElectricInputWrapper>
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -90,11 +95,13 @@ function CompanyField({ control }: ContactFormFieldsProps) {
             {t('contact.form.labels.company')}
           </FormLabel>
           <FormControl>
-            <Input
-              placeholder={t('contact.form.labels.company')}
-              className={`${FORM_CONSTANTS.INPUT_HEIGHTS.MOBILE} ${FORM_CONSTANTS.INPUT_HEIGHTS.DESKTOP} ${FORM_CONSTANTS.TEXT_SIZES.MOBILE}`}
-              {...field}
-            />
+            <ElectricInputWrapper>
+              <Input
+                placeholder={t('contact.form.labels.company')}
+                className={`${FORM_CONSTANTS.INPUT_HEIGHTS.MOBILE} ${FORM_CONSTANTS.INPUT_HEIGHTS.DESKTOP} ${FORM_CONSTANTS.TEXT_SIZES.MOBILE}`}
+                {...field}
+              />
+            </ElectricInputWrapper>
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -116,11 +123,13 @@ function MessageField({ control }: ContactFormFieldsProps) {
             {t('contact.form.labels.message')}
           </FormLabel>
           <FormControl>
-            <Textarea
-              placeholder={t('contact.form.labels.placeholder')}
-              className={`${UI_CONSTANTS.TEXTAREA_MIN_HEIGHT} resize-none`}
-              {...field}
-            />
+            <ElectricInputWrapper>
+              <Textarea
+                placeholder={t('contact.form.labels.placeholder')}
+                className={`${UI_CONSTANTS.TEXTAREA_MIN_HEIGHT} resize-none`}
+                {...field}
+              />
+            </ElectricInputWrapper>
           </FormControl>
           <FormMessage />
         </FormItem>

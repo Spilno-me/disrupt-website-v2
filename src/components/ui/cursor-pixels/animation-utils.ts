@@ -26,10 +26,11 @@ export const isFormInput = (element: Element | null): element is HTMLInputElemen
 
 /**
  * Selector for elements that should trigger the repel effect.
- * Includes: explicit data attribute, buttons, checkboxes, radios, and their labels.
+ * Includes: explicit data attribute, links, buttons, checkboxes, radios, and their labels.
  */
 export const REPEL_ELEMENT_SELECTOR = [
   '[data-cursor-repel="true"]',
+  'a',
   'button',
   '[role="button"]',
   'input[type="checkbox"]',

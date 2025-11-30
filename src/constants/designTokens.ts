@@ -13,7 +13,7 @@ export const COLORS = {
   cream: '#FBFBF3',          // Main background
   teal: '#08A4BD',           // Accent, links, active states
   ferrariRed: '#F70D1A',     // Brand accent (logo red)
-  muted: '#6B7280',          // Secondary/muted text
+  muted: '#5E4F7E',          // Secondary/muted text (dusty purple)
 
   // Feature card circle colors
   circleBlue: '#3B82F6',     // Automate
@@ -49,8 +49,8 @@ export const SHADOWS = {
 // =============================================================================
 
 export const GRADIENTS = {
-  // Hero overlay for text readability
-  heroOverlay: 'linear-gradient(to bottom, transparent 0%, transparent 35%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.45) 100%)',
+  // Hero overlay for text readability - only bottom half, light
+  heroOverlay: 'linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0.25) 100%)',
 } as const
 
 // =============================================================================
@@ -114,9 +114,9 @@ export const TYPOGRAPHY = {
 export const ANIMATION = {
   // Particle system (HeroSection)
   particles: {
-    SPAWN_THROTTLE_MS: 150,
-    MAX_ACTIVE_PARTICLES: 12,
-    SPAWN_PROBABILITY: 0.7,      // 70% chance to spawn
+    SPAWN_THROTTLE_MS: 50,       // Faster spawning (was 150)
+    MAX_ACTIVE_PARTICLES: 30,    // More particles allowed (was 12)
+    SPAWN_PROBABILITY: 0.9,      // 90% chance to spawn (was 70%)
     LIFETIME_MS: 3500,
     INITIAL_SPAWN_COUNT: 30,
   },

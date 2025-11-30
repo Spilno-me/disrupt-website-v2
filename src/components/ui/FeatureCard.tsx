@@ -42,52 +42,70 @@ export function FeatureCard({
   const [isHovered, setIsHovered] = useState(false)
   const rotationRef = useRef(0)
   const speedRef = useRef(0)
+  const isHoveredRef = useRef(false)
   const svgRef = useRef<SVGSVGElement>(null)
   const animationRef = useRef<number | null>(null)
 
   const { MAX_SPEED, ACCELERATION, DECELERATION } = ANIMATION.rotation
 
+  // Use ref-based animation loop to avoid stale closures
   const animate = useCallback(() => {
-    if (isHovered) {
+    if (isHoveredRef.current) {
       speedRef.current = Math.min(speedRef.current + ACCELERATION, MAX_SPEED)
     } else {
       speedRef.current = Math.max(speedRef.current - DECELERATION, 0)
     }
 
-    if (speedRef.current > 0) {
+    if (speedRef.current > 0.01) {
       rotationRef.current += speedRef.current
       if (svgRef.current) {
         svgRef.current.style.transform = `rotate(${rotationRef.current}deg)`
       }
       animationRef.current = requestAnimationFrame(animate)
     } else {
+      speedRef.current = 0
       animationRef.current = null
     }
-  }, [isHovered, ACCELERATION, DECELERATION, MAX_SPEED])
+  }, [ACCELERATION, DECELERATION, MAX_SPEED])
 
-  useEffect(() => {
-    if (isHovered || speedRef.current > 0) {
+  const startAnimation = useCallback(() => {
+    if (animationRef.current === null) {
       animationRef.current = requestAnimationFrame(animate)
     }
+  }, [animate])
+
+  const handleMouseEnter = useCallback(() => {
+    isHoveredRef.current = true
+    setIsHovered(true)
+    startAnimation()
+  }, [startAnimation])
+
+  const handleMouseLeave = useCallback(() => {
+    isHoveredRef.current = false
+    setIsHovered(false)
+    startAnimation()
+  }, [startAnimation])
+
+  useEffect(() => {
     return () => {
-      if (animationRef.current) {
+      if (animationRef.current !== null) {
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [isHovered, animate])
+  }, [])
 
   return (
     <div
       className="flex flex-col items-center text-center gap-4 sm:gap-6 cursor-pointer"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Icon with colored circle and dashed outer ring */}
       <div className="relative w-24 h-24 sm:w-[120px] sm:h-[120px]" data-cursor-repel="true">
         {/* Outer dashed ring using SVG for precise control */}
         <svg
           ref={svgRef}
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full will-change-transform"
           viewBox="0 0 120 120"
         >
           <circle

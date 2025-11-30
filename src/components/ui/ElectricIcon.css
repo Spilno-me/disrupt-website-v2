@@ -170,6 +170,21 @@
   animation: electric-flow-border 1.5s linear infinite;
 }
 
+/* Nav item variant - smaller border radius */
+.electric-button-wrapper.nav-item {
+  border-radius: 8px;
+}
+
+.electric-button-wrapper.nav-item::before {
+  inset: 1px;
+  border-radius: 7px;
+}
+
+.electric-button-wrapper.nav-item::after {
+  inset: 2px;
+  border-radius: 6px;
+}
+
 /* =============================================================================
    ELECTRIC ICON - SVG stroke animation
    ============================================================================= */

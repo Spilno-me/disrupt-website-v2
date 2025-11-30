@@ -6,6 +6,7 @@ import { useTranslation } from '@/hooks/useI18n'
 import { useContactFormSubmission } from '@/hooks/useContactFormSubmission'
 import { ContactFormFields } from './ContactFormFields'
 import { Button } from '@/components/ui/button'
+import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 
 export function ContactForm() {
   const { t } = useTranslation()
@@ -27,13 +28,15 @@ export function ContactForm() {
       >
         <ContactFormFields control={form.control} />
 
-        <Button
-          type="submit"
-          className="w-full h-12 sm:h-10 bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-[12px] py-2 text-base sm:text-sm font-medium"
-          disabled={form.formState.isSubmitting}
-        >
-          {form.formState.isSubmitting ? 'Sending...' : 'Book a Demo'}
-        </Button>
+        <ElectricButtonWrapper className="w-full">
+          <Button
+            type="submit"
+            className="w-full h-12 sm:h-10 bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-[12px] py-2 text-base sm:text-sm font-medium"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? 'Sending...' : 'Book a Demo'}
+          </Button>
+        </ElectricButtonWrapper>
       </form>
     </Form>
   )

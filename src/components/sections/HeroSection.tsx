@@ -9,7 +9,7 @@ import './HeroParticles.css'
 // =============================================================================
 
 const HERO_TITLES = ['Protect People', 'Empower Strategy', 'Cut the Admin']
-const SLIDE_INTERVAL = 5000
+const SLIDE_INTERVAL = 3000
 
 // Static particle configuration - positioned as percentages
 const STATIC_PARTICLES = [
@@ -61,6 +61,7 @@ interface MouseParticle {
 export function HeroSection() {
   const [mouseParticles, setMouseParticles] = useState<MouseParticle[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [previousSlide, setPreviousSlide] = useState<number | null>(null)
   const heroFrameRef = useRef<HTMLDivElement>(null)
   const particleIdRef = useRef(0)
   const lastSpawnRef = useRef(0)
@@ -68,10 +69,11 @@ export function HeroSection() {
   // Title slideshow
   useEffect(() => {
     const interval = setInterval(() => {
+      setPreviousSlide(currentSlide)
       setCurrentSlide(prev => (prev + 1) % HERO_TITLES.length)
     }, SLIDE_INTERVAL)
     return () => clearInterval(interval)
-  }, [])
+  }, [currentSlide])
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const now = Date.now()
@@ -182,7 +184,7 @@ export function HeroSection() {
 
       {/* Content wrapper - responsive sizing */}
       <div
-        className="mx-auto relative z-[1] flex flex-col w-full h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 lg:px-0"
+        className="mx-auto relative z-[2] flex flex-col w-full h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 lg:px-0"
         style={{ maxWidth: SPACING.heroFrameMaxWidth }}
         data-element="hero-wrapper"
       >
@@ -193,32 +195,49 @@ export function HeroSection() {
         >
           {/* Text Frame - Slideshow (centered) */}
           <div
-            className="relative z-10 text-center"
+            className="relative z-10 text-center w-full"
             data-element="hero-titles"
           >
-            <div className="relative h-[60px] sm:h-[72px] lg:h-[80px]">
-              {HERO_TITLES.map((title, index) => (
-                <h1
-                  key={title}
-                  className={`absolute inset-0 flex items-center justify-center font-display font-bold text-cream text-[24px] sm:text-[32px] lg:text-[48px] leading-[36px] sm:leading-[48px] lg:leading-[60px] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px] transition-all duration-700 ease-in-out ${
-                    index === currentSlide
-                      ? 'opacity-100 translate-y-0'
-                      : 'opacity-0 translate-y-4'
-                  }`}
-                >
-                  {title}
-                </h1>
-              ))}
-            </div>
-
-            {/* Subtitle - below title */}
-            <p
-              className="text-cream font-bold font-sans text-sm sm:text-base lg:text-[20px] leading-6 sm:leading-7 lg:leading-[32px] tracking-[1px] sm:tracking-[2px] lg:tracking-[4px] mt-4 sm:mt-6 lg:mt-8 max-w-[800px]"
-              data-element="hero-subtitle"
+            <div
+              className="relative h-[80px] sm:h-[100px] lg:h-[120px] w-full"
+              style={{
+                perspective: '300px',
+                maskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)',
+              }}
             >
-              Compliance should make workplaces safer and decisions smarter — not bury teams in forms.
-            </p>
+              {HERO_TITLES.map((title, index) => {
+                const isActive = index === currentSlide
+                const isExiting = index === previousSlide
+                return (
+                  <h1
+                    key={title}
+                    className="absolute inset-0 flex items-center justify-center font-display font-bold text-white text-[24px] sm:text-[32px] lg:text-[48px] leading-[36px] sm:leading-[48px] lg:leading-[60px] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px] transition-all duration-1000 ease-in-out"
+                    style={{
+                      transformStyle: 'preserve-3d',
+                      transformOrigin: 'center center -80px',
+                      transform: isActive
+                        ? 'translateY(0) rotateX(0deg)'
+                        : isExiting
+                        ? 'translateY(-100px) rotateX(70deg)'
+                        : 'translateY(100px) rotateX(-70deg)',
+                      opacity: isActive ? 1 : 0.6,
+                    }}
+                  >
+                    {title}
+                  </h1>
+                )
+              })}
+            </div>
           </div>
+
+          {/* Subtitle - positioned at bottom, full width */}
+          <p
+            className="absolute bottom-4 sm:bottom-8 lg:bottom-10 left-4 right-4 sm:left-0 sm:right-0 text-center text-white font-semibold font-sans text-[10px] sm:text-sm lg:text-[18px] leading-4 sm:leading-6 tracking-[0.5px] sm:tracking-[2px] lg:tracking-[3px] sm:whitespace-nowrap z-10"
+            data-element="hero-subtitle"
+          >
+            Compliance should make workplaces safer and decisions smarter — not bury teams in forms.
+          </p>
         </div>
       </div>
     </section>

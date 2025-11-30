@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { useTranslation } from '@/hooks/useI18n'
 import { FORM_CONSTANTS } from '@/constants/appConstants'
 
@@ -13,13 +14,15 @@ export function ContactFormSubmitButton({ isSubmitting }: ContactFormSubmitButto
   const buttonClasses = buildButtonClasses()
 
   return (
-    <Button 
-      type="submit" 
-      className={buttonClasses}
-      disabled={isSubmitting}
-    >
-      {buttonText}
-    </Button>
+    <ElectricButtonWrapper className="w-full">
+      <Button
+        type="submit"
+        className={buttonClasses}
+        disabled={isSubmitting}
+      >
+        {buttonText}
+      </Button>
+    </ElectricButtonWrapper>
   )
 }
 

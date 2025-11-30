@@ -9,279 +9,106 @@
   overflow: visible;
 }
 
-/* Base state for pixel rectangles */
+/* Base state for pixel rectangles - GPU accelerated */
 .pixel-rect {
   transform-origin: center;
-  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
 }
 
-/* Individual pixel animations with organic easing */
-/* Each pixel has slightly different timing for natural feel */
+/* Simplified animations - 3 keyframes for better mobile performance */
 
-/* Red pixels - fast with easing */
+/* Red pixels */
 .pixel-red-1.animate {
-  animation: pixel-disrupt-red-1 0.5s ease-in-out;
+  animation: pixel-red-1 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .pixel-red-2.animate {
-  animation: pixel-disrupt-red-2 0.55s ease-in-out;
+  animation: pixel-red-2 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .pixel-red-3.animate {
-  animation: pixel-disrupt-red-3 0.45s ease-in-out;
+  animation: pixel-red-3 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Dark pixels - fast with easing */
+/* Dark pixels */
 .pixel-dark-1.animate {
-  animation: pixel-disrupt-dark-1 0.5s ease-in-out;
+  animation: pixel-dark-1 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .pixel-dark-2.animate {
-  animation: pixel-disrupt-dark-2 0.6s ease-in-out;
+  animation: pixel-dark-2 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .pixel-dark-3.animate {
-  animation: pixel-disrupt-dark-3 0.55s ease-in-out;
+  animation: pixel-dark-3 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .pixel-dark-4.animate {
-  animation: pixel-disrupt-dark-4 0.5s ease-in-out;
+  animation: pixel-dark-4 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .pixel-dark-5.animate {
-  animation: pixel-disrupt-dark-5 0.58s ease-in-out;
+  animation: pixel-dark-5 0.48s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .pixel-dark-6.animate {
-  animation: pixel-disrupt-dark-6 0.62s ease-in-out;
+  animation: pixel-dark-6 0.52s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
 .pixel-dark-7.animate {
-  animation: pixel-disrupt-dark-7 0.52s ease-in-out;
+  animation: pixel-dark-7 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/*
- * Keyframe structure for "disrupting pixels":
- * Smooth expand out → hold → organic return
- * Using cubic-bezier easing for bouncy, organic feel
- */
-
-/* Red pixel 1 */
-@keyframes pixel-disrupt-red-1 {
-  0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
-  25% {
-    transform: translate(-4px, 2px) scale(1.06) rotate(-4deg);
-  }
-  35% {
-    transform: translate(-3px, 1.5px) scale(1.05) rotate(-3deg);
-  }
-  55% {
-    transform: translate(-3px, 1.5px) scale(1.05) rotate(-3deg);
-  }
-  90% {
-    transform: translate(0.3px, -0.2px) scale(0.99) rotate(0.3deg);
-  }
-  100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
+/* Optimized keyframes - only translate3d for GPU acceleration */
+@keyframes pixel-red-1 {
+  0% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(-4px, 2px, 0) scale(1.06); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Red pixel 2 */
-@keyframes pixel-disrupt-red-2 {
-  0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
-  25% {
-    transform: translate(-4px, -3px) scale(1.08) rotate(6deg);
-  }
-  35% {
-    transform: translate(-3px, -2.5px) scale(1.06) rotate(5deg);
-  }
-  55% {
-    transform: translate(-3px, -2.5px) scale(1.06) rotate(5deg);
-  }
-  90% {
-    transform: translate(0.3px, 0.3px) scale(0.99) rotate(-0.5deg);
-  }
-  100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
+@keyframes pixel-red-2 {
+  0% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(-4px, -3px, 0) scale(1.08); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Red pixel 3 */
-@keyframes pixel-disrupt-red-3 {
-  0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
-  25% {
-    transform: translate(-4px, 3.5px) scale(1.06) rotate(-5deg);
-  }
-  35% {
-    transform: translate(-3px, 3px) scale(1.05) rotate(-4deg);
-  }
-  55% {
-    transform: translate(-3px, 3px) scale(1.05) rotate(-4deg);
-  }
-  90% {
-    transform: translate(0.3px, -0.3px) scale(0.99) rotate(0.4deg);
-  }
-  100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
+@keyframes pixel-red-3 {
+  0% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(-4px, 3.5px, 0) scale(1.06); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Dark pixel 1 */
-@keyframes pixel-disrupt-dark-1 {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(-5px, -8px) rotate(14deg);
-  }
-  35% {
-    transform: translate(-4px, -6.5px) rotate(12deg);
-  }
-  55% {
-    transform: translate(-4px, -6.5px) rotate(12deg);
-  }
-  90% {
-    transform: translate(0.4px, 0.8px) rotate(-1.4deg);
-  }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
+@keyframes pixel-dark-1 {
+  0% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(-5px, -8px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Dark pixel 2 */
-@keyframes pixel-disrupt-dark-2 {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(-10px, -5px) rotate(-15deg);
-  }
-  35% {
-    transform: translate(-8px, -4px) rotate(-12deg);
-  }
-  55% {
-    transform: translate(-8px, -4px) rotate(-12deg);
-  }
-  90% {
-    transform: translate(1px, 0.5px) rotate(1.5deg);
-  }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
+@keyframes pixel-dark-2 {
+  0% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(-10px, -5px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Dark pixel 3 */
-@keyframes pixel-disrupt-dark-3 {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(-6.2px, 7.5px) rotate(9deg);
-  }
-  35% {
-    transform: translate(-5px, 6px) rotate(7deg);
-  }
-  55% {
-    transform: translate(-5px, 6px) rotate(7deg);
-  }
-  90% {
-    transform: translate(0.6px, -0.8px) rotate(-0.9deg);
-  }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
+@keyframes pixel-dark-3 {
+  0% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(-6px, 7px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Dark pixel 4 */
-@keyframes pixel-disrupt-dark-4 {
-  0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
-  25% {
-    transform: translate(-6px, 7px) scale(1.12) rotate(-8deg);
-  }
-  35% {
-    transform: translate(-5px, 6px) scale(1.1) rotate(-6deg);
-  }
-  55% {
-    transform: translate(-5px, 6px) scale(1.1) rotate(-6deg);
-  }
-  90% {
-    transform: translate(0.5px, -0.7px) scale(0.98) rotate(0.8deg);
-  }
-  100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
+@keyframes pixel-dark-4 {
+  0% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(-6px, 7px, 0) scale(1.1); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Dark pixel 5 */
-@keyframes pixel-disrupt-dark-5 {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(-6.2px, -10px) rotate(-10deg);
-  }
-  35% {
-    transform: translate(-5px, -8px) rotate(-8deg);
-  }
-  55% {
-    transform: translate(-5px, -8px) rotate(-8deg);
-  }
-  90% {
-    transform: translate(0.6px, 1px) rotate(1deg);
-  }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
+@keyframes pixel-dark-5 {
+  0% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(-6px, -10px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Dark pixel 6 */
-@keyframes pixel-disrupt-dark-6 {
-  0% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
-  25% {
-    transform: translate(-12px, -8px) scale(1.1) rotate(-12deg);
-  }
-  35% {
-    transform: translate(-10px, -6px) scale(1.08) rotate(-10deg);
-  }
-  55% {
-    transform: translate(-10px, -6px) scale(1.08) rotate(-10deg);
-  }
-  90% {
-    transform: translate(1px, 0.8px) scale(0.98) rotate(1.2deg);
-  }
-  100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-  }
+@keyframes pixel-dark-6 {
+  0% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(-12px, -8px, 0) scale(1.1); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
-/* Dark pixel 7 */
-@keyframes pixel-disrupt-dark-7 {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  25% {
-    transform: translate(-10px, -6px) rotate(20deg);
-  }
-  35% {
-    transform: translate(-8px, -5px) rotate(16deg);
-  }
-  55% {
-    transform: translate(-8px, -5px) rotate(16deg);
-  }
-  90% {
-    transform: translate(0.9px, 0.5px) rotate(-2deg);
-  }
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
+@keyframes pixel-dark-7 {
+  0% { transform: translate3d(0, 0, 0); }
+  40% { transform: translate3d(-10px, -6px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }

@@ -134,7 +134,7 @@ export function ContactInfo() {
           <h3 className="text-xl font-sans font-bold text-[#2D3142]">
             Email us
           </h3>
-          <p className="text-[#6B7280] text-base">
+          <p className="text-muted text-base">
             Reach out, and let's create something amazing.
           </p>
         </div>
@@ -144,7 +144,7 @@ export function ContactInfo() {
           <span className="text-sm font-bold text-[#2D3142]">Contact</span>
           <a
             href={emailHref}
-            className="text-[#08A4BD] hover:underline"
+            className="inline-flex items-center justify-center h-10 px-6 rounded-[8px] border-2 border-dark text-dark font-medium text-sm transition-colors hover:bg-dark hover:text-white"
           >
             {COMPANY_INFO.EMAIL}
           </a>

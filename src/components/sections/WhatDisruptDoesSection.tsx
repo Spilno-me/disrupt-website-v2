@@ -1,10 +1,6 @@
 import { FeatureCard, FeatureCardProps } from '@/components/ui/FeatureCard'
 import { SectionContainer, SectionHeading } from '@/components/ui/SectionLayout'
 import { COLORS } from '@/constants/designTokens'
-import iconAutomate from '@/assets/figma/icon-automate.svg'
-import iconAdvice from '@/assets/figma/icon-advice.svg'
-import iconAdapt from '@/assets/figma/icon-adapt.svg'
-import iconScale from '@/assets/figma/icon-scale.svg'
 
 // =============================================================================
 // FEATURE DATA
@@ -12,29 +8,25 @@ import iconScale from '@/assets/figma/icon-scale.svg'
 
 const FEATURES: FeatureCardProps[] = [
   {
-    icon: iconAutomate,
-    iconAlt: 'Automate icon',
+    iconName: 'automate',
     circleColor: COLORS.circleBlue,
     title: 'Automate',
     description: <>Cut up to <strong>70% of admin</strong> — freeing time for training, coaching, and prevention.</>,
   },
   {
-    icon: iconAdvice,
-    iconAlt: 'Advice icon',
+    iconName: 'advice',
     circleColor: COLORS.circleRed,
     title: 'Advice',
     description: <><strong>Real-time AI guidance</strong> during audits and reporting — helping teams avoid mistakes before they become incidents.</>,
   },
   {
-    icon: iconAdapt,
-    iconAlt: 'Adapt icon',
+    iconName: 'adapt',
     circleColor: COLORS.circleYellow,
     title: 'Adapt',
     description: <>Build forms and workflows <strong>instantly</strong> — no coding, no bottlenecks. Flexible enough for EHS today.</>,
   },
   {
-    icon: iconScale,
-    iconAlt: 'Scale icon',
+    iconName: 'scale',
     circleColor: COLORS.circleGreen,
     title: 'Scale',
     description: <>Architected to <strong>extend beyond EHS</strong> into any workflow where admin slows people down.</>,

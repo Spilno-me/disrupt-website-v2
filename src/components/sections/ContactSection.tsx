@@ -4,7 +4,7 @@ import { BlobSection } from '@/components/ui/GridBlobCanvas'
 
 export function ContactSection() {
   return (
-    <BlobSection id="contact" className="border-y-dashed-figma pb-20 sm:pb-16" data-element="contact-section">
+    <BlobSection id="contact" className="border-y-dashed-figma" data-element="contact-section">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col lg:flex-row border-x-dashed-figma" data-element="contact-wrapper">
           {/* Left side - Form */}
@@ -14,11 +14,11 @@ export function ContactSection() {
           >
             <div className="max-w-lg mx-auto flex flex-col gap-6 sm:gap-8 lg:gap-12">
               {/* Header */}
-              <div className="flex flex-col">
-                <h2 className="text-xl sm:text-2xl lg:text-[32px] font-display font-semibold text-[#2D3142] leading-tight mb-3 sm:mb-4">
+              <div className="flex flex-col max-w-xl gap-5">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-display font-semibold text-[#2D3142] leading-tight">
                   Ready to free your teams from compliance admin?
                 </h2>
-                <p className="text-[#6B7280] leading-relaxed text-sm sm:text-base">
+                <p className="text-muted leading-relaxed text-sm sm:text-base">
                   Whether you're running compliance in-house or advising clients, Disrupt helps you spend less time on paperwork and more time on strategy, safety, and people.
                 </p>
               </div>

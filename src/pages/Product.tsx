@@ -1,6 +1,7 @@
 import { PageLayout } from '@/components/layout/PageLayout'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { Link } from 'react-router-dom'
 
 function Product() {
@@ -21,10 +22,12 @@ function Product() {
             </p>
 
             <Link to="/">
-              <Button className="bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-lg px-6 py-2 gap-2">
-                Back to Home
-                <ArrowRight className="w-4 h-4" />
-              </Button>
+              <ElectricButtonWrapper>
+                <Button className="bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-lg px-6 py-2 gap-2">
+                  Back to Home
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </ElectricButtonWrapper>
             </Link>
           </div>
         </div>
