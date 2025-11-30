@@ -1,0 +1,107 @@
+import { COLORS } from '@/constants/designTokens'
+
+// =============================================================================
+// TYPES
+// =============================================================================
+
+interface FeatureCardData {
+  title: string
+  description: string
+}
+
+// =============================================================================
+// DATA
+// =============================================================================
+
+const FEATURES: FeatureCardData[] = [
+  {
+    title: 'API-First (Integrator Agents)',
+    description:
+      'Enables Integrator Agents for seamless sync with enterprise systems (SAP, Teams), eliminating data fragmentation.',
+  },
+  {
+    title: 'Cloud-Native (No Upgrades)',
+    description:
+      'Ensures continuous, frictionless rolling updates. Eliminate the disruption of "version upgrades" forever.',
+  },
+  {
+    title: 'Headless (Engager Agents)',
+    description:
+      'Supports Engager Agents for highly intuitive, mobile-first design, driving user adoption and data quality.',
+  },
+]
+
+// =============================================================================
+// SUB-COMPONENTS
+// =============================================================================
+
+function FeatureGridCard({ title, description }: FeatureCardData) {
+  return (
+    <div
+      className="flex flex-col gap-6 p-6 rounded-xl border border-slate-200 bg-cream"
+      data-element="feature-grid-card"
+    >
+      <div className="flex flex-col gap-4">
+        <h3
+          className="font-sans font-bold text-xl leading-[1.4] tracking-[-0.02em]"
+          style={{ color: COLORS.dark }}
+        >
+          {title}
+        </h3>
+      </div>
+      <p
+        className="font-sans text-sm leading-[1.625] tracking-[-0.01em]"
+        style={{ color: COLORS.muted }}
+      >
+        {description}
+      </p>
+    </div>
+  )
+}
+
+// =============================================================================
+// MAIN COMPONENT
+// =============================================================================
+
+export function FeaturesGridSection() {
+  return (
+    <section
+      className="py-11 border-b border-dashed"
+      style={{ borderColor: COLORS.muted }}
+      data-element="features-grid-section"
+    >
+      <div className="max-w-[1440px] mx-auto px-6">
+        {/* Header */}
+        <div className="flex flex-col items-center gap-4 mb-10">
+          <h2
+            className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl leading-[1.11] tracking-[0.025em] text-center"
+            style={{ color: COLORS.dark }}
+          >
+            The Monolith is Dead. Architecture Matters.
+          </h2>
+          <p
+            className="font-sans text-base leading-[1.5] text-center max-w-[672px]"
+            style={{ color: COLORS.muted }}
+          >
+            We replace outdated, monolithic EHS systems with a modern M-MACH-1
+            infrastructure.
+          </p>
+        </div>
+
+        {/* Features Grid */}
+        <div
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-16"
+          data-element="features-grid"
+        >
+          {FEATURES.map((feature) => (
+            <FeatureGridCard
+              key={feature.title}
+              title={feature.title}
+              description={feature.description}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -66,6 +66,7 @@ export function CursorPixels() {
   // Move all pixels to follow mouse
   const updatePositions = useCallback(() => {
     if (stateRef.current === 'disrupting') return
+    if (isExcitedRef.current) return // Skip when in repel state
 
     const { x, y } = mouseRef.current
     pixelsRef.current.forEach((pixel) => {
@@ -133,7 +134,18 @@ export function CursorPixels() {
     stateRef.current = 'following'
   }, [initQuickTo])
 
-  // ============ EXCITED STATE (hover buttons) ============
+  // ============ REPEL STATE (hover buttons/links) ============
+  // Repel offsets - pixels spread outward when hovering interactive elements
+  const REPEL_OFFSETS = [
+    { x: 35, y: 20, rotation: -20 },
+    { x: -40, y: 25, rotation: 25 },
+    { x: 45, y: 45, rotation: -15 },
+    { x: -35, y: 55, rotation: 30 },
+    { x: 40, y: 70, rotation: -25 },
+    { x: -45, y: 80, rotation: 20 },
+    { x: 35, y: 95, rotation: -30 },
+  ]
+
   const startExcited = useCallback(() => {
     if (stateRef.current === 'disrupting') return
     if (isExcitedRef.current) return
@@ -144,23 +156,45 @@ export function CursorPixels() {
       stopIdle()
     }
 
-    // Add gentle scale/rotation jitter (position still follows mouse)
-    pixelsRef.current.forEach((pixel) => {
-      const duration = 0.25 + Math.random() * 0.15
+    const { x: mouseX, y: mouseY } = mouseRef.current
+
+    // Repel pixels outward from cursor
+    pixelsRef.current.forEach((pixel, i) => {
+      const repelOffset = REPEL_OFFSETS[i]
+      const targetX = mouseX + repelOffset.x
+      const targetY = mouseY + repelOffset.y
 
       const tween = gsap.to(pixel.element, {
-        scale: 1.08 + Math.random() * 0.08,
-        rotation: (Math.random() - 0.5) * 12,
-        duration,
-        ease: 'sine.inOut',
-        repeat: -1,
-        yoyo: true,
+        x: targetX,
+        y: targetY,
+        rotation: repelOffset.rotation,
+        scale: 0.85,
+        duration: 0.3,
+        ease: 'back.out(1.5)',
         overwrite: 'auto',
       })
 
       excitedTweensRef.current.push(tween)
     })
   }, [stopIdle])
+
+  // Update repelled positions as mouse moves
+  const updateRepelPositions = useCallback(() => {
+    if (!isExcitedRef.current) return
+
+    const { x: mouseX, y: mouseY } = mouseRef.current
+
+    pixelsRef.current.forEach((pixel, i) => {
+      const repelOffset = REPEL_OFFSETS[i]
+      gsap.to(pixel.element, {
+        x: mouseX + repelOffset.x,
+        y: mouseY + repelOffset.y,
+        duration: 0.15,
+        ease: 'power2.out',
+        overwrite: 'auto',
+      })
+    })
+  }, [])
 
   const stopExcited = useCallback(() => {
     if (!isExcitedRef.current) return
@@ -169,17 +203,24 @@ export function CursorPixels() {
     excitedTweensRef.current.forEach((t) => t.kill())
     excitedTweensRef.current = []
 
-    // Smoothly return to normal
+    const { x: mouseX, y: mouseY } = mouseRef.current
+
+    // Return pixels to following positions with spring back
     pixelsRef.current.forEach((pixel) => {
+      const offset = PIXEL_OFFSETS[pixel.index]
+
       gsap.to(pixel.element, {
+        x: mouseX + offset.x,
+        y: mouseY + offset.y,
         scale: 1,
         rotation: 0,
-        duration: 0.25,
-        ease: 'power2.out',
+        duration: 0.4,
+        ease: 'back.out(1.2)',
         overwrite: 'auto',
+        onComplete: () => initQuickTo(pixel),
       })
     })
-  }, [])
+  }, [initQuickTo])
 
   // ============ DISRUPT STATE (click) ============
   const playDisrupt = useCallback(() => {
@@ -296,7 +337,11 @@ export function CursorPixels() {
     const isInteractive = target?.closest('a, button, [role="button"]')
 
     if (isInteractive) {
-      startExcited()
+      if (isExcitedRef.current) {
+        updateRepelPositions() // Update repel positions as mouse moves
+      } else {
+        startExcited()
+      }
     } else if (isExcitedRef.current) {
       stopExcited()
     }
@@ -319,7 +364,7 @@ export function CursorPixels() {
 
     // Update positions
     updatePositions()
-  }, [startIdle, stopIdle, startExcited, stopExcited, updatePositions])
+  }, [startIdle, stopIdle, startExcited, stopExcited, updatePositions, updateRepelPositions])
 
   const handleMouseEnter = useCallback(() => {
     pixelsRef.current.forEach((pixel) => {

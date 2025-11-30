@@ -6,6 +6,7 @@ import Product from './pages/Product.tsx'
 import About from './pages/About.tsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.tsx'
 import TermsOfService from './pages/TermsOfService.tsx'
+// import { CursorPixels } from './components/ui/CursorPixels.tsx' // Disabled - will revisit later
 import { useAnalytics } from './hooks/useAnalytics.ts'
 import './input.css'
 
@@ -17,6 +18,7 @@ function AnalyticsWrapper({ children }: { children: React.ReactNode }) {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+      {/* <CursorPixels /> */}
       <AnalyticsWrapper>
         <Routes>
           <Route path="/" element={<App />} />

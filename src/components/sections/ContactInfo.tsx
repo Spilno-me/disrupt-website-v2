@@ -144,7 +144,7 @@ export function ContactInfo() {
           <span className="text-sm font-bold text-[#2D3142]">Contact</span>
           <a
             href={emailHref}
-            className="inline-flex items-center justify-center h-10 px-6 rounded-[8px] border-2 border-dark text-dark font-medium text-sm transition-colors hover:bg-dark hover:text-white"
+            className="text-dark font-medium text-base underline underline-offset-4 transition-colors hover:text-teal"
           >
             {COMPANY_INFO.EMAIL}
           </a>

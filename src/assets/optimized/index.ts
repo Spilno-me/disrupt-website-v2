@@ -49,6 +49,17 @@ import whoWeHelpTabletWebp from './who-we-help-image-tablet.webp'
 import whoWeHelpTabletAvif from './who-we-help-image-tablet.avif'
 import whoWeHelpTabletPng from './who-we-help-image-tablet.png'
 
+// Hero Frame
+import heroFrameMobileWebp from './hero-frame-mobile.webp'
+import heroFrameMobileAvif from './hero-frame-mobile.avif'
+import heroFrameMobilePng from './hero-frame-mobile.png'
+import heroFrameTabletWebp from './hero-frame-tablet.webp'
+import heroFrameTabletAvif from './hero-frame-tablet.avif'
+import heroFrameTabletPng from './hero-frame-tablet.png'
+import heroFrameDesktopWebp from './hero-frame-desktop.webp'
+import heroFrameDesktopAvif from './hero-frame-desktop.avif'
+import heroFrameDesktopPng from './hero-frame-desktop.png'
+
 export const optimizedImages = {
   feature1: {
     mobile: {
@@ -125,6 +136,23 @@ export const optimizedImages = {
       webp: whoWeHelpTabletWebp,
       avif: whoWeHelpTabletAvif,
       fallback: whoWeHelpTabletPng,
+    },
+  },
+  heroFrame: {
+    mobile: {
+      webp: heroFrameMobileWebp,
+      avif: heroFrameMobileAvif,
+      fallback: heroFrameMobilePng,
+    },
+    tablet: {
+      webp: heroFrameTabletWebp,
+      avif: heroFrameTabletAvif,
+      fallback: heroFrameTabletPng,
+    },
+    desktop: {
+      webp: heroFrameDesktopWebp,
+      avif: heroFrameDesktopAvif,
+      fallback: heroFrameDesktopPng,
     },
   },
 }

@@ -1,6 +1,7 @@
-import { useRef, useEffect, useCallback, useState } from 'react'
-import { ANIMATION } from '@/constants/designTokens'
+import { useState, useEffect, useRef } from 'react'
+import { motion, useMotionValue, useSpring, animate } from 'motion/react'
 import { ElectricLucideIcon, IconName } from '@/components/ui/ElectricLucideIcon'
+import { useIsMobile } from '@/hooks'
 
 // =============================================================================
 // CONSTANTS
@@ -9,6 +10,10 @@ import { ElectricLucideIcon, IconName } from '@/components/ui/ElectricLucideIcon
 const OUTER_RADIUS = 58
 // Circumference = 2 * π * 58 ≈ 364.42, divided by 40 segments for even dashes
 const DASH_GAP_SIZE = 9.11
+
+// Animation config
+const SPIN_VELOCITY = 120 // degrees per second when hovered
+const SPRING_CONFIG = { damping: 20, stiffness: 100 } // for smooth start/stop
 
 // =============================================================================
 // TYPES
@@ -40,59 +45,51 @@ export function FeatureCard({
   description,
 }: FeatureCardProps) {
   const [isHovered, setIsHovered] = useState(false)
-  const rotationRef = useRef(0)
-  const speedRef = useRef(0)
-  const isHoveredRef = useRef(false)
-  const svgRef = useRef<SVGSVGElement>(null)
-  const animationRef = useRef<number | null>(null)
+  const isMobile = useIsMobile()
 
-  const { MAX_SPEED, ACCELERATION, DECELERATION } = ANIMATION.rotation
+  // Motion values for rotation
+  const rotation = useMotionValue(0)
+  const smoothRotation = useSpring(rotation, SPRING_CONFIG)
 
-  // Use ref-based animation loop to avoid stale closures
-  const animate = useCallback(() => {
-    if (isHoveredRef.current) {
-      speedRef.current = Math.min(speedRef.current + ACCELERATION, MAX_SPEED)
-    } else {
-      speedRef.current = Math.max(speedRef.current - DECELERATION, 0)
-    }
+  // Animation control ref
+  const animationRef = useRef<ReturnType<typeof animate> | null>(null)
 
-    if (speedRef.current > 0.01) {
-      rotationRef.current += speedRef.current
-      if (svgRef.current) {
-        svgRef.current.style.transform = `rotate(${rotationRef.current}deg)`
-      }
-      animationRef.current = requestAnimationFrame(animate)
-    } else {
-      speedRef.current = 0
-      animationRef.current = null
-    }
-  }, [ACCELERATION, DECELERATION, MAX_SPEED])
-
-  const startAnimation = useCallback(() => {
-    if (animationRef.current === null) {
-      animationRef.current = requestAnimationFrame(animate)
-    }
-  }, [animate])
-
-  const handleMouseEnter = useCallback(() => {
-    isHoveredRef.current = true
-    setIsHovered(true)
-    startAnimation()
-  }, [startAnimation])
-
-  const handleMouseLeave = useCallback(() => {
-    isHoveredRef.current = false
-    setIsHovered(false)
-    startAnimation()
-  }, [startAnimation])
-
+  // Handle hover state changes
   useEffect(() => {
-    return () => {
-      if (animationRef.current !== null) {
-        cancelAnimationFrame(animationRef.current)
+    if (isMobile) return
+
+    if (isHovered) {
+      // Start continuous rotation
+      const currentRotation = rotation.get()
+      animationRef.current = animate(rotation, currentRotation + 360000, {
+        duration: 360000 / SPIN_VELOCITY, // Time to complete many rotations
+        ease: 'linear',
+        repeat: Infinity,
+      })
+    } else {
+      // Stop animation and let spring handle deceleration
+      if (animationRef.current) {
+        animationRef.current.stop()
+        animationRef.current = null
       }
     }
-  }, [])
+
+    return () => {
+      if (animationRef.current) {
+        animationRef.current.stop()
+      }
+    }
+  }, [isHovered, isMobile, rotation])
+
+  const handleMouseEnter = () => {
+    if (isMobile) return
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    if (isMobile) return
+    setIsHovered(false)
+  }
 
   return (
     <div
@@ -102,11 +99,11 @@ export function FeatureCard({
     >
       {/* Icon with colored circle and dashed outer ring */}
       <div className="relative w-24 h-24 sm:w-[120px] sm:h-[120px]" data-cursor-repel="true">
-        {/* Outer dashed ring using SVG for precise control */}
-        <svg
-          ref={svgRef}
-          className="absolute inset-0 w-full h-full will-change-transform"
+        {/* Outer dashed ring using motion SVG */}
+        <motion.svg
+          className="absolute inset-0 w-full h-full"
           viewBox="0 0 120 120"
+          style={{ rotate: smoothRotation }}
         >
           <circle
             cx="60"
@@ -118,23 +115,22 @@ export function FeatureCard({
             strokeDasharray={`${DASH_GAP_SIZE} ${DASH_GAP_SIZE}`}
             strokeLinecap="butt"
           />
-        </svg>
+        </motion.svg>
         {/* Inner filled circle - inset by 8px */}
         <div
           className="absolute inset-1.5 sm:inset-2 rounded-full flex items-center justify-center"
           style={{ backgroundColor: circleColor }}
         >
-          <div
-            className={`transition-transform duration-300 ease-out ${
-              isHovered ? 'scale-110' : 'scale-100'
-            }`}
+          <motion.div
+            animate={{ scale: isHovered ? 1.1 : 1 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
           >
             <ElectricLucideIcon
               name={iconName}
               size={48}
               isActive={isHovered}
             />
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -144,19 +140,36 @@ export function FeatureCard({
       </h3>
 
       {/* Description - animated on desktop (hover), always visible on mobile/tablet */}
-      <div
-        className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] max-h-40 opacity-100 ${
-          !isHovered ? 'lg:max-h-0 lg:opacity-0' : ''
-        }`}
+      <motion.div
+        className="overflow-hidden"
+        initial={false}
+        animate={{
+          maxHeight: isHovered || isMobile ? 160 : 0,
+          opacity: isHovered || isMobile ? 1 : 0,
+        }}
+        transition={{
+          duration: 0.5,
+          ease: [0.34, 1.56, 0.64, 1],
+        }}
+        style={{
+          maxHeight: isMobile ? 160 : undefined,
+          opacity: isMobile ? 1 : undefined,
+        }}
       >
-        <p
-          className={`text-muted leading-relaxed text-sm sm:text-base max-w-[280px] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-            !isHovered ? 'lg:translate-y-4' : ''
-          }`}
+        <motion.p
+          className="text-muted leading-relaxed text-sm sm:text-base max-w-[280px]"
+          initial={false}
+          animate={{
+            y: isHovered || isMobile ? 0 : 16,
+          }}
+          transition={{
+            duration: 0.5,
+            ease: [0.34, 1.56, 0.64, 1],
+          }}
         >
           {description}
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
     </div>
   )
 }

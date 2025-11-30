@@ -1,167 +1,117 @@
-import React, { useEffect, useRef, ReactNode } from 'react'
+import React, { useEffect, useState, ReactNode } from 'react'
+import { motion, useMotionValue, useTransform, animate } from 'motion/react'
+
+// =============================================================================
+// CONFIGURATION
+// =============================================================================
 
 const CONFIG = {
-  grid: { size: 20, color: 'rgba(180, 180, 180, 0.4)', lineWidth: 1 },
+  grid: { size: 20, color: 'rgba(180, 180, 180, 0.4)' },
   blob: {
     waypointInterval: 2000,
-    easeFactor: 0.02,
-    maxWidthRatio: 0.4,
-    maxHeightRatio: 0.6,
-    gradientStops: [
-      { offset: 0, alpha: 1 },
-      { offset: 0.5, alpha: 0.8 },
-      { offset: 0.7, alpha: 0.3 },
-      { offset: 1, alpha: 0 },
-    ],
+    transitionDuration: 1.8,
   },
   waypoints: [
-    { x: 0.20, y: 0.25, w: 350, h: 280 },
-    { x: 0.35, y: 0.40, w: 380, h: 300 },
-    { x: 0.55, y: 0.50, w: 420, h: 340 },
-    { x: 0.70, y: 0.60, w: 450, h: 360 },
-    { x: 0.60, y: 0.70, w: 400, h: 320 },
-    { x: 0.40, y: 0.65, w: 370, h: 300 },
-    { x: 0.25, y: 0.50, w: 340, h: 270 },
-    { x: 0.22, y: 0.35, w: 360, h: 290 },
+    { x: 20, y: 25, w: 350, h: 280 },
+    { x: 35, y: 40, w: 380, h: 300 },
+    { x: 55, y: 50, w: 420, h: 340 },
+    { x: 70, y: 60, w: 450, h: 360 },
+    { x: 60, y: 70, w: 400, h: 320 },
+    { x: 40, y: 65, w: 370, h: 300 },
+    { x: 25, y: 50, w: 340, h: 270 },
+    { x: 22, y: 35, w: 360, h: 290 },
   ],
-  initialBlob: { x: 0.25, y: 0.3, w: 400, h: 320 },
+  initialBlob: { x: 25, y: 30, w: 400, h: 320 },
 }
 
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t
+// =============================================================================
+// GRID PATTERN COMPONENT
+// =============================================================================
 
-function drawGrid(ctx: CanvasRenderingContext2D, w: number, h: number) {
-  const { size, color, lineWidth } = CONFIG.grid
-  ctx.strokeStyle = color
-  ctx.lineWidth = lineWidth
-  ctx.beginPath()
-  for (let x = 0; x <= w; x += size) { ctx.moveTo(x, 0); ctx.lineTo(x, h) }
-  for (let y = 0; y <= h; y += size) { ctx.moveTo(0, y); ctx.lineTo(w, y) }
-  ctx.stroke()
-}
+function GridPattern() {
+  const { size, color } = CONFIG.grid
 
-function createGradient(ctx: CanvasRenderingContext2D, radius: number) {
-  const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, radius)
-  CONFIG.blob.gradientStops.forEach(({ offset, alpha }) =>
-    gradient.addColorStop(offset, `rgba(0,0,0,${alpha})`)
+  return (
+    <svg className="absolute inset-0 w-full h-full" aria-hidden="true">
+      <defs>
+        <pattern
+          id="grid-pattern"
+          width={size}
+          height={size}
+          patternUnits="userSpaceOnUse"
+        >
+          <path
+            d={`M ${size} 0 L 0 0 0 ${size}`}
+            fill="none"
+            stroke={color}
+            strokeWidth="1"
+          />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+    </svg>
   )
-  return gradient
 }
+
+// =============================================================================
+// MAIN COMPONENT
+// =============================================================================
 
 interface GridBlobBackgroundProps {
-  scale?: number // multiplier for blob size (default 1)
+  scale?: number
 }
 
 export function GridBlobBackground({ scale = 1 }: GridBlobBackgroundProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const offscreenRef = useRef<HTMLCanvasElement | null>(null)
-  const stateRef = useRef({
-    x: CONFIG.initialBlob.x, y: CONFIG.initialBlob.y,
-    w: CONFIG.initialBlob.w * scale, h: CONFIG.initialBlob.h * scale,
-    targetX: CONFIG.initialBlob.x, targetY: CONFIG.initialBlob.y,
-    targetW: CONFIG.initialBlob.w * scale, targetH: CONFIG.initialBlob.h * scale,
-    waypointIndex: 0, lastChange: 0,
-  })
-  const scaleRef = useRef(scale)
-  const animationRef = useRef<number>(undefined)
+  const [waypointIndex, setWaypointIndex] = useState(0)
 
+  // Motion values for smooth animation
+  const x = useMotionValue(CONFIG.initialBlob.x)
+  const y = useMotionValue(CONFIG.initialBlob.y)
+  const width = useMotionValue(CONFIG.initialBlob.w * scale)
+  const height = useMotionValue(CONFIG.initialBlob.h * scale)
+
+  // Transform to CSS mask position and size
+  const maskImage = useTransform(
+    [x, y, width, height],
+    ([xVal, yVal, wVal, hVal]) => {
+      // Create radial gradient mask with soft edges
+      return `radial-gradient(ellipse ${wVal}px ${hVal}px at ${xVal}% ${yVal}%,
+        rgba(0,0,0,1) 0%,
+        rgba(0,0,0,0.8) 50%,
+        rgba(0,0,0,0.3) 70%,
+        rgba(0,0,0,0) 100%)`
+    }
+  )
+
+  // Animate through waypoints
   useEffect(() => {
-    const canvas = canvasRef.current
-    const container = containerRef.current
-    if (!canvas || !container) return
+    const interval = setInterval(() => {
+      setWaypointIndex(prev => (prev + 1) % CONFIG.waypoints.length)
+    }, CONFIG.blob.waypointInterval)
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) {
-      console.warn('GridBlobCanvas: Unable to get 2D canvas context. Canvas effects will be disabled.')
-      return
-    }
-
-    offscreenRef.current = document.createElement('canvas')
-
-    const resize = () => {
-      const { width, height } = container.getBoundingClientRect()
-      const dpr = window.devicePixelRatio || 1
-      canvas.width = width * dpr
-      canvas.height = height * dpr
-      canvas.style.width = `${width}px`
-      canvas.style.height = `${height}px`
-      ctx.scale(dpr, dpr)
-      if (offscreenRef.current) {
-        offscreenRef.current.width = width
-        offscreenRef.current.height = height
-      }
-    }
-
-    resize()
-    const resizeObserver = new ResizeObserver(resize)
-    resizeObserver.observe(container)
-
-    const animate = (timestamp: number) => {
-      const { width, height } = container.getBoundingClientRect()
-      if (width <= 0 || height <= 0) {
-        animationRef.current = requestAnimationFrame(animate)
-        return
-      }
-
-      const s = stateRef.current
-      const { waypointInterval, easeFactor, maxWidthRatio, maxHeightRatio } = CONFIG.blob
-
-      if (timestamp - s.lastChange > waypointInterval) {
-        s.waypointIndex = (s.waypointIndex + 1) % CONFIG.waypoints.length
-        const wp = CONFIG.waypoints[s.waypointIndex]
-        const sc = scaleRef.current
-        s.targetX = wp.x; s.targetY = wp.y; s.targetW = wp.w * sc; s.targetH = wp.h * sc
-        s.lastChange = timestamp
-      }
-
-      s.x = lerp(s.x, s.targetX, easeFactor)
-      s.y = lerp(s.y, s.targetY, easeFactor)
-      s.w = lerp(s.w, s.targetW, easeFactor)
-      s.h = lerp(s.h, s.targetH, easeFactor)
-
-      const offscreen = offscreenRef.current
-      const offCtx = offscreen?.getContext('2d')
-      if (!offscreen || !offCtx) {
-        animationRef.current = requestAnimationFrame(animate)
-        return
-      }
-
-      offCtx.clearRect(0, 0, width, height)
-      drawGrid(offCtx, width, height)
-
-      ctx.clearRect(0, 0, width, height)
-      ctx.save()
-
-      const cx = s.x * width, cy = s.y * height
-      const rx = Math.min(s.w, width * maxWidthRatio)
-      const ry = Math.min(s.h, height * maxHeightRatio)
-
-      ctx.translate(cx, cy)
-      ctx.scale(1, ry / rx)
-      ctx.fillStyle = createGradient(ctx, rx)
-      ctx.beginPath()
-      ctx.arc(0, 0, rx, 0, Math.PI * 2)
-      ctx.fill()
-      ctx.restore()
-
-      ctx.globalCompositeOperation = 'source-in'
-      ctx.drawImage(offscreen, 0, 0)
-      ctx.globalCompositeOperation = 'source-over'
-
-      animationRef.current = requestAnimationFrame(animate)
-    }
-
-    animationRef.current = requestAnimationFrame(animate)
-
-    return () => {
-      resizeObserver.disconnect()
-      if (animationRef.current) cancelAnimationFrame(animationRef.current)
-    }
+    return () => clearInterval(interval)
   }, [])
 
+  // Animate to new waypoint when index changes
+  useEffect(() => {
+    const wp = CONFIG.waypoints[waypointIndex]
+    const duration = CONFIG.blob.transitionDuration
+
+    animate(x, wp.x, { duration, ease: 'easeInOut' })
+    animate(y, wp.y, { duration, ease: 'easeInOut' })
+    animate(width, wp.w * scale, { duration, ease: 'easeInOut' })
+    animate(height, wp.h * scale, { duration, ease: 'easeInOut' })
+  }, [waypointIndex, scale, x, y, width, height])
+
   return (
-    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
-      <canvas ref={canvasRef} className="absolute inset-0" aria-hidden="true" />
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+      <motion.div
+        className="absolute inset-0"
+        style={{ maskImage, WebkitMaskImage: maskImage }}
+        aria-hidden="true"
+      >
+        <GridPattern />
+      </motion.div>
     </div>
   )
 }

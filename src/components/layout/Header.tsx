@@ -95,12 +95,13 @@ export function Header({
             {/* Contact Button */}
             {showContactButton && (
               <ElectricButtonWrapper>
-                <button
+                <Link
+                  to="/#contact"
                   onClick={handleContactClick}
                   className="h-9 px-4 py-2 rounded-[12px] text-sm font-sans font-medium leading-[1.43] flex items-center justify-center gap-2 transition-colors hover:opacity-90 bg-dark text-white cursor-pointer"
                 >
                   Contact us
-                </button>
+                </Link>
               </ElectricButtonWrapper>
             )}
           </div>
@@ -127,12 +128,13 @@ export function Header({
               {/* Mobile Contact Button */}
               {showContactButton && (
                 <ElectricButtonWrapper className="w-full">
-                  <button
+                  <Link
+                    to="/#contact"
                     onClick={handleContactClick}
-                    className="w-full h-11 px-4 py-2 rounded-[12px] text-base font-medium cursor-pointer bg-dark text-white"
+                    className="w-full h-11 px-4 py-2 rounded-[12px] text-base font-medium cursor-pointer bg-dark text-white flex items-center justify-center"
                   >
                     Contact us
-                  </button>
+                  </Link>
                 </ElectricButtonWrapper>
               )}
             </MobileMenu>

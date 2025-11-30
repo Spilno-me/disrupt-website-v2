@@ -5,3 +5,4 @@
 
 export { useRotationAnimation } from './useRotationAnimation'
 export { useSpinAnimation } from './useSpinAnimation'
+export { useIsMobile } from './useIsMobile'

@@ -1,7 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 import { ANIMATION, COLORS, SPACING, GRADIENTS } from '@/constants/designTokens'
-import heroFrame from '@/assets/figma/hero-frame.svg'
+import { optimizedImages } from '@/assets/optimized'
 import './HeroParticles.css'
 
 // =============================================================================
@@ -9,28 +10,29 @@ import './HeroParticles.css'
 // =============================================================================
 
 const HERO_TITLES = ['Protect People', 'Empower Strategy', 'Cut the Admin']
-const SLIDE_INTERVAL = 3000
+const SLIDE_INTERVAL = 4000
 
 // Static particle configuration - positioned as percentages
+// fadeDelay and fadeDuration control the staggered subtle appearance
 const STATIC_PARTICLES = [
-  { size: 8, x: 15, y: 20, delay: 0 },
-  { size: 10, x: 25, y: 45, delay: 2 },
-  { size: 7, x: 40, y: 15, delay: 4 },
-  { size: 9, x: 55, y: 70, delay: 1 },
-  { size: 8, x: 70, y: 35, delay: 3 },
-  { size: 11, x: 85, y: 55, delay: 5 },
-  { size: 7, x: 20, y: 75, delay: 2 },
-  { size: 9, x: 45, y: 85, delay: 4 },
-  { size: 8, x: 60, y: 25, delay: 1 },
-  { size: 10, x: 80, y: 80, delay: 3 },
-  { size: 7, x: 10, y: 50, delay: 6 },
-  { size: 9, x: 35, y: 60, delay: 0 },
-  { size: 8, x: 50, y: 40, delay: 2 },
-  { size: 10, x: 75, y: 15, delay: 5 },
-  { size: 7, x: 90, y: 45, delay: 1 },
-  { size: 9, x: 30, y: 30, delay: 4 },
-  { size: 8, x: 65, y: 65, delay: 3 },
-  { size: 11, x: 5, y: 85, delay: 2 },
+  { size: 8, x: 15, y: 20, delay: 0, fadeDelay: 0.5, fadeDuration: 2.2 },
+  { size: 10, x: 25, y: 45, delay: 2, fadeDelay: 0.8, fadeDuration: 2.5 },
+  { size: 7, x: 40, y: 15, delay: 4, fadeDelay: 1.1, fadeDuration: 2.0 },
+  { size: 9, x: 55, y: 70, delay: 1, fadeDelay: 1.4, fadeDuration: 2.8 },
+  { size: 8, x: 70, y: 35, delay: 3, fadeDelay: 0.6, fadeDuration: 2.3 },
+  { size: 11, x: 85, y: 55, delay: 5, fadeDelay: 1.7, fadeDuration: 2.6 },
+  { size: 7, x: 20, y: 75, delay: 2, fadeDelay: 2.0, fadeDuration: 2.1 },
+  { size: 9, x: 45, y: 85, delay: 4, fadeDelay: 1.0, fadeDuration: 2.9 },
+  { size: 8, x: 60, y: 25, delay: 1, fadeDelay: 2.3, fadeDuration: 2.4 },
+  { size: 10, x: 80, y: 80, delay: 3, fadeDelay: 1.5, fadeDuration: 2.7 },
+  { size: 7, x: 10, y: 50, delay: 6, fadeDelay: 2.6, fadeDuration: 2.2 },
+  { size: 9, x: 35, y: 60, delay: 0, fadeDelay: 0.9, fadeDuration: 3.0 },
+  { size: 8, x: 50, y: 40, delay: 2, fadeDelay: 1.8, fadeDuration: 2.5 },
+  { size: 10, x: 75, y: 15, delay: 5, fadeDelay: 2.1, fadeDuration: 2.3 },
+  { size: 7, x: 90, y: 45, delay: 1, fadeDelay: 1.3, fadeDuration: 2.8 },
+  { size: 9, x: 30, y: 30, delay: 4, fadeDelay: 2.4, fadeDuration: 2.1 },
+  { size: 8, x: 65, y: 65, delay: 3, fadeDelay: 0.7, fadeDuration: 2.6 },
+  { size: 11, x: 5, y: 85, delay: 2, fadeDelay: 1.9, fadeDuration: 2.4 },
 ] as const
 
 // Blue palette for mouse particles
@@ -60,8 +62,8 @@ interface MouseParticle {
 
 export function HeroSection() {
   const [mouseParticles, setMouseParticles] = useState<MouseParticle[]>([])
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [previousSlide, setPreviousSlide] = useState<number | null>(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [imageLoaded, setImageLoaded] = useState(false)
   const heroFrameRef = useRef<HTMLDivElement>(null)
   const particleIdRef = useRef(0)
   const lastSpawnRef = useRef(0)
@@ -69,13 +71,15 @@ export function HeroSection() {
   // Title slideshow
   useEffect(() => {
     const interval = setInterval(() => {
-      setPreviousSlide(currentSlide)
-      setCurrentSlide(prev => (prev + 1) % HERO_TITLES.length)
+      setCurrentIndex(prev => (prev + 1) % HERO_TITLES.length)
     }, SLIDE_INTERVAL)
     return () => clearInterval(interval)
-  }, [currentSlide])
+  }, [])
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    // Don't spawn particles until image is loaded
+    if (!imageLoaded) return
+
     const now = Date.now()
     if (now - lastSpawnRef.current < SPAWN_THROTTLE_MS) return
     lastSpawnRef.current = now
@@ -112,7 +116,7 @@ export function HeroSection() {
     setTimeout(() => {
       setMouseParticles(prev => prev.filter(p => p.id !== newParticle.id))
     }, LIFETIME_MS)
-  }, [mouseParticles.length])
+  }, [mouseParticles.length, imageLoaded])
 
   return (
     <section
@@ -133,11 +137,45 @@ export function HeroSection() {
           style={{ maxWidth: SPACING.heroFrameMaxWidth }}
           data-element="hero-bg-frame"
         >
-          <img
-            src={heroFrame}
-            alt=""
-            className="w-full h-full object-cover"
-          />
+          <picture>
+            {/* AVIF - best compression */}
+            <source
+              media="(max-width: 639px)"
+              srcSet={optimizedImages.heroFrame.mobile.avif}
+              type="image/avif"
+            />
+            <source
+              media="(max-width: 1023px)"
+              srcSet={optimizedImages.heroFrame.tablet.avif}
+              type="image/avif"
+            />
+            <source
+              srcSet={optimizedImages.heroFrame.desktop.avif}
+              type="image/avif"
+            />
+            {/* WebP - wide support */}
+            <source
+              media="(max-width: 639px)"
+              srcSet={optimizedImages.heroFrame.mobile.webp}
+              type="image/webp"
+            />
+            <source
+              media="(max-width: 1023px)"
+              srcSet={optimizedImages.heroFrame.tablet.webp}
+              type="image/webp"
+            />
+            <source
+              srcSet={optimizedImages.heroFrame.desktop.webp}
+              type="image/webp"
+            />
+            {/* PNG fallback */}
+            <img
+              src={optimizedImages.heroFrame.desktop.fallback}
+              alt=""
+              className="w-full h-full object-cover"
+              onLoad={() => setImageLoaded(true)}
+            />
+          </picture>
 
           {/* Gradient overlay for better text readability */}
           <div
@@ -145,40 +183,53 @@ export function HeroSection() {
             style={{ background: GRADIENTS.heroOverlay }}
           />
 
-          {/* Static floating particles - hidden on small mobile */}
-          <div className="absolute inset-0 pointer-events-none hidden sm:block">
-            {STATIC_PARTICLES.map((particle, index) => (
-              <div
-                key={index}
-                className="hero-particle"
-                style={{
-                  width: particle.size,
-                  height: particle.size,
-                  left: `${particle.x}%`,
-                  top: `${particle.y}%`,
-                  animationDelay: `${particle.delay}s, ${particle.delay * 0.5}s`,
-                }}
-              />
-            ))}
-          </div>
+          {/* Static floating particles - hidden on small mobile, wait for image to load */}
+          {imageLoaded && (
+            <div className="absolute inset-0 pointer-events-none hidden sm:block">
+              {STATIC_PARTICLES.map((particle, index) => (
+                <motion.div
+                  key={index}
+                  className="hero-particle"
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 0.85, scale: 1 }}
+                  transition={{
+                    duration: particle.fadeDuration,
+                    delay: particle.fadeDelay,
+                    ease: [0.25, 0.1, 0.25, 1], // cubic-bezier for very smooth easing
+                  }}
+                  style={{
+                    width: particle.size,
+                    height: particle.size,
+                    left: `${particle.x}%`,
+                    top: `${particle.y}%`,
+                    animationDelay: `${particle.delay}s, ${particle.delay * 0.5}s`,
+                  }}
+                />
+              ))}
+            </div>
+          )}
 
-          {/* Mouse-generated particles - desktop only */}
-          <div className="absolute inset-0 pointer-events-none hidden lg:block">
-            {mouseParticles.map(particle => (
-              <div
-                key={particle.id}
-                className="mouse-particle"
-                style={{
-                  width: particle.size,
-                  height: particle.size,
-                  left: particle.x,
-                  top: particle.y,
-                  backgroundColor: particle.color,
-                  animation: `mouse-drift-${particle.animationIndex} 3.5s linear forwards`,
-                }}
-              />
-            ))}
-          </div>
+          {/* Mouse-generated particles - desktop only, wait for image to load */}
+          {imageLoaded && (
+            <div className="absolute inset-0 pointer-events-none hidden lg:block">
+              {mouseParticles.map(particle => (
+                <motion.div
+                  key={particle.id}
+                  className="mouse-particle"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  style={{
+                    width: particle.size,
+                    height: particle.size,
+                    left: particle.x,
+                    top: particle.y,
+                    backgroundColor: particle.color,
+                    animation: `mouse-drift-${particle.animationIndex} 3.5s linear forwards`,
+                  }}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -193,47 +244,28 @@ export function HeroSection() {
           className="w-full flex flex-col items-center justify-center relative h-full px-4 sm:px-6 lg:px-[36px]"
           data-element="hero-container"
         >
-          {/* Text Frame - Slideshow (centered) */}
+          {/* Text Frame - Motion Animation */}
           <div
-            className="relative z-10 text-center w-full"
+            className="relative z-10 text-center w-full h-[60px] sm:h-[80px] lg:h-[100px]"
             data-element="hero-titles"
           >
-            <div
-              className="relative h-[80px] sm:h-[100px] lg:h-[120px] w-full"
-              style={{
-                perspective: '300px',
-                maskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%)',
-              }}
-            >
-              {HERO_TITLES.map((title, index) => {
-                const isActive = index === currentSlide
-                const isExiting = index === previousSlide
-                return (
-                  <h1
-                    key={title}
-                    className="absolute inset-0 flex items-center justify-center font-display font-bold text-white text-[24px] sm:text-[32px] lg:text-[48px] leading-[36px] sm:leading-[48px] lg:leading-[60px] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px] transition-all duration-1000 ease-in-out"
-                    style={{
-                      transformStyle: 'preserve-3d',
-                      transformOrigin: 'center center -80px',
-                      transform: isActive
-                        ? 'translateY(0) rotateX(0deg)'
-                        : isExiting
-                        ? 'translateY(-100px) rotateX(70deg)'
-                        : 'translateY(100px) rotateX(-70deg)',
-                      opacity: isActive ? 1 : 0.6,
-                    }}
-                  >
-                    {title}
-                  </h1>
-                )
-              })}
-            </div>
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={currentIndex}
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 30 }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                className="absolute inset-0 flex items-center justify-center font-display font-bold text-white text-[24px] sm:text-[32px] lg:text-[48px] leading-[36px] sm:leading-[48px] lg:leading-[60px] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px]"
+              >
+                {HERO_TITLES[currentIndex]}
+              </motion.h1>
+            </AnimatePresence>
           </div>
 
-          {/* Subtitle - positioned at bottom, full width */}
+          {/* Subtitle - centered below heading */}
           <p
-            className="absolute bottom-4 sm:bottom-8 lg:bottom-10 left-4 right-4 sm:left-0 sm:right-0 text-center text-white font-semibold font-sans text-[10px] sm:text-sm lg:text-[18px] leading-4 sm:leading-6 tracking-[0.5px] sm:tracking-[2px] lg:tracking-[3px] sm:whitespace-nowrap z-10"
+            className="mt-4 sm:mt-6 text-center text-white font-semibold font-sans text-sm sm:text-base lg:text-[18px] leading-5 sm:leading-6 tracking-[0.5px] sm:tracking-[1px] lg:tracking-[2px] max-w-[320px] sm:max-w-none z-10"
             data-element="hero-subtitle"
           >
             Compliance should make workplaces safer and decisions smarter — not bury teams in forms.
