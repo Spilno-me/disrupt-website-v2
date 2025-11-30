@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { CursorAnimationController } from './CursorAnimationController'
 import { PIXELS, REPEL } from './animation-config'
-import { isFormInput, REPEL_ELEMENT_SELECTOR } from './animation-utils'
+import { isFormInput, shouldTriggerRepel } from './animation-utils'
 import '../CursorPixels.css'
 
 const isTouchDevice = (): boolean => {
@@ -21,8 +21,22 @@ const prefersReducedMotion = (): boolean => {
 export function CursorPixels() {
   const pixelRefs = useRef<(HTMLDivElement | null)[]>([])
   const controllerRef = useRef<CursorAnimationController | null>(null)
-  const hasShownRef = useRef(false)  // Track if pixels have been shown
+  const isInitializedRef = useRef(false)
   const [shouldRender, setShouldRender] = useState(true)
+
+  // ============ Repel Detection ============
+
+  const checkShouldRepel = useCallback((target: Element | null): boolean => {
+    // Check for repel elements (buttons, checkboxes, etc.)
+    if (shouldTriggerRepel(target)) return true
+
+    // Also repel when a form input is focused
+    if (isFormInput(document.activeElement)) return true
+
+    return false
+  }, [])
+
+  // ============ Event Handlers ============
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     const controller = controllerRef.current
@@ -30,40 +44,26 @@ export function CursorPixels() {
 
     controller.updateMousePosition({ x: e.clientX, y: e.clientY })
 
-    const target = e.target as HTMLElement
+    const shouldRepel = checkShouldRepel(e.target as Element)
 
-    // Check for repel elements using centralized selector
-    const isRepelElement = Boolean(
-      target?.closest(REPEL_ELEMENT_SELECTOR)
-    ) || (target instanceof HTMLLabelElement && target.querySelector('input[type="checkbox"], input[type="radio"]'))
-
-    // Also repel when an input/textarea is focused (don't distract from form filling)
-    const isInputFocused = isFormInput(document.activeElement)
-
-    const shouldRepel = isRepelElement || isInputFocused
-
-    // Show pixels on first mouse move, but only if NOT starting on a repel element
-    // (if starting on repel element, pixels will appear when leaving it)
-    if (!hasShownRef.current) {
-      if (shouldRepel) {
-        // Mark as shown - they'll appear when leaving repel via fade-in animation
-        hasShownRef.current = true
-      } else {
-        hasShownRef.current = true
+    // Show pixels on first mouse move (unless over a repel element)
+    if (!isInitializedRef.current) {
+      isInitializedRef.current = true
+      if (!shouldRepel) {
         controller.showPixels()
       }
     }
 
     controller.handleRepel(shouldRepel)
-  }, [])
+  }, [checkShouldRepel])
 
   const handleMouseEnter = useCallback(() => {
-    hasShownRef.current = true
+    isInitializedRef.current = true
     controllerRef.current?.showPixels()
   }, [])
 
   const handleMouseLeave = useCallback(() => {
-    hasShownRef.current = false  // Reset so they show again on next enter
+    isInitializedRef.current = false
     controllerRef.current?.hidePixels()
   }, [])
 
@@ -71,24 +71,24 @@ export function CursorPixels() {
     controllerRef.current?.triggerDisrupt()
   }, [])
 
-  // Handle focus on inputs - trigger repel immediately
   const handleFocusIn = useCallback((e: FocusEvent) => {
     if (isFormInput(e.target as Element)) {
       controllerRef.current?.handleRepel(true)
     }
   }, [])
 
-  // Handle blur from inputs - end repel
   const handleFocusOut = useCallback((e: FocusEvent) => {
-    if (isFormInput(e.target as Element)) {
-      // Small delay to check if focus moved to another input
-      setTimeout(() => {
-        if (!isFormInput(document.activeElement)) {
-          controllerRef.current?.handleRepel(false)
-        }
-      }, REPEL.FOCUS_TRANSITION_DELAY_MS)
-    }
+    if (!isFormInput(e.target as Element)) return
+
+    // Small delay to check if focus moved to another input
+    setTimeout(() => {
+      if (!isFormInput(document.activeElement)) {
+        controllerRef.current?.handleRepel(false)
+      }
+    }, REPEL.FOCUS_TRANSITION_DELAY_MS)
   }, [])
+
+  // ============ Setup & Cleanup ============
 
   useEffect(() => {
     if (isTouchDevice() || prefersReducedMotion()) {
@@ -122,6 +122,8 @@ export function CursorPixels() {
       controllerRef.current = null
     }
   }, [handleMouseMove, handleMouseEnter, handleMouseLeave, handleClick, handleFocusIn, handleFocusOut])
+
+  // ============ Render ============
 
   if (!shouldRender) return null
 

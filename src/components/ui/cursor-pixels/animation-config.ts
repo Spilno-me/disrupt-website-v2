@@ -57,9 +57,6 @@ export const REPEL = {
   FOCUS_TRANSITION_DELAY_MS: 10,  // Delay to check if focus moved to another input
 } as const
 
-// Repel state machine states
-export type RepelState = 'none' | 'scattering' | 'scattered' | 'returning'
-
 // Pixel configurations
 export const PIXELS = [
   { id: 'red-1', width: 12, height: 12, rx: 2, color: '#F70D1A', delay: 0.02 },

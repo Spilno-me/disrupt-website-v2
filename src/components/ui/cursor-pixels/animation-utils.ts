@@ -37,3 +37,23 @@ export const REPEL_ELEMENT_SELECTOR = [
   'label:has(input[type="checkbox"])',
   'label:has(input[type="radio"])',
 ].join(', ')
+
+/**
+ * Check if an element or its ancestors should trigger repel effect.
+ * Handles edge cases that CSS selectors can't cover (e.g., labels containing checkboxes).
+ */
+export const shouldTriggerRepel = (target: Element | null): boolean => {
+  if (!target) return false
+
+  // Check if target or any ancestor matches the selector
+  if (target.closest(REPEL_ELEMENT_SELECTOR)) return true
+
+  // Handle label elements containing checkbox/radio inputs
+  // (fallback for browsers where :has() might not work perfectly)
+  if (target instanceof HTMLLabelElement) {
+    const hasCheckboxOrRadio = target.querySelector('input[type="checkbox"], input[type="radio"]')
+    if (hasCheckboxOrRadio) return true
+  }
+
+  return false
+}

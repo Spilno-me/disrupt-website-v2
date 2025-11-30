@@ -1,5 +1,5 @@
 import gsap from 'gsap'
-import { TIMING, DISRUPT_PHASES, EXPLOSION, PIXEL_OFFSETS, REPEL } from './animation-config'
+import { TIMING, DISRUPT_PHASES, EXPLOSION, PIXEL_OFFSETS } from './animation-config'
 import { randomInRange, randomCentered } from './animation-utils'
 import type { PixelAnimator, Position, TransformState } from './PixelAnimator'
 
@@ -29,49 +29,6 @@ export class DisruptAnimationOrchestrator {
     animators.forEach((animator, index) => {
       const pixelTimeline = this.createPixelTimeline(animator, mousePosition, index)
       masterTimeline.add(pixelTimeline, 0)
-    })
-
-    this.timeline = masterTimeline
-    return masterTimeline
-  }
-
-  createRepelExplosion(
-    animators: PixelAnimator[],
-    onComplete: () => void
-  ): gsap.core.Timeline {
-    this.kill()
-
-    const masterTimeline = gsap.timeline({ onComplete })
-
-    animators.forEach((animator, index) => {
-      const currentState = animator.getCurrentTransform()
-
-      // Each pixel explodes in a different direction, but with some cohesion
-      // Spread them in a fan pattern outward based on their index
-      const baseAngle = (index / animators.length) * Math.PI * 2
-      const angleVariance = randomCentered(REPEL.ANGLE_VARIANCE * 2)
-      const angle = baseAngle + angleVariance
-
-      const distance = randomInRange(REPEL.MIN_DISTANCE, REPEL.MAX_DISTANCE)
-
-      const explodeX = currentState.x + Math.cos(angle) * distance
-      const explodeY = currentState.y + Math.sin(angle) * distance
-      const explodeRotation = currentState.rotation + randomCentered(REPEL.MAX_ROTATION)
-
-      // Explode outward AND fade out simultaneously - single smooth animation
-      masterTimeline.to(
-        animator.getElement(),
-        {
-          x: explodeX,
-          y: explodeY,
-          scale: REPEL.FINAL_SCALE,
-          rotation: explodeRotation,
-          opacity: 0,
-          duration: REPEL.EXPLODE_DURATION,
-          ease: 'power2.out',
-        },
-        0
-      )
     })
 
     this.timeline = masterTimeline
