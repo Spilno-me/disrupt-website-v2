@@ -7,7 +7,7 @@ import {
   Column,
   SectionImage,
 } from '@/components/ui/SectionLayout'
-import featureImage from '@/assets/figma/feature-2-image.png'
+import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================
 // DATA
@@ -52,6 +52,7 @@ export function ProofSection() {
           />
 
           <TwoColumnLayout className="w-full text-left">
+            {/* Content - Left on desktop */}
             <Column width="55%">
               <div className="flex flex-col gap-4">
                 {PROOF_ITEMS.map((item) => (
@@ -60,9 +61,10 @@ export function ProofSection() {
               </div>
             </Column>
 
-            <Column width="45%">
+            {/* Image - Right on desktop, After header on mobile */}
+            <Column width="45%" className="order-first lg:order-none">
               <SectionImage
-                src={featureImage}
+                sources={optimizedImages.feature2}
                 alt="Proof metrics visualization"
               />
             </Column>

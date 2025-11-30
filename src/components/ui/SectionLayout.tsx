@@ -1,5 +1,7 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useState, useRef, useEffect } from 'react'
 import { SHADOWS } from '@/constants/designTokens'
+import { SkeletonImage } from './Skeleton'
+import { cn } from '@/lib/utils'
 
 // =============================================================================
 // SECTION CONTAINER
@@ -67,23 +69,89 @@ export function TwoColumnLayout({
 // SECTION IMAGE
 // =============================================================================
 
+interface ImageSource {
+  mobile: {
+    webp: string
+    avif: string
+    fallback: string
+  }
+  tablet: {
+    webp: string
+    avif: string
+    fallback: string
+  }
+  desktop?: {
+    webp: string
+    avif: string
+    fallback: string
+  }
+}
+
 interface SectionImageProps {
-  src: string
+  /** Original image source (for simple usage) */
+  src?: string
+  /** Optimized responsive sources */
+  sources?: ImageSource
   alt: string
   className?: string
+  /** Priority loading for above-the-fold images */
+  priority?: boolean
+  /** Aspect ratio for skeleton */
+  aspectRatio?: 'square' | '4/3' | '16/9' | 'auto'
 }
 
 /**
  * Section image with consistent styling (rounded corners, shadow).
- * Includes error handling for failed image loads.
+ * Supports both simple src and optimized responsive sources.
+ * Includes lazy loading, skeleton placeholder, and error handling.
  */
-export function SectionImage({ src, alt, className = '' }: SectionImageProps) {
+export function SectionImage({
+  src,
+  sources,
+  alt,
+  className = '',
+  priority = false,
+  aspectRatio = '4/3',
+}: SectionImageProps) {
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isInView, setIsInView] = useState(priority)
   const [hasError, setHasError] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (priority || !containerRef.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true)
+            observer.disconnect()
+          }
+        })
+      },
+      {
+        rootMargin: '200px',
+        threshold: 0.01,
+      }
+    )
+
+    observer.observe(containerRef.current)
+
+    return () => observer.disconnect()
+  }, [priority])
 
   if (hasError) {
     return (
       <div
-        className={`w-full h-[300px] rounded-[16px] bg-muted/20 flex items-center justify-center ${className}`}
+        className={cn(
+          'w-full rounded-[16px] bg-muted/20 flex items-center justify-center',
+          aspectRatio === 'square' && 'aspect-square',
+          aspectRatio === '4/3' && 'aspect-[4/3]',
+          aspectRatio === '16/9' && 'aspect-video',
+          aspectRatio === 'auto' && 'h-[300px]',
+          className
+        )}
         style={{ boxShadow: SHADOWS.image }}
       >
         <span className="text-muted text-sm">Image unavailable</span>
@@ -91,14 +159,101 @@ export function SectionImage({ src, alt, className = '' }: SectionImageProps) {
     )
   }
 
+  // Use optimized sources if provided
+  if (sources) {
+    return (
+      <div
+        ref={containerRef}
+        className={cn('relative overflow-hidden rounded-[16px]', className)}
+        style={{ boxShadow: SHADOWS.image }}
+      >
+        {!isLoaded && (
+          <SkeletonImage
+            aspectRatio={aspectRatio}
+            className="absolute inset-0 z-10"
+          />
+        )}
+
+        {isInView && (
+          <picture>
+            {/* AVIF sources */}
+            {sources.desktop && (
+              <source
+                media="(min-width: 1024px)"
+                srcSet={sources.desktop.avif}
+                type="image/avif"
+              />
+            )}
+            <source
+              media="(min-width: 768px)"
+              srcSet={sources.tablet.avif}
+              type="image/avif"
+            />
+            <source srcSet={sources.mobile.avif} type="image/avif" />
+
+            {/* WebP sources */}
+            {sources.desktop && (
+              <source
+                media="(min-width: 1024px)"
+                srcSet={sources.desktop.webp}
+                type="image/webp"
+              />
+            )}
+            <source
+              media="(min-width: 768px)"
+              srcSet={sources.tablet.webp}
+              type="image/webp"
+            />
+            <source srcSet={sources.mobile.webp} type="image/webp" />
+
+            {/* Fallback */}
+            <img
+              src={sources.tablet.fallback}
+              alt={alt}
+              loading={priority ? 'eager' : 'lazy'}
+              decoding={priority ? 'sync' : 'async'}
+              onLoad={() => setIsLoaded(true)}
+              onError={() => setHasError(true)}
+              className={cn(
+                'w-full h-auto object-cover transition-opacity duration-500',
+                isLoaded ? 'opacity-100' : 'opacity-0'
+              )}
+            />
+          </picture>
+        )}
+      </div>
+    )
+  }
+
+  // Simple src fallback
   return (
-    <img
-      src={src}
-      alt={alt}
-      className={`w-full h-auto rounded-[16px] object-cover ${className}`}
+    <div
+      ref={containerRef}
+      className={cn('relative overflow-hidden rounded-[16px]', className)}
       style={{ boxShadow: SHADOWS.image }}
-      onError={() => setHasError(true)}
-    />
+    >
+      {!isLoaded && (
+        <SkeletonImage
+          aspectRatio={aspectRatio}
+          className="absolute inset-0 z-10"
+        />
+      )}
+
+      {isInView && (
+        <img
+          src={src}
+          alt={alt}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding={priority ? 'sync' : 'async'}
+          onLoad={() => setIsLoaded(true)}
+          onError={() => setHasError(true)}
+          className={cn(
+            'w-full h-auto object-cover transition-opacity duration-500',
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          )}
+        />
+      )}
+    </div>
   )
 }
 
@@ -141,12 +296,14 @@ export function SectionHeading({
         {title}
       </h2>
       {subtitle && (
-        <p className="text-sm sm:text-base lg:text-lg font-display font-medium text-teal mb-4">
-          {subtitle}
-        </p>
-      )}
-      {showSeparator && subtitle && (
-        <div className={`separator-dashed mb-8 ${centered ? 'w-full max-w-md' : ''} ${separatorClass}`} />
+        <div className="lg:w-fit mb-4">
+          <p className="text-sm sm:text-base lg:text-lg font-display font-medium text-teal">
+            {subtitle}
+          </p>
+          {showSeparator && (
+            <div className={`separator-dashed mt-4 w-full ${separatorClass}`} />
+          )}
+        </div>
       )}
     </div>
   )

@@ -59,7 +59,7 @@
   --color-dark: #2D3142;            /* Primary dark / text / buttons */
   --color-teal: #08A4BD;            /* Accent / links */
   --color-ferrari-red: #F70D1A;     /* Brand accent (logo red) */
-  --color-muted: #6B7280;           /* Secondary/muted text */
+  --color-muted: #5E4F7E;           /* Secondary/paragraph text (dusty purple) */
 
   /* Feature Card Circle Colors */
   --color-circle-blue: #3B82F6;     /* Automate */
@@ -121,8 +121,8 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: #5E4F7E;
+  --color-muted-foreground: #5E4F7E;
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
@@ -617,112 +617,75 @@
 }
 
 @layer utilities {
-  /* Map marker pixel animations - explosive effect like header logo */
+  /* Map marker pixel animations - GPU accelerated */
   .marker-pixel {
     transform-origin: center;
-    transition: transform 0.3s ease-out;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
   }
 
-  /* Each pixel has unique explosive animation */
-  .marker-p1.animate { animation: marker-explode-1 0.5s ease-in-out; }
-  .marker-p2.animate { animation: marker-explode-2 0.55s ease-in-out; }
-  .marker-p3.animate { animation: marker-explode-3 0.45s ease-in-out; }
-  .marker-p4.animate { animation: marker-explode-4 0.5s ease-in-out; }
-  .marker-p5.animate { animation: marker-explode-5 0.6s ease-in-out; }
-  .marker-p6.animate { animation: marker-explode-6 0.55s ease-in-out; }
-  .marker-p7.animate { animation: marker-explode-7 0.5s ease-in-out; }
-  .marker-p8.animate { animation: marker-explode-8 0.58s ease-in-out; }
-  .marker-p9.animate { animation: marker-explode-9 0.62s ease-in-out; }
-  .marker-p10.animate { animation: marker-explode-10 0.52s ease-in-out; }
+  /* Optimized animations - 3 keyframes, bouncy easing */
+  .marker-p1.animate { animation: marker-1 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .marker-p2.animate { animation: marker-2 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .marker-p3.animate { animation: marker-3 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .marker-p4.animate { animation: marker-4 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .marker-p5.animate { animation: marker-5 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .marker-p6.animate { animation: marker-6 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .marker-p7.animate { animation: marker-7 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .marker-p8.animate { animation: marker-8 0.48s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .marker-p9.animate { animation: marker-9 0.52s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .marker-p10.animate { animation: marker-10 0.42s cubic-bezier(0.34, 1.56, 0.64, 1); }
 
-  /* Pixel 1 - explodes down-left */
-  @keyframes marker-explode-1 {
-    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-    25% { transform: translate(-6px, 4px) scale(1.15) rotate(-8deg); }
-    55% { transform: translate(-5px, 3px) scale(1.12) rotate(-6deg); }
-    90% { transform: translate(0.3px, -0.2px) scale(0.98) rotate(0.5deg); }
-    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  /* GPU-optimized keyframes with translate3d */
+  @keyframes marker-1 {
+    0% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-6px, 4px, 0) scale(1.15); }
+    100% { transform: translate3d(0, 0, 0); }
   }
-
-  /* Pixel 2 - explodes up-left */
-  @keyframes marker-explode-2 {
-    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-    25% { transform: translate(-8px, -6px) scale(1.2) rotate(12deg); }
-    55% { transform: translate(-6px, -5px) scale(1.15) rotate(10deg); }
-    90% { transform: translate(0.4px, 0.3px) scale(0.97) rotate(-1deg); }
-    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  @keyframes marker-2 {
+    0% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-8px, -6px, 0) scale(1.2); }
+    100% { transform: translate3d(0, 0, 0); }
   }
-
-  /* Pixel 3 - explodes down */
-  @keyframes marker-explode-3 {
-    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-    25% { transform: translate(-4px, 8px) scale(1.18) rotate(-10deg); }
-    55% { transform: translate(-3px, 6px) scale(1.14) rotate(-8deg); }
-    90% { transform: translate(0.2px, -0.4px) scale(0.98) rotate(0.8deg); }
-    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  @keyframes marker-3 {
+    0% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-4px, 8px, 0) scale(1.18); }
+    100% { transform: translate3d(0, 0, 0); }
   }
-
-  /* Pixel 4 - explodes left */
-  @keyframes marker-explode-4 {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-10px, -3px) rotate(18deg); }
-    55% { transform: translate(-8px, -2px) rotate(14deg); }
-    90% { transform: translate(0.5px, 0.2px) rotate(-1.5deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
+  @keyframes marker-4 {
+    0% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-10px, -3px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
   }
-
-  /* Pixel 5 - explodes up-left far */
-  @keyframes marker-explode-5 {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-12px, -8px) rotate(-20deg); }
-    55% { transform: translate(-10px, -6px) rotate(-16deg); }
-    90% { transform: translate(0.8px, 0.5px) rotate(2deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
+  @keyframes marker-5 {
+    0% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-12px, -8px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
   }
-
-  /* Pixel 6 - explodes down-left */
-  @keyframes marker-explode-6 {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-8px, 10px) rotate(15deg); }
-    55% { transform: translate(-6px, 8px) rotate(12deg); }
-    90% { transform: translate(0.4px, -0.6px) rotate(-1deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
+  @keyframes marker-6 {
+    0% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-8px, 10px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
   }
-
-  /* Pixel 7 - explodes left-down */
-  @keyframes marker-explode-7 {
-    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-    25% { transform: translate(-9px, 6px) scale(1.2) rotate(-12deg); }
-    55% { transform: translate(-7px, 5px) scale(1.15) rotate(-10deg); }
-    90% { transform: translate(0.5px, -0.4px) scale(0.97) rotate(1deg); }
-    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  @keyframes marker-7 {
+    0% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-9px, 6px, 0) scale(1.2); }
+    100% { transform: translate3d(0, 0, 0); }
   }
-
-  /* Pixel 8 - explodes up far */
-  @keyframes marker-explode-8 {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-6px, -12px) rotate(-15deg); }
-    55% { transform: translate(-5px, -10px) rotate(-12deg); }
-    90% { transform: translate(0.4px, 0.8px) rotate(1.2deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
+  @keyframes marker-8 {
+    0% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-6px, -12px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
   }
-
-  /* Pixel 9 - explodes far left */
-  @keyframes marker-explode-9 {
-    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-    25% { transform: translate(-14px, -4px) scale(1.15) rotate(-18deg); }
-    55% { transform: translate(-11px, -3px) scale(1.1) rotate(-14deg); }
-    90% { transform: translate(0.9px, 0.3px) scale(0.98) rotate(1.5deg); }
-    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  @keyframes marker-9 {
+    0% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-14px, -4px, 0) scale(1.15); }
+    100% { transform: translate3d(0, 0, 0); }
   }
-
-  /* Pixel 10 - explodes left-up */
-  @keyframes marker-explode-10 {
-    0% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-11px, -7px) rotate(22deg); }
-    55% { transform: translate(-9px, -5px) rotate(18deg); }
-    90% { transform: translate(0.7px, 0.4px) rotate(-2deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
+  @keyframes marker-10 {
+    0% { transform: translate3d(0, 0, 0); }
+    40% { transform: translate3d(-11px, -7px, 0); }
+    100% { transform: translate3d(0, 0, 0); }
   }
 
   /* HQ marker ring - slow color pulse from teal to red */
@@ -880,5 +843,54 @@
       transparent 4px,
       transparent 8px
     );
+  }
+
+  /* Arrow bounce animation - subtle directional indicator */
+  .arrow-bounce {
+    animation: arrow-bounce-right 1.5s ease-in-out infinite;
+  }
+
+  @keyframes arrow-bounce-right {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
+
+  /* Skeleton loading animations */
+  .skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skeleton-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    animation: skeleton-shimmer 1.5s infinite;
+  }
+
+  @keyframes skeleton-shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .skeleton-wave {
+    animation: skeleton-wave 1.6s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-wave {
+    0%, 100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.5;
+    }
   }
 }

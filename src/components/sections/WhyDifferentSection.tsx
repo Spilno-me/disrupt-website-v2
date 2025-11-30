@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { scrollToElement } from '@/utils/navigation'
 import {
   SectionContainer,
@@ -8,7 +9,7 @@ import {
   Column,
   SectionImage,
 } from '@/components/ui/SectionLayout'
-import featureImage from '@/assets/figma/feature-4-image.png'
+import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================
 // COMPONENT
@@ -21,13 +22,24 @@ export function WhyDifferentSection() {
       data-element="why-different-section"
     >
       <SectionContainer>
-        <TwoColumnLayout>
-          {/* Content - Left side */}
+        {/* Mobile: Header first */}
+        <div className="lg:hidden">
+          <SectionHeading
+            title="Why We're Different"
+            subtitle="Not Another Tool. A New Model."
+          />
+        </div>
+
+        <TwoColumnLayout reverse>
+          {/* Content - Right on desktop */}
           <Column className="flex flex-col">
-            <SectionHeading
-              title="Why We're Different"
-              subtitle="Not Another Tool. A New Model."
-            />
+            {/* Desktop: Header inside column */}
+            <div className="hidden lg:block">
+              <SectionHeading
+                title="Why We're Different"
+                subtitle="Not Another Tool. A New Model."
+              />
+            </div>
 
             {/* Description */}
             <div className="flex flex-col gap-4 mb-6">
@@ -40,19 +52,21 @@ export function WhyDifferentSection() {
             </div>
 
             {/* CTA Button */}
-            <Button
-              onClick={() => scrollToElement('contact')}
-              className="w-fit h-11 sm:h-9 bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-[12px] px-6 sm:px-4 py-2 gap-2 text-base sm:text-sm font-medium"
-            >
-              Contact us
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+            <ElectricButtonWrapper className="w-fit">
+              <Button
+                onClick={() => scrollToElement('contact')}
+                className="h-11 sm:h-9 bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-[12px] px-6 sm:px-4 py-2 gap-2 text-base sm:text-sm font-medium"
+              >
+                Contact us
+                <ArrowRight className="w-4 h-4 arrow-bounce" />
+              </Button>
+            </ElectricButtonWrapper>
           </Column>
 
-          {/* Image - Right side */}
-          <Column>
+          {/* Image - Left on desktop, After header on mobile */}
+          <Column className="order-first lg:order-none">
             <SectionImage
-              src={featureImage}
+              sources={optimizedImages.feature4}
               alt="Why we're different visualization"
             />
           </Column>

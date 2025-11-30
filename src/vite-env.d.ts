@@ -36,6 +36,11 @@ declare module '*.webp' {
   export default src
 }
 
+declare module '*.avif' {
+  const src: string
+  export default src
+}
+
 // Global types for test environment
 declare global {
   var global: typeof globalThis

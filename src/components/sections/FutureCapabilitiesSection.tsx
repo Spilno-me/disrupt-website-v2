@@ -7,7 +7,7 @@ import {
   Column,
   SectionImage,
 } from '@/components/ui/SectionLayout'
-import featureImage from '@/assets/figma/feature-5-image.png'
+import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================
 // DATA
@@ -27,21 +27,32 @@ export function FutureCapabilitiesSection() {
   return (
     <BlobSection className="py-8 sm:py-12 lg:py-16">
       <SectionContainer>
+        {/* Mobile: Header first */}
+        <div className="lg:hidden">
+          <SectionHeading
+            title="EHS First. Enterprise Always."
+            subtitle="Starting with EHS — building a platform that grows."
+          />
+        </div>
+
         <TwoColumnLayout reverse>
-          {/* Image - Left on desktop */}
-          <Column>
+          {/* Image - Left on desktop, After header on mobile */}
+          <Column className="order-first lg:order-none">
             <SectionImage
-              src={featureImage}
+              sources={optimizedImages.feature5}
               alt="Construction worker using tablet"
             />
           </Column>
 
           {/* Content - Right on desktop */}
           <Column>
-            <SectionHeading
-              title="EHS First. Enterprise Always."
-              subtitle="Starting with EHS — building a platform that grows."
-            />
+            {/* Desktop: Header inside column */}
+            <div className="hidden lg:block">
+              <SectionHeading
+                title="EHS First. Enterprise Always."
+                subtitle="Starting with EHS — building a platform that grows."
+              />
+            </div>
 
             <div className="flex flex-col gap-4">
               {FUTURE_CAPABILITIES.map((item) => (
