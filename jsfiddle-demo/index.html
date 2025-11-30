@@ -1,0 +1,52 @@
+<!--
+  ╔═══════════════════════════════════════════════════════════════════╗
+  ║                    CURSOR PIXELS ANIMATION                        ║
+  ║                                                                   ║
+  ║   A smooth, organic cursor-following effect with idle floating,   ║
+  ║   excited jitter on hover, and explosion on click.                ║
+  ║                                                                   ║
+  ║   Created by Andrii Drozdenko                                     ║
+  ║   Crafted with love by DisruptInc.io                              ║
+  ║   https://disruptinc.io                                           ║
+  ║                                                                   ║
+  ║   Sharing is caring! Feel free to use, modify, and share.         ║
+  ║   A little credit goes a long way. Cheers!                        ║
+  ╚═══════════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursor Pixels Animation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="demo-content">
+    <h1>Cursor Pixels Animation</h1>
+    <p>Move your mouse around. The pixels follow!</p>
+    <p>Stop moving - they float gently.</p>
+    <p>Click anywhere - they explode!</p>
+    <button class="demo-button">Hover me for excitement!</button>
+    <a href="#" class="demo-link">I'm interactive too</a>
+    <p class="credit">
+      Made with <span class="heart">♥</span> by <a href="https://disruptinc.io" target="_blank" rel="noopener">DisruptInc.io</a>
+    </p>
+  </div>
+
+  <!-- Cursor pixels container -->
+  <div class="cursor-pixels-container" aria-hidden="true">
+    <div class="cursor-pixel" data-index="0"></div>
+    <div class="cursor-pixel" data-index="1"></div>
+    <div class="cursor-pixel" data-index="2"></div>
+    <div class="cursor-pixel" data-index="3"></div>
+    <div class="cursor-pixel" data-index="4"></div>
+    <div class="cursor-pixel" data-index="5"></div>
+    <div class="cursor-pixel" data-index="6"></div>
+  </div>
+
+  <!-- GSAP from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

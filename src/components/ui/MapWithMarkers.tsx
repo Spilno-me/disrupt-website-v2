@@ -241,6 +241,7 @@ function LocationMarker({ x, y, country, isMain = false, mapOffset, mapWidth }: 
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      data-cursor-repel="true"
     >
       {/* Tooltip */}
       <div

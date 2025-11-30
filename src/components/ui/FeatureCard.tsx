@@ -1,5 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from 'react'
 import { ANIMATION } from '@/constants/designTokens'
+import { ElectricLucideIcon, IconName } from '@/components/ui/ElectricLucideIcon'
 
 // =============================================================================
 // CONSTANTS
@@ -14,10 +15,8 @@ const DASH_GAP_SIZE = 9.11
 // =============================================================================
 
 export interface FeatureCardProps {
-  /** Icon image source */
-  icon: string
-  /** Alt text for the icon */
-  iconAlt: string
+  /** Lucide icon name for the electric effect */
+  iconName: IconName
   /** Background color for the circle */
   circleColor: string
   /** Card title */
@@ -35,8 +34,7 @@ export interface FeatureCardProps {
  * Used in the "What Disrupt Does" section to showcase key features.
  */
 export function FeatureCard({
-  icon,
-  iconAlt,
+  iconName,
   circleColor,
   title,
   description,
@@ -85,7 +83,7 @@ export function FeatureCard({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Icon with colored circle and dashed outer ring */}
-      <div className="relative w-24 h-24 sm:w-[120px] sm:h-[120px]">
+      <div className="relative w-24 h-24 sm:w-[120px] sm:h-[120px]" data-cursor-repel="true">
         {/* Outer dashed ring using SVG for precise control */}
         <svg
           ref={svgRef}
@@ -108,23 +106,39 @@ export function FeatureCard({
           className="absolute inset-1.5 sm:inset-2 rounded-full flex items-center justify-center"
           style={{ backgroundColor: circleColor }}
         >
-          <img
-            src={icon}
-            alt={iconAlt}
-            className="w-10 h-10 sm:w-14 sm:h-14"
-          />
+          <div
+            className={`transition-transform duration-300 ease-out ${
+              isHovered ? 'scale-110' : 'scale-100'
+            }`}
+          >
+            <ElectricLucideIcon
+              name={iconName}
+              size={48}
+              isActive={isHovered}
+            />
+          </div>
         </div>
       </div>
 
-      {/* Title */}
-      <h3 className="text-lg sm:text-xl font-sans font-bold text-dark">
+      {/* Title - always visible */}
+      <h3 className="text-lg font-sans font-semibold text-dark leading-7">
         {title}
       </h3>
 
-      {/* Description */}
-      <p className="text-muted leading-relaxed text-sm sm:text-base max-w-[280px]">
-        {description}
-      </p>
+      {/* Description - animated on desktop (hover), always visible on mobile/tablet */}
+      <div
+        className={`overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] max-h-40 opacity-100 ${
+          !isHovered ? 'lg:max-h-0 lg:opacity-0' : ''
+        }`}
+      >
+        <p
+          className={`text-muted leading-relaxed text-sm sm:text-base max-w-[280px] transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+            !isHovered ? 'lg:translate-y-4' : ''
+          }`}
+        >
+          {description}
+        </p>
+      </div>
     </div>
   )
 }

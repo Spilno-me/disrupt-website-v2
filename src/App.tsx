@@ -1,5 +1,6 @@
 import { Toaster } from 'sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { CursorPixels } from '@/components/ui/cursor-pixels'
 import { PageLayout } from '@/components/layout/PageLayout'
 import { HeroSection } from '@/components/sections/HeroSection'
 import { AIPlatformSection } from '@/components/sections/AIPlatformSection'
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <I18nLoader>
+      <CursorPixels />
       <TooltipProvider>
         <PageLayout
           showContactButton={true}
