@@ -1,6 +1,56 @@
 import { ReactNode, useState, useRef, useEffect } from 'react'
 import { SkeletonImage } from './Skeleton'
+import { GridBlobBackground } from './GridBlobCanvas'
+import { ResponsiveImage } from './ResponsiveImage'
 import { cn } from '@/lib/utils'
+
+// =============================================================================
+// SECTION WRAPPER
+// =============================================================================
+
+interface SectionWrapperProps {
+  children: ReactNode
+  /** Background color variant */
+  background?: 'white' | 'cream'
+  /** Show grid blob background animation */
+  showBlob?: boolean
+  /** Blob scale (default 1.5) */
+  blobScale?: number
+  /** Data attribute for section identification */
+  dataElement?: string
+  className?: string
+}
+
+/**
+ * Consistent section wrapper with background color, padding, borders, and optional blob.
+ * Replaces repeated section element patterns across components.
+ */
+export function SectionWrapper({
+  children,
+  background = 'white',
+  showBlob = false,
+  blobScale = 1.5,
+  dataElement,
+  className = '',
+}: SectionWrapperProps) {
+  const bgClass = background === 'cream' ? 'bg-cream' : 'bg-white'
+  const needsRelative = showBlob ? 'relative' : ''
+
+  return (
+    <section
+      className={cn(
+        bgClass,
+        needsRelative,
+        'py-8 sm:py-11 lg:py-16 border-y-dashed-figma overflow-hidden',
+        className
+      )}
+      data-element={dataElement}
+    >
+      {showBlob && <GridBlobBackground scale={blobScale} />}
+      {children}
+    </section>
+  )
+}
 
 // =============================================================================
 // SECTION CONTAINER
@@ -343,5 +393,95 @@ export function Column({ children, width = '1/2', className = '' }: ColumnProps)
     <div className={`${widthClass} ${className}`}>
       {children}
     </div>
+  )
+}
+
+// =============================================================================
+// CONTENT SECTION (Two-column image + text pattern)
+// =============================================================================
+
+interface ImageSource {
+  mobile: { webp: string; avif: string; fallback: string }
+  tablet: { webp: string; avif: string; fallback: string }
+  desktop?: { webp: string; avif: string; fallback: string }
+}
+
+interface ContentSectionProps {
+  /** Section title */
+  title: string
+  /** Section subtitle (teal) */
+  subtitle: string
+  /** Content - text paragraphs or custom content */
+  children: ReactNode
+  /** Responsive image sources */
+  image: ImageSource
+  /** Image alt text */
+  imageAlt: string
+  /** Background color */
+  background?: 'white' | 'cream'
+  /** Show blob background */
+  showBlob?: boolean
+  /** Image position on desktop (left or right) */
+  imagePosition?: 'left' | 'right'
+  /** Data element attribute */
+  dataElement?: string
+  /** Optional image className for positioning */
+  imageClassName?: string
+}
+
+/**
+ * High-level two-column content section with image.
+ * Handles the common pattern of title, subtitle, content, and image
+ * with proper mobile/desktop layout switching.
+ */
+export function ContentSection({
+  title,
+  subtitle,
+  children,
+  image,
+  imageAlt,
+  background = 'white',
+  showBlob = false,
+  imagePosition = 'right',
+  dataElement,
+  imageClassName,
+}: ContentSectionProps) {
+  const isImageLeft = imagePosition === 'left'
+
+  return (
+    <SectionWrapper
+      background={background}
+      showBlob={showBlob}
+      dataElement={dataElement}
+    >
+      <SectionContainer className={showBlob ? 'relative z-[1]' : ''}>
+        {/* Mobile: Header first */}
+        <div className="lg:hidden">
+          <SectionHeading title={title} subtitle={subtitle} />
+        </div>
+
+        <TwoColumnLayout reverse={!isImageLeft}>
+          {/* Image Column */}
+          <Column className={isImageLeft ? 'order-first' : 'order-first lg:order-none'}>
+            <div className="-mx-4 sm:mx-0">
+              <ResponsiveImage
+                images={image}
+                alt={imageAlt}
+                className={imageClassName}
+              />
+            </div>
+          </Column>
+
+          {/* Content Column */}
+          <Column className="flex flex-col">
+            {/* Desktop: Header inside column */}
+            <div className="hidden lg:block">
+              <SectionHeading title={title} subtitle={subtitle} />
+            </div>
+            {children}
+          </Column>
+        </TwoColumnLayout>
+      </SectionContainer>
+    </SectionWrapper>
   )
 }

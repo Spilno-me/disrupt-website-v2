@@ -1,12 +1,5 @@
 import { Check } from 'lucide-react'
-import {
-  SectionContainer,
-  SectionHeading,
-  TwoColumnLayout,
-  Column,
-} from '@/components/ui/SectionLayout'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
-import { ResponsiveImage } from '@/components/ui/ResponsiveImage'
+import { ContentSection } from '@/components/ui/SectionLayout'
 import { aboutImages } from '@/assets/optimized/about'
 
 // =============================================================================
@@ -26,56 +19,26 @@ const VALUES = [
 
 export function OurValuesSection() {
   return (
-    <section
-      className="relative bg-white py-8 sm:py-11 lg:py-16 border-y-dashed-figma"
-      data-element="our-values-section"
+    <ContentSection
+      title="Our Values"
+      subtitle="The four S's that drive everything we do."
+      image={aboutImages.ourValues}
+      imageAlt="Our Values"
+      background="white"
+      showBlob
+      imagePosition="left"
+      dataElement="our-values-section"
     >
-      {/* Grid Blob Background */}
-      <GridBlobBackground scale={1.5} />
-
-      <SectionContainer className="relative z-[1]">
-        {/* Mobile: Header first */}
-        <div className="lg:hidden">
-          <SectionHeading
-            title="Our Values"
-            subtitle="The four S's that drive everything we do."
-          />
-        </div>
-
-        <TwoColumnLayout reverse>
-          {/* Content - Right on desktop */}
-          <Column className="flex flex-col">
-            {/* Desktop: Header inside column */}
-            <div className="hidden lg:block">
-              <SectionHeading
-                title="Our Values"
-                subtitle="The four S's that drive everything we do."
-              />
-            </div>
-
-            <ul className="flex flex-col gap-4">
-              {VALUES.map((value) => (
-                <li key={value.title} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-[#08A4BD] flex-shrink-0 mt-0.5" />
-                  <span className="text-muted text-base lg:text-lg leading-[1.5]">
-                    <strong className="text-dark">{value.title}</strong> – {value.description}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </Column>
-
-          {/* Image - Left on desktop */}
-          <Column className="order-first lg:order-none">
-            <div className="-mx-4 sm:mx-0">
-              <ResponsiveImage
-                images={aboutImages.ourValues}
-                alt="Our Values"
-              />
-            </div>
-          </Column>
-        </TwoColumnLayout>
-      </SectionContainer>
-    </section>
+      <ul className="flex flex-col gap-4">
+        {VALUES.map((value) => (
+          <li key={value.title} className="flex items-start gap-3">
+            <Check className="w-5 h-5 text-[#08A4BD] flex-shrink-0 mt-0.5" />
+            <span className="text-muted text-base lg:text-lg leading-[1.5]">
+              <strong className="text-dark">{value.title}</strong> – {value.description}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </ContentSection>
   )
 }

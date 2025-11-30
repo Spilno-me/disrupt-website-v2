@@ -3,7 +3,7 @@ import { PageLayout } from '@/components/layout/PageLayout'
 function PrivacyPolicy() {
 
   return (
-    <PageLayout>
+    <PageLayout showContactButton={false}>
       <div className="flex-grow">
           <div className="container mx-auto px-6 py-24 max-w-4xl">
             <h1 className="text-4xl font-display font-bold text-center mb-8">Privacy Information Statement</h1>
@@ -39,11 +39,10 @@ function PrivacyPolicy() {
                 <h2 className="text-2xl font-display font-semibold mb-4">3. Data We Collect</h2>
                 <p className="mb-4">We may collect:</p>
                 <ul className="list-disc ml-6 mb-4">
-                  <li>Identifiers (name, email, phone, organization)</li>
-                  <li>Account details (login information, billing data)</li>
-                  <li>Usage information (cookies, device info, IP addresses, session data)</li>
-                  <li>Website analytics data through Google Analytics (page views, user interactions, device information)</li>
-                  <li>Business communications (support requests, emails, call records)</li>
+                  <li><strong>Identifiers</strong> (name, email, phone, organization)</li>
+                  <li><strong>Account details</strong> (login information, billing data)</li>
+                  <li><strong>Usage information</strong> (cookies, device info, IP addresses, session data)</li>
+                  <li><strong>Business communications</strong> (support requests, emails, call records)</li>
                 </ul>
                 <p>We limit collection to what is necessary for the stated purposes.</p>
               </section>
@@ -65,10 +64,10 @@ function PrivacyPolicy() {
                 <h2 className="text-2xl font-display font-semibold mb-4">5. Lawful Bases for Processing</h2>
                 <p className="mb-4">Depending on context, processing is based on:</p>
                 <ul className="list-disc ml-6 mb-4">
-                  <li>Consent (e.g., newsletters)</li>
-                  <li>Contract (e.g., account setup, service provision)</li>
-                  <li>Legitimate interests (e.g., service improvements, security monitoring)</li>
-                  <li>Legal obligations (e.g., regulatory compliance)</li>
+                  <li><strong>Consent</strong> (e.g., newsletters)</li>
+                  <li><strong>Contract</strong> (e.g., account setup, service provision)</li>
+                  <li><strong>Legitimate interests</strong> (e.g., service improvements, security monitoring)</li>
+                  <li><strong>Legal obligations</strong> (e.g., regulatory compliance)</li>
                 </ul>
               </section>
 
@@ -76,13 +75,12 @@ function PrivacyPolicy() {
                 <h2 className="text-2xl font-display font-semibold mb-4">6. Data Sharing & International Transfers</h2>
                 <p className="mb-4">We may share personal data with:</p>
                 <ul className="list-disc ml-6 mb-4">
-                  <li>Trusted service providers (cloud hosting, analytics, payment processors)</li>
-                  <li>Google Analytics for website usage analysis and performance monitoring</li>
+                  <li>Trusted <strong>service providers</strong> (cloud hosting, analytics, payment processors)</li>
                   <li>Affiliates and partners</li>
                   <li>Regulators or law enforcement where legally required</li>
                 </ul>
                 <p>
-                  For international transfers, we implement GDPR-compliant safeguards such as Standard Contractual Clauses (SCCs).
+                  For international transfers, we implement GDPR-compliant safeguards such as <strong>Standard Contractual Clauses (SCCs)</strong>.
                 </p>
               </section>
 
@@ -119,13 +117,13 @@ function PrivacyPolicy() {
                 <h2 className="text-2xl font-display font-semibold mb-4">10. Your Privacy Rights</h2>
                 <p className="mb-4">Depending on your jurisdiction, you may have the right to:</p>
                 <ul className="list-disc ml-6 mb-4">
-                  <li>Access your personal data</li>
-                  <li>Rectify inaccuracies</li>
-                  <li>Erase data ("right to be forgotten")</li>
-                  <li>Restrict processing</li>
-                  <li>Object to processing, including direct marketing</li>
-                  <li>Data portability (receive your data in machine-readable format)</li>
-                  <li>Withdraw consent at any time</li>
+                  <li><strong>Access</strong> your personal data</li>
+                  <li><strong>Rectify</strong> inaccuracies</li>
+                  <li><strong>Erase</strong> data ("right to be forgotten")</li>
+                  <li><strong>Restrict</strong> processing</li>
+                  <li><strong>Object</strong> to processing, including direct marketing</li>
+                  <li><strong>Data portability</strong> (receive your data in machine-readable format)</li>
+                  <li><strong>Withdraw consent</strong> at any time</li>
                 </ul>
                 <p>You also have the right to lodge a complaint with a supervisory authority.</p>
               </section>
@@ -142,12 +140,12 @@ function PrivacyPolicy() {
                 <p className="mb-4">
                   If you have questions about this Privacy Information Statement or wish to exercise your rights:
                 </p>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p><strong>Data Protection Officer (DPO)</strong></p>
-                  <p><strong>Email:</strong> <a href="mailto:privacy@disruptinc.com" className="text-blue-600 hover:underline">privacy@disruptinc.com</a></p>
-                  <p><strong>Address:</strong> [Address to be provided]</p>
-                  <p className="mt-2 text-sm">For EU/EEA residents, you may also contact your local supervisory authority.</p>
-                </div>
+                <ul className="list-disc ml-6 mb-4">
+                  <li><strong>Data Protection Officer (DPO)</strong></li>
+                  <li>Email: <strong><a href="mailto:privacy@disr.com" className="text-teal hover:underline">privacy@disr.com</a></strong></li>
+                  <li>Address:</li>
+                </ul>
+                <p>For EU/EEA residents, you may also contact your local <strong>supervisory authority</strong>.</p>
               </section>
 
               <section>

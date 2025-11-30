@@ -50,8 +50,8 @@ export function FeatureCard({
   // Ref for scroll detection on mobile
   const cardRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(cardRef, {
-    amount: 0.5, // Trigger when 50% visible
-    margin: "-15% 0px -15% 0px",
+    amount: 0.7, // Trigger when 70% visible
+    margin: "-25% 0px -25% 0px",
   })
 
   // Debounced active state to prevent glitchy rapid toggling
@@ -147,10 +147,11 @@ export function FeatureCard({
         </motion.svg>
         {/* Inner filled circle - inset by 8px */}
         <div
-          className="absolute inset-1.5 sm:inset-2 rounded-full flex items-center justify-center"
+          className="absolute inset-1.5 sm:inset-2 rounded-full flex items-center justify-center overflow-visible"
           style={{ backgroundColor: circleColor }}
         >
           <motion.div
+            className="overflow-visible"
             animate={{ scale: isActive ? 1.1 : 1 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
           >
@@ -168,13 +169,13 @@ export function FeatureCard({
         {title}
       </h3>
 
-      {/* Description - animated on hover (desktop) or scroll into view (mobile) */}
+      {/* Description - animated on hover (desktop only) */}
       <motion.div
         className="overflow-hidden"
         initial={false}
         animate={{
-          maxHeight: isActive ? 160 : 0,
-          opacity: isActive ? 1 : 0,
+          maxHeight: isMobile ? 160 : (isHovered ? 160 : 0),
+          opacity: isMobile ? 1 : (isHovered ? 1 : 0),
         }}
         transition={{
           duration: 0.4,
@@ -185,7 +186,7 @@ export function FeatureCard({
           className="text-muted leading-relaxed text-sm sm:text-base max-w-[280px]"
           initial={false}
           animate={{
-            y: isActive ? 0 : -20,
+            y: isMobile ? 0 : (isHovered ? 0 : -20),
           }}
           transition={{
             duration: 0.4,

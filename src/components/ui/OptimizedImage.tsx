@@ -2,28 +2,15 @@ import { useState, useRef, useEffect } from 'react'
 import { cn } from '@/lib/utils'
 import { SkeletonImage } from './Skeleton'
 import { SHADOWS } from '@/constants/designTokens'
+import { ResponsivePicture, type ResponsiveImageSets } from './ResponsivePicture'
 
-interface ImageSource {
-  mobile: {
-    webp: string
-    avif: string
-    fallback: string
-  }
-  tablet: {
-    webp: string
-    avif: string
-    fallback: string
-  }
-  desktop?: {
-    webp: string
-    avif: string
-    fallback: string
-  }
-}
+// =============================================================================
+// TYPES
+// =============================================================================
 
 interface OptimizedImageProps {
   /** Responsive image sources */
-  sources: ImageSource
+  sources: ResponsiveImageSets
   /** Alt text for accessibility */
   alt: string
   /** Additional CSS classes */
@@ -35,6 +22,71 @@ interface OptimizedImageProps {
   /** Apply shadow styling */
   withShadow?: boolean
 }
+
+// =============================================================================
+// HOOKS
+// =============================================================================
+
+function useIntersectionObserver(
+  ref: React.RefObject<HTMLElement | null>,
+  enabled: boolean
+) {
+  const [isInView, setIsInView] = useState(!enabled)
+
+  useEffect(() => {
+    if (!enabled || !ref.current) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true)
+            observer.disconnect()
+          }
+        })
+      },
+      { rootMargin: '200px', threshold: 0.01 }
+    )
+
+    observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [enabled, ref])
+
+  return isInView
+}
+
+// =============================================================================
+// SHARED COMPONENTS
+// =============================================================================
+
+function ImageErrorFallback({
+  aspectRatio,
+  className,
+  withShadow,
+}: {
+  aspectRatio: OptimizedImageProps['aspectRatio']
+  className?: string
+  withShadow?: boolean
+}) {
+  return (
+    <div
+      className={cn(
+        'w-full rounded-[16px] bg-muted/20 flex items-center justify-center',
+        aspectRatio === 'square' && 'aspect-square',
+        aspectRatio === '4/3' && 'aspect-[4/3]',
+        aspectRatio === '16/9' && 'aspect-video',
+        className
+      )}
+      style={withShadow ? { boxShadow: SHADOWS.image } : undefined}
+    >
+      <span className="text-muted text-sm">Image unavailable</span>
+    </div>
+  )
+}
+
+// =============================================================================
+// OPTIMIZED IMAGE COMPONENT
+// =============================================================================
 
 /**
  * Optimized image component with:
@@ -53,56 +105,18 @@ export function OptimizedImage({
   withShadow = true,
 }: OptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isInView, setIsInView] = useState(priority)
   const [hasError, setHasError] = useState(false)
-  const imgRef = useRef<HTMLImageElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (priority || !containerRef.current) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsInView(true)
-            observer.disconnect()
-          }
-        })
-      },
-      {
-        rootMargin: '200px',
-        threshold: 0.01,
-      }
-    )
-
-    observer.observe(containerRef.current)
-
-    return () => observer.disconnect()
-  }, [priority])
-
-  const handleLoad = () => {
-    setIsLoaded(true)
-  }
-
-  const handleError = () => {
-    setHasError(true)
-  }
+  const isInView = useIntersectionObserver(containerRef, !priority)
 
   if (hasError) {
     return (
-      <div
-        className={cn(
-          'w-full rounded-[16px] bg-muted/20 flex items-center justify-center',
-          aspectRatio === 'square' && 'aspect-square',
-          aspectRatio === '4/3' && 'aspect-[4/3]',
-          aspectRatio === '16/9' && 'aspect-video',
-          className
-        )}
-        style={withShadow ? { boxShadow: SHADOWS.image } : undefined}
-      >
-        <span className="text-muted text-sm">Image unavailable</span>
-      </div>
+      <ImageErrorFallback
+        aspectRatio={aspectRatio}
+        className={className}
+        withShadow={withShadow}
+      />
     )
   }
 
@@ -112,7 +126,6 @@ export function OptimizedImage({
       className={cn('relative overflow-hidden rounded-[16px]', className)}
       style={withShadow ? { boxShadow: SHADOWS.image } : undefined}
     >
-      {/* Skeleton placeholder */}
       {!isLoaded && (
         <SkeletonImage
           aspectRatio={aspectRatio}
@@ -120,62 +133,27 @@ export function OptimizedImage({
         />
       )}
 
-      {/* Responsive picture element */}
       {isInView && (
-        <picture>
-          {/* AVIF sources - best compression */}
-          {sources.desktop && (
-            <source
-              media="(min-width: 1024px)"
-              srcSet={sources.desktop.avif}
-              type="image/avif"
-            />
+        <ResponsivePicture
+          images={sources}
+          alt={alt}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding={priority ? 'sync' : 'async'}
+          onLoad={() => setIsLoaded(true)}
+          onError={() => setHasError(true)}
+          className={cn(
+            'transition-opacity duration-500',
+            isLoaded ? 'opacity-100' : 'opacity-0'
           )}
-          <source
-            media="(min-width: 768px)"
-            srcSet={sources.tablet.avif}
-            type="image/avif"
-          />
-          <source srcSet={sources.mobile.avif} type="image/avif" />
-
-          {/* WebP sources - good compression, wider support */}
-          {sources.desktop && (
-            <source
-              media="(min-width: 1024px)"
-              srcSet={sources.desktop.webp}
-              type="image/webp"
-            />
-          )}
-          <source
-            media="(min-width: 768px)"
-            srcSet={sources.tablet.webp}
-            type="image/webp"
-          />
-          <source srcSet={sources.mobile.webp} type="image/webp" />
-
-          {/* PNG fallback */}
-          <img
-            ref={imgRef}
-            src={sources.tablet.fallback}
-            alt={alt}
-            loading={priority ? 'eager' : 'lazy'}
-            decoding={priority ? 'sync' : 'async'}
-            onLoad={handleLoad}
-            onError={handleError}
-            className={cn(
-              'w-full h-auto object-cover transition-opacity duration-500',
-              isLoaded ? 'opacity-100' : 'opacity-0'
-            )}
-          />
-        </picture>
+        />
       )}
     </div>
   )
 }
 
-// ============================================================================
+// =============================================================================
 // SIMPLE OPTIMIZED IMAGE (for images without multiple sizes)
-// ============================================================================
+// =============================================================================
 
 interface SimpleOptimizedImageProps {
   /** Original image source */
@@ -205,47 +183,18 @@ export function SimpleOptimizedImage({
   withShadow = true,
 }: SimpleOptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false)
-  const [isInView, setIsInView] = useState(priority)
   const [hasError, setHasError] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (priority || !containerRef.current) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsInView(true)
-            observer.disconnect()
-          }
-        })
-      },
-      {
-        rootMargin: '200px',
-        threshold: 0.01,
-      }
-    )
-
-    observer.observe(containerRef.current)
-
-    return () => observer.disconnect()
-  }, [priority])
+  const isInView = useIntersectionObserver(containerRef, !priority)
 
   if (hasError) {
     return (
-      <div
-        className={cn(
-          'w-full rounded-[16px] bg-muted/20 flex items-center justify-center',
-          aspectRatio === 'square' && 'aspect-square',
-          aspectRatio === '4/3' && 'aspect-[4/3]',
-          aspectRatio === '16/9' && 'aspect-video',
-          className
-        )}
-        style={withShadow ? { boxShadow: SHADOWS.image } : undefined}
-      >
-        <span className="text-muted text-sm">Image unavailable</span>
-      </div>
+      <ImageErrorFallback
+        aspectRatio={aspectRatio}
+        className={className}
+        withShadow={withShadow}
+      />
     )
   }
 

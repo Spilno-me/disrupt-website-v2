@@ -8,7 +8,7 @@ import { COMPANY_INFO, NAVIGATION } from '@/constants/appConstants'
 export function Footer() {
   return (
     <footer
-      className="py-3 sm:py-4 backdrop-blur-[10px] bg-cream/30 border-t border-teal shadow-[0px_-2px_4px_5px_rgba(0,0,0,0.15)]"
+      className="py-3 sm:py-4 backdrop-blur-[10px] bg-cream/30 shadow-[0px_-1px_3px_rgba(0,0,0,0.08)]"
       data-element="main-footer"
     >
       <div

@@ -9,12 +9,20 @@ const SCROLL_BEHAVIOR = 'smooth' as const
 /**
  * Scroll to a specific element by its ID.
  * Used for in-page navigation (e.g., "Contact us" button).
+ * Accounts for fixed header height.
  */
 export function scrollToElement(elementId: string): void {
   const element = document.getElementById(elementId)
+  const headerHeight = 82 // Match SPACING.headerHeight
 
   if (element) {
-    element.scrollIntoView({ behavior: SCROLL_BEHAVIOR })
+    const elementPosition = element.getBoundingClientRect().top + window.scrollY
+    const offsetPosition = elementPosition - headerHeight - 16 // Extra 16px padding
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: SCROLL_BEHAVIOR,
+    })
   }
 }
 

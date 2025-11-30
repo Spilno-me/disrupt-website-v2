@@ -2,7 +2,7 @@ import { PageLayout } from '@/components/layout/PageLayout'
 
 function TermsOfService() {
   return (
-    <PageLayout>
+    <PageLayout showContactButton={false}>
       <div className="flex-grow">
           <div className="container mx-auto px-6 py-24 max-w-4xl">
             <h1 className="text-4xl font-display font-bold text-center mb-8">Terms of Service</h1>

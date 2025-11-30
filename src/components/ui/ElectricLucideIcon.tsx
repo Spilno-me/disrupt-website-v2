@@ -39,8 +39,8 @@ const ELECTRIC_CONFIG = {
   dashArray: '20 10',
   flowDuration: 0.6,
   staggerDelay: 0.08,
-  glowFilter: 'drop-shadow(0 0 3px cyan) drop-shadow(0 0 6px cyan)',
-  glowFilterIntense: 'drop-shadow(0 0 5px cyan) drop-shadow(0 0 10px #00ffff)',
+  glowFilter: 'drop-shadow(0 0 2px cyan)',
+  glowFilterIntense: 'drop-shadow(0 0 3px cyan)',
 }
 
 // =============================================================================
@@ -146,7 +146,7 @@ export function ElectricLucideIcon({
 
   return (
     <div
-      className={`relative ${className}`}
+      className={`relative overflow-visible ${className}`}
       style={{ width: size, height: size }}
     >
       {/* Base white icon with animated shadow */}

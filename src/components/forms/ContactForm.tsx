@@ -31,7 +31,8 @@ export function ContactForm() {
         <ElectricButtonWrapper className="w-full">
           <Button
             type="submit"
-            className="w-full h-12 sm:h-10 bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-[12px] py-2 text-base sm:text-sm font-medium"
+            variant="contact"
+            className="w-full"
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? 'Sending...' : 'Book a Demo'}

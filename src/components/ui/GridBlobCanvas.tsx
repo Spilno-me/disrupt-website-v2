@@ -12,16 +12,16 @@ const CONFIG = {
     transitionDuration: 1.8,
   },
   waypoints: [
-    { x: 20, y: 25, w: 350, h: 280 },
-    { x: 35, y: 40, w: 380, h: 300 },
+    { x: 35, y: 25, w: 350, h: 280 },
+    { x: 45, y: 40, w: 380, h: 300 },
     { x: 55, y: 50, w: 420, h: 340 },
-    { x: 70, y: 60, w: 450, h: 360 },
+    { x: 65, y: 60, w: 450, h: 360 },
     { x: 60, y: 70, w: 400, h: 320 },
-    { x: 40, y: 65, w: 370, h: 300 },
-    { x: 25, y: 50, w: 340, h: 270 },
-    { x: 22, y: 35, w: 360, h: 290 },
+    { x: 50, y: 65, w: 370, h: 300 },
+    { x: 40, y: 50, w: 340, h: 270 },
+    { x: 38, y: 35, w: 360, h: 290 },
   ],
-  initialBlob: { x: 25, y: 30, w: 400, h: 320 },
+  initialBlob: { x: 40, y: 30, w: 400, h: 320 },
 }
 
 // =============================================================================
@@ -125,7 +125,7 @@ interface BlobSectionProps extends React.HTMLAttributes<HTMLElement> {
 
 export function BlobSection({ children, className = '', as: Tag = 'section', ...rest }: BlobSectionProps) {
   return (
-    <Tag className={`relative ${className}`} {...rest}>
+    <Tag className={`relative overflow-hidden ${className}`} {...rest}>
       <GridBlobBackground />
       <div className="relative z-[1]">{children}</div>
     </Tag>

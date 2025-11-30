@@ -358,9 +358,13 @@ interface LocationMarkerProps {
   isMain?: boolean
   mapOffset: number
   mapWidth: number
+  markerId: string
+  activeMarkerId: string | null
+  onMarkerClick: (markerId: string) => void
+  isMobile: boolean
 }
 
-function LocationMarker({ x, y, country, isMain = false, mapOffset, mapWidth }: LocationMarkerProps) {
+function LocationMarker({ x, y, country, isMain = false, mapOffset, mapWidth, markerId, activeMarkerId, onMarkerClick, isMobile }: LocationMarkerProps) {
   const size = isMain ? 64 : 44
   const [isHovered, setIsHovered] = useState(false)
   const countryName = COUNTRY_NAMES[country] || country
@@ -368,25 +372,33 @@ function LocationMarker({ x, y, country, isMain = false, mapOffset, mapWidth }: 
   // Calculate actual pixel position within the infinite map
   const pixelX = (x / 100) * mapWidth + mapOffset
 
+  const isTouched = activeMarkerId === markerId
+  // On mobile, only use touch state (not hover) so timer can close tooltip
+  const showTooltip = isMobile ? isTouched : (isHovered || isTouched)
+
   return (
     <div
       className="absolute cursor-pointer transition-all duration-200"
       style={{
         left: pixelX,
         top: `${y}%`,
-        transform: `translate(-50%, -50%) scale(${isHovered ? 1.15 : 1})`,
+        transform: `translate(-50%, -50%) scale(${showTooltip ? 1.15 : 1})`,
         width: size,
         height: size,
-        zIndex: isHovered ? 50 : (isMain ? 10 : 1),
+        zIndex: showTooltip ? 50 : (isMain ? 10 : 1),
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={(e) => {
+        e.stopPropagation()
+        onMarkerClick(isTouched ? '' : markerId)
+      }}
       data-cursor-repel="true"
     >
       {/* Tooltip */}
       <div
         className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#2D3142] text-white text-xs font-medium px-2 py-1 rounded transition-all duration-300 ${
-          isHovered
+          showTooltip
             ? 'opacity-100 -top-8 scale-100'
             : 'opacity-0 top-0 scale-75 pointer-events-none'
         }`}
@@ -465,7 +477,30 @@ export function MapWithMarkers() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [mapWidth, setMapWidth] = useState(882)
   const [isInitialized, setIsInitialized] = useState(false)
+  const [activeMarkerId, setActiveMarkerId] = useState<string | null>(null)
+  const tooltipTimerRef = useRef<NodeJS.Timeout | null>(null)
   const isMobile = useIsMobile()
+
+  // Auto-hide tooltip after 10 seconds
+  useEffect(() => {
+    // Clear any existing timer
+    if (tooltipTimerRef.current) {
+      clearTimeout(tooltipTimerRef.current)
+      tooltipTimerRef.current = null
+    }
+
+    if (activeMarkerId) {
+      tooltipTimerRef.current = setTimeout(() => {
+        setActiveMarkerId(null)
+      }, 10000)
+    }
+
+    return () => {
+      if (tooltipTimerRef.current) {
+        clearTimeout(tooltipTimerRef.current)
+      }
+    }
+  }, [activeMarkerId])
 
   // Motion value for smooth, GPU-accelerated transforms
   const x = useMotionValue(0)
@@ -564,6 +599,7 @@ export function MapWithMarkers() {
       className="relative w-full h-[520px] rounded-[16px] overflow-hidden select-none cursor-grab active:cursor-grabbing"
       style={{ touchAction: 'pan-y' }}
       data-element="contact-map"
+      onClick={() => setActiveMarkerId(null)}
     >
       {/* Map copies for infinite scroll - Motion powered */}
       <motion.div
@@ -609,6 +645,10 @@ export function MapWithMarkers() {
                 isMain={marker.isMain}
                 mapOffset={copyIndex * mapWidth}
                 mapWidth={mapWidth}
+                markerId={`${copyIndex}-${marker.id}`}
+                activeMarkerId={activeMarkerId}
+                onMarkerClick={setActiveMarkerId}
+                isMobile={isMobile}
               />
             </div>
           ))

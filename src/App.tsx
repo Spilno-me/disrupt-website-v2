@@ -10,20 +10,12 @@ import { WhyDifferentSection } from '@/components/sections/WhyDifferentSection'
 import { FutureCapabilitiesSection } from '@/components/sections/FutureCapabilitiesSection'
 import { ContactSection } from '@/components/sections/ContactSection'
 import { I18nLoader } from '@/components/I18nLoader'
-import { scrollToElement } from '@/utils/navigation'
 
 function App() {
-  const handleContactClick = () => {
-    scrollToElement('contact')
-  }
-
   return (
     <I18nLoader>
       <TooltipProvider>
-        <PageLayout
-          showContactButton={true}
-          onContactClick={handleContactClick}
-        >
+        <PageLayout>
           <HeroSection />
           <AIPlatformSection />
           <WhoWeHelpSection />

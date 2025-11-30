@@ -1,17 +1,35 @@
+import { useState, useEffect } from 'react'
 import { Check } from 'lucide-react'
+import { motion, AnimatePresence } from 'motion/react'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
+import { HeroParticles } from '@/components/ui/HeroParticles'
 import { aboutImages } from '@/assets/optimized/about'
-import { SPACING } from '@/constants/designTokens'
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+
+const HERO_TITLES = ['Built to protect people', 'Designed to redefine compliance']
+const SLIDE_INTERVAL = 4000
 
 // =============================================================================
 // COMPONENT
 // =============================================================================
 
 export function AboutHeroSection() {
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  // Title slideshow
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % HERO_TITLES.length)
+    }, SLIDE_INTERVAL)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <section
-      className="relative"
-      style={{ marginTop: SPACING.headerHeight }}
+      className="relative mt-[82px]"
       data-element="about-hero-section"
     >
       {/* Grid Blob Background - visible in light areas */}
@@ -19,8 +37,7 @@ export function AboutHeroSection() {
 
       {/* Hero Container - dark background with content */}
       <div
-        className="relative z-[1] mx-auto px-0 sm:px-4 lg:px-0"
-        style={{ maxWidth: SPACING.heroFrameMaxWidth }}
+        className="relative z-[1] mx-auto px-0 sm:px-6 max-w-[1440px]"
         data-element="about-hero-container"
       >
         {/* Dark Hero Frame */}
@@ -72,23 +89,33 @@ export function AboutHeroSection() {
 
           {/* Gradient overlay - black on top fading to transparent for text readability */}
           <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.1) 60%, transparent 100%)'
-            }}
+            className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/70 via-black/40 to-transparent"
           />
+
+          {/* Static floating particles */}
+          <HeroParticles />
 
           {/* Content Grid - Two Columns */}
           <div className="relative z-10 flex flex-col lg:flex-row h-full min-h-[500px] lg:min-h-[560px]">
-            {/* Left Column - Title */}
-            <div className="flex-1 flex items-start justify-start p-6 sm:p-8 lg:p-12 lg:pl-16 lg:pt-24">
-              <h1
-                className="font-display font-bold text-white text-[28px] sm:text-[32px] lg:text-[36px] leading-[1.4] tracking-[1px] max-w-[600px]"
+            {/* Left Column - Title with Slideshow */}
+            <div className="flex-1 flex items-start justify-start p-6 pt-12 sm:p-8 sm:pt-16 lg:p-12 lg:pl-16 lg:pt-24">
+              <div
+                className="relative h-[80px] sm:h-[90px] lg:h-[100px] w-full max-w-[600px]"
                 data-element="about-hero-title"
               >
-                <span className="block">Built to protect people</span>
-                <span className="block">Designed to redefine compliance</span>
-              </h1>
+                <AnimatePresence mode="wait">
+                  <motion.h1
+                    key={currentIndex}
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 30 }}
+                    transition={{ duration: 0.4, ease: 'easeInOut' }}
+                    className="absolute inset-0 flex items-center font-display font-bold text-white text-[28px] sm:text-[32px] lg:text-[36px] leading-[1.4] tracking-[1px]"
+                  >
+                    {HERO_TITLES[currentIndex]}
+                  </motion.h1>
+                </AnimatePresence>
+              </div>
             </div>
 
             {/* Right Column - Description */}

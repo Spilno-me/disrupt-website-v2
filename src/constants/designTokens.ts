@@ -74,8 +74,8 @@ export const SPACING = {
 
   // Container max width
   containerMaxWidth: '1440px',
-  heroFrameMaxWidth: '1358px',
-  headerMaxWidth: '1359px',
+  heroFrameMaxWidth: '1440px',  // Match content container width
+  headerMaxWidth: '1440px',
 
   // Header height (for hero offset)
   headerHeight: '82px',
