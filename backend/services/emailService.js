@@ -168,6 +168,11 @@ export const createNotificationEmail = (name, email, company, message) => {
 export const sendEmails = async (contactData) => {
   const { name, email, company, message } = contactData;
 
+  console.log('=== EMAIL SENDING START ===');
+  console.log('Contact data:', { name, email, company, messageLength: message?.length });
+  console.log('SMTP configured:', isSmtpConfigured());
+  console.log('TEAM_EMAIL:', process.env.TEAM_EMAIL);
+
   if (!isSmtpConfigured()) {
     console.log('TEST MODE - Email simulation:');
     console.log('User Confirmation Email to:', email);
@@ -185,21 +190,26 @@ export const sendEmails = async (contactData) => {
   const teamEmail = createNotificationEmail(name, email, company, message);
 
   // Send user confirmation
-  await transporter.sendMail({
+  console.log('Sending user confirmation to:', email);
+  const userResult = await transporter.sendMail({
     from: `"${process.env.FROM_NAME || 'Disrupt Inc.'}" <${process.env.SMTP_USER}>`,
     to: email,
     subject: userEmail.subject,
     html: userEmail.html
   });
+  console.log('User confirmation result:', userResult.response);
 
   // Send team notification
-  await transporter.sendMail({
+  console.log('Sending team notification to:', process.env.TEAM_EMAIL);
+  const teamResult = await transporter.sendMail({
     from: `"${process.env.FROM_NAME || 'Disrupt Inc.'}" <${process.env.SMTP_USER}>`,
     to: process.env.TEAM_EMAIL,
     replyTo: email,
     subject: teamEmail.subject,
     html: teamEmail.html
   });
+  console.log('Team notification result:', teamResult.response);
+  console.log('=== EMAIL SENDING COMPLETE ===');
 
   return {
     success: true,

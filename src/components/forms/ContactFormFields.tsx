@@ -38,6 +38,7 @@ function NameField({ control }: ContactFormFieldsProps) {
           </FormLabel>
           <FormControl>
             <Input
+              placeholder={t('contact.form.labels.name')}
               className={`${FORM_CONSTANTS.INPUT_HEIGHTS.MOBILE} ${FORM_CONSTANTS.INPUT_HEIGHTS.DESKTOP} ${FORM_CONSTANTS.TEXT_SIZES.MOBILE}`}
               {...field}
             />
@@ -64,6 +65,7 @@ function EmailField({ control }: ContactFormFieldsProps) {
           <FormControl>
             <Input
               type="email"
+              placeholder={t('contact.form.labels.email')}
               className={`${FORM_CONSTANTS.INPUT_HEIGHTS.MOBILE} ${FORM_CONSTANTS.INPUT_HEIGHTS.DESKTOP} ${FORM_CONSTANTS.TEXT_SIZES.MOBILE}`}
               {...field}
             />
@@ -89,6 +91,7 @@ function CompanyField({ control }: ContactFormFieldsProps) {
           </FormLabel>
           <FormControl>
             <Input
+              placeholder={t('contact.form.labels.company')}
               className={`${FORM_CONSTANTS.INPUT_HEIGHTS.MOBILE} ${FORM_CONSTANTS.INPUT_HEIGHTS.DESKTOP} ${FORM_CONSTANTS.TEXT_SIZES.MOBILE}`}
               {...field}
             />

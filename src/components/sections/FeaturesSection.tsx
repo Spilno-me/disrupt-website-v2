@@ -36,11 +36,11 @@ export function FeaturesSection() {
     >
       <div className="w-full px-6" data-element="features-container">
         <div className="flex flex-col items-center gap-12 w-full" data-element="features-content">
-          <div className="flex flex-col items-center gap-4 max-w-4xl" data-element="features-header">
-            <h2 className="text-4xl font-display font-bold text-center tracking-[4px] leading-10 text-white">
+          <div className="flex flex-col items-center max-w-4xl" data-element="features-header">
+            <h2 className="text-4xl font-display font-bold text-center tracking-[4px] leading-10 text-white mb-3">
               {t('features.title')}
             </h2>
-            <p className="text-base text-center leading-6 text-white">
+            <p className="text-base text-center leading-6 text-white mb-4 lg:mb-6">
               {t('features.subtitle')}
             </p>
           </div>

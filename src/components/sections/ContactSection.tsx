@@ -1,30 +1,45 @@
 import { ContactForm } from '@/components/forms/ContactForm'
 import { ContactInfo } from './ContactInfo'
+import { BlobSection } from '@/components/ui/GridBlobCanvas'
 
 export function ContactSection() {
   return (
-    <section id="contact" className="flex justify-center border-custom-dash-b" data-element="contact-section">
-      <div className="flex flex-col w-full max-w-7xl" data-element="contact-main-wrapper">
-        <div className="flex flex-col lg:flex-row lg:gap-20 gap-0" data-element="contact-wrapper">
-          <div className="lg:w-1/2 w-full relative" data-element="contact-form-wrapper">
-            <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-border to-transparent opacity-100 dashed-border-vertical" ></div>
-            <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-border to-transparent opacity-100 dashed-border-vertical" ></div>
-            <div className="absolute inset-x-0 bottom-0 h-px lg:hidden dashed-border-horizontal" ></div>
-            <div className="contact-form-wrapper bg-background" data-element="contact-form-section">
+    <BlobSection id="contact" className="border-y-dashed-figma" data-element="contact-section">
+      {/* Figma: max-width 1440px, full-width row layout with side margins */}
+      <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
+        <div className="flex flex-col lg:flex-row border-x-dashed-figma" data-element="contact-wrapper">
+          {/* Left side - Form - Figma: padding 96px 24px, bg cream, border right dashed */}
+          <div
+            className="w-full lg:w-1/2 bg-[#FBFBF3] px-6 py-24 lg:border-r-dashed-figma"
+            data-element="contact-form-wrapper"
+          >
+            <div className="max-w-lg mx-auto flex flex-col gap-12">
+              {/* Header - Figma: gap 20px */}
+              <div className="flex flex-col">
+                <h2 className="text-2xl lg:text-[32px] font-display font-semibold text-[#2D3142] leading-tight mb-4">
+                  Ready to free your teams from compliance admin?
+                </h2>
+                <p className="text-[#6B7280] leading-relaxed text-base">
+                  Whether you're running compliance in-house or advising clients, Disrupt helps you spend less time on paperwork and more time on strategy, safety, and people.
+                </p>
+              </div>
+
+              {/* Form */}
               <ContactForm />
             </div>
           </div>
-          
-          <div className="lg:w-1/2 w-full relative" data-element="contact-info-wrapper">
-            <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-border to-transparent opacity-100 dashed-border-vertical" ></div>
-            <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-border to-transparent opacity-100 dashed-border-vertical" ></div>
-            <div className="absolute inset-x-0 top-0 h-px lg:hidden dashed-border-horizontal" ></div>
-            <div className="contact-info-wrapper" data-element="contact-info-section">
+
+          {/* Right side - Contact Info + Map - transparent to show grid/blob */}
+          <div
+            className="w-full lg:w-1/2 px-6 py-24"
+            data-element="contact-info-wrapper"
+          >
+            <div className="max-w-xl mx-auto">
               <ContactInfo />
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </BlobSection>
   )
 }

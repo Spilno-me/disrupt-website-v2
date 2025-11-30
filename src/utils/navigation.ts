@@ -1,28 +1,40 @@
 import { NAVIGATION } from '@/constants/appConstants'
 
-const SCROLL_BEHAVIOR = 'smooth' as const
-const SCROLL_TOP_POSITION = 0
+// =============================================================================
+// NAVIGATION UTILITIES
+// =============================================================================
 
+const SCROLL_BEHAVIOR = 'smooth' as const
+
+/**
+ * Scroll to a specific element by its ID.
+ * Used for in-page navigation (e.g., "Contact us" button).
+ */
 export function scrollToElement(elementId: string): void {
   const element = document.getElementById(elementId)
-  
+
   if (element) {
     element.scrollIntoView({ behavior: SCROLL_BEHAVIOR })
   }
 }
 
+/**
+ * Scroll to the top of the page.
+ * Used for "back to top" functionality.
+ */
 export function scrollToTop(): void {
-  window.scrollTo({ top: SCROLL_TOP_POSITION, behavior: SCROLL_BEHAVIOR })
+  window.scrollTo({ top: 0, behavior: SCROLL_BEHAVIOR })
 }
 
-export function navigateToHome(): void {
-  window.location.href = NAVIGATION.HOME
+/**
+ * Navigate to a specific route using window.location.
+ * Use for hard navigation when React Router is not available.
+ */
+export function navigateTo(path: string): void {
+  window.location.href = path
 }
 
-export function navigateToPrivacyPolicy(): void {
-  window.location.href = NAVIGATION.PRIVACY_POLICY
-}
-
-export function navigateToTermsOfService(): void {
-  window.location.href = NAVIGATION.TERMS_OF_SERVICE
-}
+// Convenience aliases for common navigation targets
+export const navigateToHome = () => navigateTo(NAVIGATION.HOME)
+export const navigateToPrivacyPolicy = () => navigateTo(NAVIGATION.PRIVACY_POLICY)
+export const navigateToTermsOfService = () => navigateTo(NAVIGATION.TERMS_OF_SERVICE)

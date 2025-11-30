@@ -48,47 +48,41 @@
 @theme {
   --font-display: "Pilat Extended", "Arial", "sans-serif";
   --font-sans: "Fixel", "system-ui", "sans-serif";
+
+  /* Custom animations */
+  --animate-spin-slow: spin-slow 3s linear infinite;
   --color-primary: #3b82f6;
   --color-secondary: #9333ea;
+
+  /* Figma Design Colors */
+  --color-cream: #FBFBF3;           /* Main background */
+  --color-dark: #2D3142;            /* Primary dark / text / buttons */
+  --color-teal: #08A4BD;            /* Accent / links */
+  --color-ferrari-red: #F70D1A;     /* Brand accent (logo red) */
+  --color-muted: #6B7280;           /* Secondary/muted text */
+
+  /* Feature Card Circle Colors */
+  --color-circle-blue: #3B82F6;     /* Automate */
+  --color-circle-red: #EF4444;      /* Advice */
+  --color-circle-yellow: #EAB308;   /* Adapt */
+  --color-circle-green: #22C55E;    /* Scale */
 }
 
-/* Dot background pattern utilities */
-.dots-pattern {
-  background-image: radial-gradient(#64748b 1px, transparent 1px);
-  background-size: 15px 15px;
-  background-repeat: repeat;
-  opacity: 0.08;
-}
-
-.dots-pattern-light {
-  background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-  background-size: 15px 15px;
-  background-repeat: repeat;
-  opacity: 0.3;
-}
-
-/* Fixed single background dot pattern */
-.dots-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: white;
-  background-image: radial-gradient(#EBEBEB 1px, transparent 1px);
-  background-size: 15px 15px;
-  background-repeat: repeat;
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Glass morphism header styling */
+/* Glass morphism header styling - Figma design */
 .glass-header {
-  backdrop-filter: blur(8px);
-  background: rgba(247, 247, 250, 0.8);
-  border-bottom: 1px solid rgba(209, 212, 212, 0.2);
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  backdrop-filter: blur(10px);
+  background: rgba(251, 251, 243, 0.3);
+  border-bottom: 1px solid #08A4BD;
+  box-shadow: 0px 2px 4px 5px rgba(0, 0, 0, 0.15);
 }
+
+/* NOTE: Simple color/text utilities converted to Tailwind:
+   - bg-cream → bg-[#FBFBF3]
+   - bg-dark → bg-[#2D3142]
+   - text-teal → text-[#08A4BD]
+   - section-tag → inline-flex py-1 px-3 border border-[#2D3142] rounded-full text-sm font-medium text-[#2D3142]
+   - border-b-teal → border-b border-[#08A4BD]
+*/
 
 
 
@@ -219,7 +213,14 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/* Custom dashed border utility - 8px dash, 6px gap, no endpoints */
+/* Brand colors */
+:root {
+  --brand-secondary: #08A4BD;
+  --brand-base: #FBFBF3;
+  --color-dashed-border: #08A4BD;
+}
+
+/* Custom dashed border utility - 4px dash, 4px gap (per Figma) */
 .border-custom-dash {
   position: relative;
 }
@@ -232,12 +233,12 @@
   right: 0;
   bottom: 0;
   border: 1px solid transparent;
-  background: 
-    linear-gradient(90deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-x top,
-    linear-gradient(90deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-x bottom,
-    linear-gradient(0deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-y left,
-    linear-gradient(0deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-y right;
-  background-size: 14px 1px, 14px 1px, 1px 14px, 1px 14px;
+  background:
+    linear-gradient(90deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-x top,
+    linear-gradient(90deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-x bottom,
+    linear-gradient(0deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-y left,
+    linear-gradient(0deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-y right;
+  background-size: 8px 1px, 8px 1px, 1px 8px, 1px 8px;
   pointer-events: none;
 }
 
@@ -252,8 +253,8 @@
   left: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(0deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-y;
-  background-size: 1px 14px;
+  background: linear-gradient(0deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-y;
+  background-size: 1px 8px;
   z-index: 10;
 }
 
@@ -268,8 +269,8 @@
   right: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(0deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-y;
-  background-size: 1px 14px;
+  background: linear-gradient(0deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-y;
+  background-size: 1px 8px;
   z-index: 10;
 }
 
@@ -284,8 +285,8 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-x;
-  background-size: 14px 1px;
+  background: linear-gradient(90deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-x;
+  background-size: 8px 1px;
 }
 
 .border-custom-dash-b {
@@ -299,8 +300,8 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-x;
-  background-size: 14px 1px;
+  background: linear-gradient(90deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-x;
+  background-size: 8px 1px;
 }
 
 /* Custom component styles */
@@ -395,8 +396,8 @@
   inset-y: 0;
   left: 0;
   width: 1px;
-  background: linear-gradient(0deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-y;
-  background-size: 1px 14px;
+  background: linear-gradient(0deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-y;
+  background-size: 1px 8px;
   opacity: 1;
 }
 
@@ -406,8 +407,8 @@
   inset-y: 0;
   right: 0;
   width: 1px;
-  background: linear-gradient(0deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-y;
-  background-size: 1px 14px;
+  background: linear-gradient(0deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-y;
+  background-size: 1px 8px;
   opacity: 1;
 }
 
@@ -421,8 +422,8 @@
   inset-x: 0;
   bottom: 0;
   height: 1px;
-  background: linear-gradient(90deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-x;
-  background-size: 14px 1px;
+  background: linear-gradient(90deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-x;
+  background-size: 8px 1px;
 }
 
 .border-dashed-top {
@@ -435,8 +436,8 @@
   inset-x: 0;
   top: 0;
   height: 1px;
-  background: linear-gradient(90deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-x;
-  background-size: 14px 1px;
+  background: linear-gradient(90deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-x;
+  background-size: 8px 1px;
 }
 
 .border-dashed-bottom-none {
@@ -473,13 +474,13 @@
 }
 
 .dashed-border-vertical {
-  background: linear-gradient(0deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-y;
-  background-size: 1px 14px;
+  background: linear-gradient(0deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-y;
+  background-size: 1px 8px;
 }
 
 .dashed-border-horizontal {
-  background: linear-gradient(90deg, var(--color-border) 0px, var(--color-border) 8px, transparent 8px, transparent 14px) repeat-x;
-  background-size: 14px 1px;
+  background: linear-gradient(90deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-x;
+  background-size: 8px 1px;
 }
 
 /* RTL Support */
@@ -582,8 +583,8 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, #94a3b8 0px, #94a3b8 8px, transparent 8px, transparent 14px) repeat-x;
-  background-size: 14px 1px;
+  background: linear-gradient(90deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-x;
+  background-size: 8px 1px;
 }
 
 .features-dashed-border-bottom::after {
@@ -593,15 +594,291 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, #94a3b8 0px, #94a3b8 8px, transparent 8px, transparent 14px) repeat-x;
-  background-size: 14px 1px;
+  background: linear-gradient(90deg, var(--color-dashed-border) 0px, var(--color-dashed-border) 4px, transparent 4px, transparent 8px) repeat-x;
+  background-size: 8px 1px;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html, body {
+    margin: 0;
+    padding: 0;
+    overscroll-behavior: none;
+  }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Ensure all interactive elements have pointer cursor */
+  a, button, [role="button"], input[type="submit"], input[type="button"] {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  /* Map marker pixel animations - explosive effect like header logo */
+  .marker-pixel {
+    transform-origin: center;
+    transition: transform 0.3s ease-out;
+  }
+
+  /* Each pixel has unique explosive animation */
+  .marker-p1.animate { animation: marker-explode-1 0.5s ease-in-out; }
+  .marker-p2.animate { animation: marker-explode-2 0.55s ease-in-out; }
+  .marker-p3.animate { animation: marker-explode-3 0.45s ease-in-out; }
+  .marker-p4.animate { animation: marker-explode-4 0.5s ease-in-out; }
+  .marker-p5.animate { animation: marker-explode-5 0.6s ease-in-out; }
+  .marker-p6.animate { animation: marker-explode-6 0.55s ease-in-out; }
+  .marker-p7.animate { animation: marker-explode-7 0.5s ease-in-out; }
+  .marker-p8.animate { animation: marker-explode-8 0.58s ease-in-out; }
+  .marker-p9.animate { animation: marker-explode-9 0.62s ease-in-out; }
+  .marker-p10.animate { animation: marker-explode-10 0.52s ease-in-out; }
+
+  /* Pixel 1 - explodes down-left */
+  @keyframes marker-explode-1 {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(-6px, 4px) scale(1.15) rotate(-8deg); }
+    55% { transform: translate(-5px, 3px) scale(1.12) rotate(-6deg); }
+    90% { transform: translate(0.3px, -0.2px) scale(0.98) rotate(0.5deg); }
+    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  }
+
+  /* Pixel 2 - explodes up-left */
+  @keyframes marker-explode-2 {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(-8px, -6px) scale(1.2) rotate(12deg); }
+    55% { transform: translate(-6px, -5px) scale(1.15) rotate(10deg); }
+    90% { transform: translate(0.4px, 0.3px) scale(0.97) rotate(-1deg); }
+    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  }
+
+  /* Pixel 3 - explodes down */
+  @keyframes marker-explode-3 {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(-4px, 8px) scale(1.18) rotate(-10deg); }
+    55% { transform: translate(-3px, 6px) scale(1.14) rotate(-8deg); }
+    90% { transform: translate(0.2px, -0.4px) scale(0.98) rotate(0.8deg); }
+    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  }
+
+  /* Pixel 4 - explodes left */
+  @keyframes marker-explode-4 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-10px, -3px) rotate(18deg); }
+    55% { transform: translate(-8px, -2px) rotate(14deg); }
+    90% { transform: translate(0.5px, 0.2px) rotate(-1.5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+  /* Pixel 5 - explodes up-left far */
+  @keyframes marker-explode-5 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-12px, -8px) rotate(-20deg); }
+    55% { transform: translate(-10px, -6px) rotate(-16deg); }
+    90% { transform: translate(0.8px, 0.5px) rotate(2deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+  /* Pixel 6 - explodes down-left */
+  @keyframes marker-explode-6 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-8px, 10px) rotate(15deg); }
+    55% { transform: translate(-6px, 8px) rotate(12deg); }
+    90% { transform: translate(0.4px, -0.6px) rotate(-1deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+  /* Pixel 7 - explodes left-down */
+  @keyframes marker-explode-7 {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(-9px, 6px) scale(1.2) rotate(-12deg); }
+    55% { transform: translate(-7px, 5px) scale(1.15) rotate(-10deg); }
+    90% { transform: translate(0.5px, -0.4px) scale(0.97) rotate(1deg); }
+    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  }
+
+  /* Pixel 8 - explodes up far */
+  @keyframes marker-explode-8 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-6px, -12px) rotate(-15deg); }
+    55% { transform: translate(-5px, -10px) rotate(-12deg); }
+    90% { transform: translate(0.4px, 0.8px) rotate(1.2deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+  /* Pixel 9 - explodes far left */
+  @keyframes marker-explode-9 {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    25% { transform: translate(-14px, -4px) scale(1.15) rotate(-18deg); }
+    55% { transform: translate(-11px, -3px) scale(1.1) rotate(-14deg); }
+    90% { transform: translate(0.9px, 0.3px) scale(0.98) rotate(1.5deg); }
+    100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  }
+
+  /* Pixel 10 - explodes left-up */
+  @keyframes marker-explode-10 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-11px, -7px) rotate(22deg); }
+    55% { transform: translate(-9px, -5px) rotate(18deg); }
+    90% { transform: translate(0.7px, 0.4px) rotate(-2deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+  /* HQ marker ring - slow color pulse from teal to red */
+  .marker-hq-ring {
+    stroke: #08A4BD;
+    animation: marker-ring-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes marker-ring-pulse {
+    0% { stroke: #08A4BD; }
+    50% { stroke: #F70D1A; }
+    100% { stroke: #08A4BD; }
+  }
+
+  /* Figma-precise dashed borders: 4px dash, 4px gap */
+  .border-dashed-figma {
+    border-style: dashed;
+    border-image: repeating-linear-gradient(
+      90deg,
+      var(--color-dashed-border) 0,
+      var(--color-dashed-border) 4px,
+      transparent 4px,
+      transparent 8px
+    ) 1;
+  }
+
+  .border-t-dashed-figma {
+    border-top-style: dashed;
+    border-top-width: 1px;
+    border-image: repeating-linear-gradient(
+      90deg,
+      var(--color-dashed-border) 0,
+      var(--color-dashed-border) 4px,
+      transparent 4px,
+      transparent 8px
+    ) 1;
+  }
+
+  .border-b-dashed-figma {
+    border-bottom-style: dashed;
+    border-bottom-width: 1px;
+    border-image: repeating-linear-gradient(
+      90deg,
+      var(--color-dashed-border) 0,
+      var(--color-dashed-border) 4px,
+      transparent 4px,
+      transparent 8px
+    ) 1;
+  }
+
+  .border-y-dashed-figma {
+    border-top-style: dashed;
+    border-bottom-style: dashed;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-image: repeating-linear-gradient(
+      90deg,
+      var(--color-dashed-border) 0,
+      var(--color-dashed-border) 4px,
+      transparent 4px,
+      transparent 8px
+    ) 1;
+  }
+
+  .border-r-dashed-figma {
+    border-right-style: dashed;
+    border-right-width: 1px;
+    border-image: repeating-linear-gradient(
+      0deg,
+      var(--color-dashed-border) 0,
+      var(--color-dashed-border) 4px,
+      transparent 4px,
+      transparent 8px
+    ) 1;
+  }
+
+  .border-l-dashed-figma {
+    position: relative;
+  }
+
+  .border-l-dashed-figma::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: repeating-linear-gradient(
+      180deg,
+      var(--color-dashed-border) 0,
+      var(--color-dashed-border) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+  }
+
+  .border-x-dashed-figma {
+    position: relative;
+  }
+
+  .border-x-dashed-figma::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: repeating-linear-gradient(
+      180deg,
+      var(--color-dashed-border) 0,
+      var(--color-dashed-border) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+  }
+
+  .border-x-dashed-figma::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: repeating-linear-gradient(
+      180deg,
+      var(--color-dashed-border) 0,
+      var(--color-dashed-border) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+  }
+
+  @media (min-width: 1024px) {
+    .lg\:border-r-dashed-figma {
+      border-right-style: dashed;
+      border-right-width: 1px;
+      border-image: repeating-linear-gradient(
+        0deg,
+        var(--color-dashed-border) 0,
+        var(--color-dashed-border) 4px,
+        transparent 4px,
+        transparent 8px
+      ) 1;
+    }
+  }
+
+  /* Horizontal dashed separator line */
+  .separator-dashed {
+    width: 100%;
+    height: 1px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--color-dashed-border) 0,
+      var(--color-dashed-border) 4px,
+      transparent 4px,
+      transparent 8px
+    );
   }
 }

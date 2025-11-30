@@ -1,66 +1,189 @@
-import heroBackground from '@/assets/v2waves.png'
-import { UI_CONSTANTS } from '@/constants/appConstants'
-import { useTranslation } from '@/hooks/useI18n'
-import { useParallax } from '@/hooks/useParallax'
-import { useEffect, useRef, useState } from 'react'
+import { useState, useCallback, useRef } from 'react'
+import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
+import heroFrame from '@/assets/figma/hero-frame.svg'
+// Note: HeroSection uses GridBlobBackground directly (not BlobSection)
+// because it has absolute positioned children and event handlers on the section
+import './HeroParticles.css'
+
+// Static particle configuration - larger, more visible dust particles
+const particles = [
+  { size: 8, x: 15, y: 20, delay: 0 },
+  { size: 10, x: 25, y: 45, delay: 2 },
+  { size: 7, x: 40, y: 15, delay: 4 },
+  { size: 9, x: 55, y: 70, delay: 1 },
+  { size: 8, x: 70, y: 35, delay: 3 },
+  { size: 11, x: 85, y: 55, delay: 5 },
+  { size: 7, x: 20, y: 75, delay: 2 },
+  { size: 9, x: 45, y: 85, delay: 4 },
+  { size: 8, x: 60, y: 25, delay: 1 },
+  { size: 10, x: 80, y: 80, delay: 3 },
+  { size: 7, x: 10, y: 50, delay: 6 },
+  { size: 9, x: 35, y: 60, delay: 0 },
+  { size: 8, x: 50, y: 40, delay: 2 },
+  { size: 10, x: 75, y: 15, delay: 5 },
+  { size: 7, x: 90, y: 45, delay: 1 },
+  { size: 9, x: 30, y: 30, delay: 4 },
+  { size: 8, x: 65, y: 65, delay: 3 },
+  { size: 11, x: 5, y: 85, delay: 2 },
+]
+
+const colors = ['#3B82F6', '#60A5FA', '#93C5FD', '#BFDBFE']
+
+interface MouseParticle {
+  id: number
+  x: number
+  y: number
+  size: number
+  color: string
+  animationIndex: number
+}
 
 export function HeroSection() {
-  const { t } = useTranslation()
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [dimensions, setDimensions] = useState({ containerHeight: 0, elementHeight: 0 })
-  
-  const { transform } = useParallax({
-    speed: -0.5,
-    offset: 0,
-    containerHeight: dimensions.containerHeight,
-    elementHeight: dimensions.elementHeight,
-    stopPoint: 286, // Parallax stops after scrolling 286px
-    debug: false // Debug mode off - parallax configured
-  })
+  const [mouseParticles, setMouseParticles] = useState<MouseParticle[]>([])
+  const heroFrameRef = useRef<HTMLDivElement>(null)
+  const particleIdRef = useRef(0)
+  const lastSpawnRef = useRef(0)
 
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (containerRef.current) {
-        const containerHeight = containerRef.current.offsetHeight
-        // Element height is 150% of container height for more parallax range
-        const elementHeight = containerHeight * 1.5
-        setDimensions({ containerHeight, elementHeight })
-      }
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    const now = Date.now()
+    // Throttle particle creation (every 150ms for subtlety)
+    if (now - lastSpawnRef.current < 150) return
+    lastSpawnRef.current = now
+
+    const heroFrame = heroFrameRef.current
+    if (!heroFrame) return
+
+    const rect = heroFrame.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+
+    // Only spawn if mouse is within hero frame bounds
+    if (x < 0 || x > rect.width || y < 0 || y > rect.height) return
+
+    // Limit total active particles to avoid artifacts
+    if (mouseParticles.length > 12) return
+
+    // 70% chance to spawn a particle (more organic)
+    if (Math.random() > 0.7) return
+
+    // Create 1 particle near mouse position
+    const newParticle: MouseParticle = {
+      id: particleIdRef.current++,
+      x: x + (Math.random() - 0.5) * 30,
+      y: y + (Math.random() - 0.5) * 30,
+      size: 2 + Math.random() * 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      animationIndex: Math.floor(Math.random() * 6) + 1,
     }
 
-    updateDimensions()
-    window.addEventListener('resize', updateDimensions)
-    
-    return () => window.removeEventListener('resize', updateDimensions)
-  }, [])
+    setMouseParticles(prev => [...prev, newParticle])
+
+    // Remove particle after animation completes (3.5s animation)
+    setTimeout(() => {
+      setMouseParticles(prev => prev.filter(p => p.id !== newParticle.id))
+    }, 3500)
+  }, [mouseParticles.length])
 
   return (
-    <section className="pt-16 pb-0" data-element="hero-section">
-      <div className={`container mx-auto ${UI_CONSTANTS.CONTAINER_PADDING} flex flex-col items-center gap-16 pb-16`} data-element="hero-container">
-        <div className="hero-content-wrapper w-full max-w-[840px] mx-auto" data-element="hero-text">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-semibold text-center leading-tight sm:leading-[48px] tracking-[2px] sm:tracking-[4px] drop-shadow-sm">
-            {t('hero.title')}
-          </h1>
-          <p className="text-base sm:text-lg text-muted-foreground text-center leading-6 sm:leading-7 mt-4">
-            {t('hero.description')}
-          </p>
-        </div>
-      </div>
-      
-      <div ref={containerRef} className="relative w-full h-[600px] lg:h-[500px] md:h-[400px] sm:h-[320px] overflow-hidden parallax-container" data-element="hero-image">
-        <div 
-          className="absolute w-full h-[150%] parallax-element"
-          style={{ 
-            transform,
-            top: '0%',
-            left: 0
-          }}
+    <section
+      className="relative mt-[82px] mb-[56px]"
+      data-element="hero-section"
+      onMouseMove={handleMouseMove}
+    >
+      <GridBlobBackground scale={1.8} />
+      {/* Background Frame */}
+      <div
+        className="absolute inset-x-0 top-0 flex justify-center z-[1]"
+        data-element="hero-bg-wrapper"
+      >
+        <div
+          ref={heroFrameRef}
+          className="w-[1358px] h-[499px] rounded-b-[10px] overflow-hidden relative"
+          data-element="hero-bg-frame"
         >
           <img
-            src={heroBackground}
-            alt="V2 Waves - Modern wave pattern design"
-            className="w-[120%] h-full object-cover object-center absolute left-1/2 transform -translate-x-1/2"
+            src={heroFrame}
+            alt=""
+            className="w-full h-full object-cover"
           />
+
+          {/* Static floating particles */}
+          <div className="absolute inset-0 pointer-events-none">
+            {particles.map((particle, index) => (
+              <div
+                key={index}
+                className="hero-particle"
+                style={{
+                  width: particle.size,
+                  height: particle.size,
+                  left: `${particle.x}%`,
+                  top: `${particle.y}%`,
+                  animationDelay: `${particle.delay}s, ${particle.delay * 0.5}s`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Mouse-generated particles */}
+          <div className="absolute inset-0 pointer-events-none">
+            {mouseParticles.map(particle => (
+              <div
+                key={particle.id}
+                className="mouse-particle"
+                style={{
+                  width: particle.size,
+                  height: particle.size,
+                  left: particle.x,
+                  top: particle.y,
+                  backgroundColor: particle.color,
+                  animation: `mouse-drift-${particle.animationIndex} 3.5s linear forwards`,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Content wrapper - matches hero image width */}
+      <div
+        className="mx-auto relative z-[1] flex flex-col w-[1358px] max-w-[calc(100%-72px)] h-[499px] pointer-events-none"
+        data-element="hero-wrapper"
+      >
+        {/* Container - padding 36px, gap 53px */}
+        <div
+          className="w-full flex flex-col relative h-full px-[36px] pb-[36px] gap-[53px]"
+          data-element="hero-container"
+        >
+          {/* Text Frame */}
+          <div
+            className="relative z-10 self-stretch shrink-0 pt-[30px]"
+            data-element="hero-titles"
+          >
+            <div className="w-[1288px] max-w-full h-[279px] flex flex-col items-start">
+              <h1 className="font-display font-bold text-[#FBFBF3] text-[36px] leading-[60px] tracking-[4px]">
+                Protect People
+              </h1>
+              <h1 className="font-display font-bold text-[#FBFBF3] text-[36px] leading-[60px] tracking-[4px]">
+                Empower Strategy
+              </h1>
+              <h1 className="font-display font-bold text-[#FBFBF3] text-[36px] leading-[60px] tracking-[4px]">
+                Cut the Admin
+              </h1>
+            </div>
+          </div>
+
+          {/* Subtitle */}
+          <div
+            className="relative z-10 w-full"
+            data-element="hero-subtitle-wrapper"
+          >
+            <p
+              className="text-[#FBFBF3] font-bold font-sans text-[20px] leading-[32px] tracking-[4px]"
+              data-element="hero-subtitle"
+            >
+              Compliance should make workplaces safer and decisions smarter — not bury teams in forms.
+            </p>
+          </div>
         </div>
       </div>
     </section>

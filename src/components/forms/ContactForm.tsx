@@ -4,10 +4,8 @@ import { Form } from '@/components/ui/form'
 import { createContactFormSchema, ContactFormData, defaultFormValues } from '@/schemas/createContactFormSchema'
 import { useTranslation } from '@/hooks/useI18n'
 import { useContactFormSubmission } from '@/hooks/useContactFormSubmission'
-import { FORM_CONSTANTS } from '@/constants/appConstants'
-import { ContactFormHeader } from './ContactFormHeader'
 import { ContactFormFields } from './ContactFormFields'
-import { ContactFormSubmitButton } from './ContactFormSubmitButton'
+import { Button } from '@/components/ui/button'
 
 export function ContactForm() {
   const { t } = useTranslation()
@@ -21,19 +19,22 @@ export function ContactForm() {
   const { handleSubmit } = useContactFormSubmission({ form })
 
   return (
-    <div className="flex flex-col gap-12 max-w-md mx-auto" data-element="contact-form-content">
-      <ContactFormHeader />
-      
-      <Form {...form}>
-        <form 
-          onSubmit={form.handleSubmit(handleSubmit)} 
-          className={`flex flex-col items-center ${FORM_CONSTANTS.FIELD_GAPS.MOBILE} ${FORM_CONSTANTS.FIELD_GAPS.DESKTOP}`}
-          data-element="contact-form"
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="flex flex-col gap-6"
+        data-element="contact-form"
+      >
+        <ContactFormFields control={form.control} />
+
+        <Button
+          type="submit"
+          className="w-full h-9 bg-[#2D3142] text-white hover:bg-[#2D3142]/90 rounded-[12px] py-2 text-sm font-medium"
+          disabled={form.formState.isSubmitting}
         >
-          <ContactFormFields control={form.control} />
-          <ContactFormSubmitButton isSubmitting={form.formState.isSubmitting} />
-        </form>
-      </Form>
-    </div>
+          {form.formState.isSubmitting ? 'Sending...' : 'Book a Demo'}
+        </Button>
+      </form>
+    </Form>
   )
 }
