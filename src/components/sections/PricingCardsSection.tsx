@@ -296,36 +296,25 @@ export function PricingCardsSection() {
                 Quoted based on total business size
               </p>
             </div>
-            <button
-              onClick={() => scrollToElement('contact')}
-              className="font-sans text-sm font-medium cursor-pointer hover:underline"
-              style={{ color: COLORS.teal }}
-            >
-              Get a Custom Quote
-            </button>
+            <ElectricButtonWrapper>
+              <Button
+                variant="contact"
+                onClick={() => scrollToElement('contact')}
+              >
+                Get Custom Quote
+              </Button>
+            </ElectricButtonWrapper>
           </div>
         </div>
 
         {/* Pricing Cards Grid */}
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
           data-element="pricing-cards-grid"
         >
           {PRICING_CARD_TIERS.map((tier) => (
             <PricingCard key={tier.name} tier={tier} />
           ))}
-        </div>
-
-        {/* CTA */}
-        <div className="flex justify-center">
-          <ElectricButtonWrapper>
-            <Button
-              variant="contact"
-              onClick={() => scrollToElement('contact')}
-            >
-              Get Custom Quote
-            </Button>
-          </ElectricButtonWrapper>
         </div>
       </div>
     </section>
