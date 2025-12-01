@@ -1,18 +1,15 @@
 import { ContactFormData } from '@/schemas/createContactFormSchema'
 import { sendContactForm, EmailPayload } from '@/services/emailService'
-import { useToast } from '@/hooks/useToast'
-import { useTranslation } from '@/hooks/useI18n'
 import { UseFormReturn } from 'react-hook-form'
 import { trackFormSubmission, trackEvent } from '@/utils/analytics'
 
 interface UseContactFormSubmissionProps {
   form: UseFormReturn<ContactFormData>
+  onSuccess?: () => void
+  onError?: () => void
 }
 
-export function useContactFormSubmission({ form }: UseContactFormSubmissionProps) {
-  const { t } = useTranslation()
-  const { showSuccess, showError } = useToast()
-
+export function useContactFormSubmission({ form, onSuccess, onError }: UseContactFormSubmissionProps) {
   const handleSubmit = async (data: ContactFormData): Promise<void> => {
     try {
       const payload = createEmailPayload(data)
@@ -20,8 +17,8 @@ export function useContactFormSubmission({ form }: UseContactFormSubmissionProps
 
       handleSubmissionSuccess(data)
       form.reset()
-    } catch (error) {
-      handleSubmissionError(error)
+    } catch {
+      handleSubmissionError()
     }
   }
 
@@ -39,23 +36,12 @@ export function useContactFormSubmission({ form }: UseContactFormSubmissionProps
       has_company: !!data.company
     })
 
-    showSuccess({
-      title: t('contact.form.messages.successTitle'),
-      description: t('contact.form.messages.successDescription')
-    })
+    onSuccess?.()
   }
 
-  const handleSubmissionError = (error: unknown): void => {
+  const handleSubmissionError = (): void => {
     trackFormSubmission('contact_form', false)
-
-    const description = error instanceof Error
-      ? error.message
-      : t('contact.form.messages.errorFallback')
-
-    showError({
-      title: t('contact.form.messages.errorTitle'),
-      description
-    })
+    onError?.()
   }
 
   return { handleSubmit }

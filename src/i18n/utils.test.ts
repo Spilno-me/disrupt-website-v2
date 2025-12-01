@@ -58,6 +58,17 @@ const mockTranslations: TranslationKeys = {
         successDescription: 'Message sent',
         errorTitle: 'Error',
         errorFallback: 'Try again'
+      },
+      modal: {
+        title: 'Thanks!',
+        description: 'Message on its way.',
+        button: 'Got it'
+      },
+      errorModal: {
+        title: 'Oops!',
+        description: 'Something went wrong.',
+        retryButton: 'Retry',
+        closeButton: 'Close'
       }
     },
     info: {

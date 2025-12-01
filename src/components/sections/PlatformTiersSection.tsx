@@ -91,7 +91,7 @@ const CORE_CAPABILITIES: FeatureRow[] = [
 const FOUNDATIONAL_EHS_MODULES: FeatureRow[] = [
   {
     label: 'Always Included:',
-    description: 'Incidents, Observations, Actions Tracking, Risk, JHA, Bow-ties, Safety Meetings, Training Mgmt, Doc Control, Basic Reporting.',
+    description: 'Incidents, Observations, Actions Tracking, Risk, JHA, Bow-ties, Safety Meetings, Training Management, Doc Control, Basic Reporting.',
     viewer: 'check',
     contributor: 'check',
     powerUser: 'check',
@@ -107,7 +107,7 @@ const FOUNDATIONAL_EHS_MODULES: FeatureRow[] = [
   },
   {
     label: 'Enterprise Disruptor Bundle:',
-    description: 'Permit to Work (LOTO), Contractor & Chemical Mgmt. Target: Mid/Enterprise High-Hazard',
+    description: 'Permit to Work (LOTO), Contractor & Chemical Management. Target: Mid/Enterprise High-Hazard',
     viewer: 'x',
     contributor: 'x',
     powerUser: 'check',
@@ -258,16 +258,15 @@ export function PlatformTiersSection() {
       <GridBlobBackground scale={1.5} />
       <div className="max-w-[1440px] mx-auto px-6 relative z-[1]">
         {/* Header */}
-        <div className="flex flex-col items-center gap-5 mb-11">
+        <div className="flex flex-col items-start lg:items-center gap-5 mb-11">
           <h2
-            className="font-display font-bold text-2xl sm:text-3xl lg:text-[30px] leading-[1.2] tracking-tight text-center"
+            className="font-display font-bold text-2xl sm:text-3xl lg:text-[30px] leading-[1.2] tracking-tight text-left lg:text-center"
             style={{ color: '#341E63' }}
           >
             Platform Tiers: Foundational EHS & Agentic AI
           </h2>
           <p
-            className="font-sans text-base leading-[1.5] text-center max-w-[800px]"
-            style={{ color: COLORS.muted }}
+            className="font-display font-medium text-sm sm:text-base lg:text-lg text-left lg:text-center max-w-[800px] text-teal"
           >
             Pricing is structured with two components
           </p>

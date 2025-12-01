@@ -48,6 +48,17 @@
         "successDescription": "Grazie per averci contattato. Ti risponderemo presto.",
         "errorTitle": "Errore nell'invio del messaggio",
         "errorFallback": "Per favore riprova o contattaci direttamente."
+      },
+      "modal": {
+        "title": "Grazie! Siamo pronti a disruptare!",
+        "description": "Il tuo messaggio è in arrivo al nostro team. Ti contatteremo presto per esplorare come trasformare il tuo modo di lavorare.",
+        "button": "Andiamo!"
+      },
+      "errorModal": {
+        "title": "Ops! Qualcosa è andato storto",
+        "description": "Non siamo riusciti a inviare il tuo messaggio in questo momento. Non preoccuparti, queste cose succedono. Riproviamo!",
+        "retryButton": "Riprova",
+        "closeButton": "Forse più tardi"
       }
     },
     "info": {

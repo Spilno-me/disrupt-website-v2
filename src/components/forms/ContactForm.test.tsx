@@ -65,6 +65,17 @@ const mockTranslations = {
         successDescription: 'We\'ll get back to you soon.',
         errorTitle: 'Error',
         errorFallback: 'Please try again later.'
+      },
+      modal: {
+        title: 'Thanks! We\'re ready to start disrupting!',
+        description: 'Your message is on its way.',
+        button: 'Let\'s Go!'
+      },
+      errorModal: {
+        title: 'Oops! Something went wrong',
+        description: 'We couldn\'t send your message.',
+        retryButton: 'Try Again',
+        closeButton: 'Maybe Later'
       }
     },
     info: {

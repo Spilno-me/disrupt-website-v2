@@ -48,6 +48,17 @@
         "successDescription": "Thank you for reaching out. We'll get back to you soon.",
         "errorTitle": "Failed to send message",
         "errorFallback": "Please try again or contact us directly."
+      },
+      "modal": {
+        "title": "Thanks! We're ready to start disrupting!",
+        "description": "Your message is on its way to our team. We'll be in touch soon to explore how we can transform the way you work.",
+        "button": "Let's Go!"
+      },
+      "errorModal": {
+        "title": "Oops! Something went wrong",
+        "description": "We couldn't send your message right now. Don't worry, these things happen. Let's give it another shot!",
+        "retryButton": "Try Again",
+        "closeButton": "Maybe Later"
       }
     },
     "info": {

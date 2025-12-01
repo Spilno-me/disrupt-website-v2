@@ -54,6 +54,7 @@ export function AboutHeroSection() {
           ref={heroFrameRef}
           className="w-full h-[380px] sm:h-[420px] lg:h-[499px] rounded-none sm:rounded-b-[10px] overflow-hidden relative max-w-[1440px] bg-black"
           data-element="about-hero-frame"
+          data-dark-background="true"
         >
           {/* Background Image - centered */}
           <picture>
@@ -114,11 +115,11 @@ export function AboutHeroSection() {
         data-element="about-hero-wrapper"
       >
         {/* Content Grid - Two Columns */}
-        <div className="w-full flex flex-col lg:flex-row h-full px-4 sm:px-6 lg:px-[36px]">
+        <div className="w-full flex flex-col lg:flex-row lg:gap-8 h-full px-4 sm:px-6 lg:px-[36px]">
           {/* Left Column - Title with Slideshow */}
-          <div className="flex-1 flex items-start justify-start pt-12 sm:pt-16 lg:pt-24">
+          <div className="lg:w-[55%] flex items-start justify-start pt-12 sm:pt-16 lg:pt-24">
             <div
-              className="relative h-[80px] sm:h-[90px] lg:h-[100px] w-full max-w-[600px]"
+              className="relative h-[80px] sm:h-[90px] lg:h-[100px] w-full"
               data-element="about-hero-title"
             >
               <AnimatePresence mode="wait">
@@ -137,8 +138,8 @@ export function AboutHeroSection() {
           </div>
 
           {/* Right Column - Description */}
-          <div className="flex-1 flex items-start justify-start lg:justify-end pt-4 lg:pt-24">
-            <div className="flex flex-col gap-5 max-w-[480px]">
+          <div className="lg:w-[45%] flex items-start justify-start lg:justify-end pt-4 lg:pt-24">
+            <div className="flex flex-col gap-5 max-w-[420px]">
               <p className="font-display font-medium text-teal text-sm sm:text-base lg:text-lg">
                 Compliance has buried teams in admin for too long. We're here to change that.
               </p>

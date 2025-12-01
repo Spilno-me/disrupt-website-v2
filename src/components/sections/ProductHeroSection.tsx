@@ -42,6 +42,7 @@ export function ProductHeroSection() {
           ref={heroFrameRef}
           className="w-full h-[380px] sm:h-[420px] lg:h-[499px] rounded-none sm:rounded-b-[10px] overflow-hidden relative max-w-[1440px]"
           data-element="product-hero-bg-frame"
+          data-dark-background="true"
         >
           {/* Hero Image */}
           <img

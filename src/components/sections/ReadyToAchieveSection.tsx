@@ -21,7 +21,7 @@ export function ReadyToAchieveSection() {
           </h2>
 
           {/* Subheading */}
-          <p className="font-sans text-base leading-[1.5] max-w-[560px] mb-8 text-teal">
+          <p className="font-display font-medium text-sm sm:text-base lg:text-lg max-w-[560px] mb-8 text-teal">
             Stop paying extra for AI, upgrades, and consulting that drains your ROI today.
           </p>
 

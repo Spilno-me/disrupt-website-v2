@@ -158,7 +158,7 @@ export function ROICalculatorSection() {
           <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-[30px] leading-[1.2] tracking-tight text-left lg:text-center text-dark">
             ROI CALCULATOR: See Your Savings
           </h2>
-          <p className="font-sans text-base leading-[1.5] text-left lg:text-center max-w-[800px] text-teal">
+          <p className="font-display font-medium text-sm sm:text-base lg:text-lg text-left lg:text-center max-w-[800px] text-teal">
             Drag the sliders to see how much incumbent "Flat-Tax" fees are costing you versus our Flat-Rate model.
           </p>
         </div>

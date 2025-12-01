@@ -50,6 +50,17 @@ export interface TranslationKeys {
         errorTitle: string
         errorFallback: string
       }
+      modal: {
+        title: string
+        description: string
+        button: string
+      }
+      errorModal: {
+        title: string
+        description: string
+        retryButton: string
+        closeButton: string
+      }
     }
     info: {
       title: string

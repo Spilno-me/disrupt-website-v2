@@ -116,6 +116,11 @@ export function FAQSection() {
     >
       <GridBlobBackground scale={1.5} />
       <div className="max-w-[1440px] mx-auto px-6 relative z-[1]">
+        {/* Dashed separator */}
+        <div className="max-w-[900px] mx-auto mb-12 lg:mb-16">
+          <div className="border-t-2 border-dashed border-teal/40" />
+        </div>
+
         <div className="max-w-[620px] mx-auto">
           {/* Header */}
           <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-[30px] leading-[1.2] tracking-tight text-left lg:text-center text-dark mb-12">

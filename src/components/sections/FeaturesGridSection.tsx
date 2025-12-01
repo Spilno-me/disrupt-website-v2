@@ -73,16 +73,15 @@ export function FeaturesGridSection() {
       <GridBlobBackground scale={1.5} />
       <div className="max-w-[1440px] mx-auto px-6 relative z-[1]">
         {/* Header */}
-        <div className="flex flex-col items-center gap-4 mb-10">
+        <div className="flex flex-col items-start lg:items-center gap-4 mb-10">
           <h2
-            className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl leading-[1.11] tracking-[0.025em] text-center"
+            className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl leading-[1.11] tracking-[0.025em] text-left lg:text-center"
             style={{ color: COLORS.dark }}
           >
             The Monolith is Dead. Architecture Matters.
           </h2>
           <p
-            className="font-sans text-base leading-[1.5] text-center max-w-[672px]"
-            style={{ color: COLORS.muted }}
+            className="font-display font-medium text-sm sm:text-base lg:text-lg text-teal text-left lg:text-center max-w-[672px]"
           >
             We replace outdated, monolithic EHS systems with a modern M-MACH-1
             infrastructure.

@@ -6,6 +6,7 @@ import { scrollToElement } from '@/utils/navigation'
 import { MobileMenu } from '@/components/ui/mobile-menu'
 import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { useIsMobile } from '@/hooks/useIsMobile'
+import { useHeaderContrast } from '@/hooks/useContrastColor'
 
 // Smooth scroll to top using motion library
 function smoothScrollToTop(): void {
@@ -39,6 +40,10 @@ export function Header({
   const location = useLocation()
   const navigate = useNavigate()
   const isMobile = useIsMobile()
+  const contrastMode = useHeaderContrast()
+
+  // Text color based on background
+  const navTextColor = contrastMode === 'dark' ? 'text-dark' : 'text-white'
 
   const handleLogoClick = () => {
     if (onLogoClick) {
@@ -101,11 +106,12 @@ export function Header({
       >
         <div className="w-full max-w-[1359px] mx-auto flex items-center justify-between gap-4">
           {/* Logo */}
-          <div className="flex items-center" data-element="header-logo">
+          <div className="flex items-center overflow-visible" data-element="header-logo">
             <AnimatedLogo
-              className="h-[54px] w-[178px] rounded-[12px] cursor-pointer"
+              className="h-[54px] w-[178px] cursor-pointer overflow-visible"
               onClick={handleLogoClick}
               alt={COMPANY_INFO.FULL_NAME}
+              colorMode={contrastMode}
             />
           </div>
 
@@ -115,13 +121,11 @@ export function Header({
               {NAV_ITEMS.map((item) => {
                 const isActive = isActiveRoute(item.path)
                 return (
-                  <ElectricButtonWrapper key={item.path} className="nav-item" isActive={isActive}>
+                  <ElectricButtonWrapper key={item.path} className="nav-item" isActive={isActive} colorMode={contrastMode}>
                     <Link
                       to={item.path}
-                      className={`h-9 px-4 py-2 rounded-[8px] text-sm font-sans font-medium leading-[1.43] transition-colors flex items-center justify-center gap-2 cursor-pointer ${
-                        isActive
-                          ? 'text-dark'
-                          : 'text-dark hover:bg-white/10'
+                      className={`h-9 px-4 py-2 rounded-[8px] text-sm font-sans font-medium leading-[1.43] transition-colors flex items-center justify-center gap-2 cursor-pointer ${navTextColor} ${
+                        isActive ? '' : 'hover:bg-white/10'
                       }`}
                     >
                       {item.label}
@@ -133,7 +137,7 @@ export function Header({
 
             {/* Contact Button */}
             {showContactButton && (
-              <ElectricButtonWrapper>
+              <ElectricButtonWrapper colorMode={contrastMode}>
                 <Link
                   to="/#contact"
                   onClick={handleContactClick}

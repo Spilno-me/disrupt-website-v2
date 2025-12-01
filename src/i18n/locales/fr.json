@@ -48,6 +48,17 @@
         "successDescription": "Merci de nous avoir contactés. Nous vous répondrons bientôt.",
         "errorTitle": "Échec de l'envoi du message",
         "errorFallback": "Veuillez réessayer ou nous contacter directement."
+      },
+      "modal": {
+        "title": "Merci ! Nous sommes prêts à disrupter !",
+        "description": "Votre message est en route vers notre équipe. Nous vous contacterons bientôt pour explorer comment transformer votre façon de travailler.",
+        "button": "C'est parti !"
+      },
+      "errorModal": {
+        "title": "Oups ! Quelque chose s'est mal passé",
+        "description": "Nous n'avons pas pu envoyer votre message pour le moment. Ne vous inquiétez pas, ça arrive. Réessayons !",
+        "retryButton": "Réessayer",
+        "closeButton": "Peut-être plus tard"
       }
     },
     "info": {

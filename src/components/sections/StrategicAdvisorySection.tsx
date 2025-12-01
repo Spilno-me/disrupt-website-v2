@@ -1,5 +1,5 @@
 import { COLORS } from '@/constants/designTokens'
-import { Shield, BookOpen, Gauge, Scale } from 'lucide-react'
+import { Shield, BookOpen, BarChart3, Scale } from 'lucide-react'
 
 // =============================================================================
 // TYPES
@@ -27,7 +27,7 @@ const ADVISORY_FEATURES: AdvisoryFeature[] = [
     description: 'Auto-generate CSRD/ESG reports, OSHA 300 logs, and RIDDOR forms.',
   },
   {
-    icon: Gauge,
+    icon: BarChart3,
     title: 'Benchmark Analyst',
     description: 'Compare your incident rates and safety culture against industry peers instantly.',
   },
