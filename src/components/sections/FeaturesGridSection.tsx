@@ -67,22 +67,17 @@ function FeatureGridCard({ title, description }: FeatureCardData) {
 export function FeaturesGridSection() {
   return (
     <section
-      className="py-11 relative"
+      className="py-8 sm:py-12 lg:py-16 relative"
       data-element="features-grid-section"
     >
       <GridBlobBackground scale={1.5} />
-      <div className="max-w-[1440px] mx-auto px-6 relative z-[1]">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-[1]">
         {/* Header */}
         <div className="flex flex-col items-start lg:items-center gap-4 mb-10">
-          <h2
-            className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl leading-[1.11] tracking-[0.025em] text-left lg:text-center"
-            style={{ color: COLORS.dark }}
-          >
+          <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-left lg:text-center text-dark">
             The Monolith is Dead. Architecture Matters.
           </h2>
-          <p
-            className="font-display font-medium text-sm sm:text-base lg:text-lg text-teal text-left lg:text-center max-w-[672px]"
-          >
+          <p className="text-sm sm:text-base lg:text-lg font-display font-medium text-teal text-left lg:text-center max-w-[672px]">
             We replace outdated, monolithic EHS systems with a modern M-MACH-1
             infrastructure.
           </p>

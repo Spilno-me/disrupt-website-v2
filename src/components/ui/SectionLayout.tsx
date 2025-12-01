@@ -41,7 +41,7 @@ export function SectionWrapper({
       className={cn(
         bgClass,
         needsRelative,
-        'py-8 sm:py-11 lg:py-16 border-y-dashed-figma overflow-hidden',
+        'py-8 sm:py-12 lg:py-16 border-y-dashed-figma overflow-hidden',
         className
       )}
       data-element={dataElement}
@@ -350,7 +350,7 @@ export function SectionHeading({
 
   return (
     <div className={`flex flex-col ${alignClass} ${className}`}>
-      <h2 className="text-xl sm:text-2xl lg:text-[32px] font-display font-semibold text-dark leading-tight mb-1">
+      <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold text-dark leading-[1.2] mb-2">
         {title}
       </h2>
       {subtitle && (

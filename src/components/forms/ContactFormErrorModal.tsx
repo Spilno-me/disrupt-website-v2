@@ -9,6 +9,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { useTranslation } from '@/hooks/useI18n'
 
 interface ContactFormErrorModalProps {
@@ -122,24 +123,28 @@ export function ContactFormErrorModal({ open, onClose, onRetry }: ContactFormErr
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-center mt-6 gap-3 flex-col sm:flex-row">
-          <Button
-            variant="outline"
-            onClick={onClose}
-            onMouseEnter={() => setIsButtonHovered(true)}
-            onMouseLeave={() => setIsButtonHovered(false)}
-            className="w-full sm:w-auto"
-          >
-            {t('contact.form.errorModal.closeButton')}
-          </Button>
-          <Button
-            variant="contact"
-            onClick={handleRetry}
-            onMouseEnter={() => setIsButtonHovered(true)}
-            onMouseLeave={() => setIsButtonHovered(false)}
-            className="w-full sm:w-auto px-8"
-          >
-            {t('contact.form.errorModal.retryButton')}
-          </Button>
+          <ElectricButtonWrapper>
+            <Button
+              variant="outline"
+              onClick={onClose}
+              onMouseEnter={() => setIsButtonHovered(true)}
+              onMouseLeave={() => setIsButtonHovered(false)}
+              className="w-full sm:w-auto"
+            >
+              {t('contact.form.errorModal.closeButton')}
+            </Button>
+          </ElectricButtonWrapper>
+          <ElectricButtonWrapper>
+            <Button
+              variant="contact"
+              onClick={handleRetry}
+              onMouseEnter={() => setIsButtonHovered(true)}
+              onMouseLeave={() => setIsButtonHovered(false)}
+              className="w-full sm:w-auto px-8"
+            >
+              {t('contact.form.errorModal.retryButton')}
+            </Button>
+          </ElectricButtonWrapper>
         </DialogFooter>
       </DialogContent>
     </Dialog>

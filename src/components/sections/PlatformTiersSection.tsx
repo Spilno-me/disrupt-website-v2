@@ -1,6 +1,7 @@
 import { COLORS } from '@/constants/designTokens'
 import { Check, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { scrollToElement } from '@/utils/navigation'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 import { ScrollableTableWrapper } from '@/components/ui/ScrollableTableWrapper'
@@ -252,22 +253,17 @@ function PricingFeatureCard({
 export function PlatformTiersSection() {
   return (
     <section
-      className="py-11 relative"
+      className="py-8 sm:py-12 lg:py-16 relative"
       data-element="platform-tiers-section"
     >
       <GridBlobBackground scale={1.5} />
-      <div className="max-w-[1440px] mx-auto px-6 relative z-[1]">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-[1]">
         {/* Header */}
-        <div className="flex flex-col items-start lg:items-center gap-5 mb-11">
-          <h2
-            className="font-display font-bold text-2xl sm:text-3xl lg:text-[30px] leading-[1.2] tracking-tight text-left lg:text-center"
-            style={{ color: '#341E63' }}
-          >
+        <div className="flex flex-col items-start lg:items-center gap-4 mb-10">
+          <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-left lg:text-center text-dark">
             Platform Tiers: Foundational EHS & Agentic AI
           </h2>
-          <p
-            className="font-display font-medium text-sm sm:text-base lg:text-lg text-left lg:text-center max-w-[800px] text-teal"
-          >
+          <p className="text-sm sm:text-base lg:text-lg font-display font-medium text-left lg:text-center max-w-[800px] text-teal">
             Pricing is structured with two components
           </p>
         </div>
@@ -511,12 +507,14 @@ export function PlatformTiersSection() {
 
         {/* CTA */}
         <div className="flex justify-center">
-          <Button
-            variant="contact"
-            onClick={() => scrollToElement('contact')}
-          >
-            Get Custom Quote
-          </Button>
+          <ElectricButtonWrapper>
+            <Button
+              variant="contact"
+              onClick={() => scrollToElement('contact')}
+            >
+              Get Custom Quote
+            </Button>
+          </ElectricButtonWrapper>
         </div>
       </div>
     </section>

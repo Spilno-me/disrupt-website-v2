@@ -9,6 +9,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
+import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { useTranslation } from '@/hooks/useI18n'
 
 interface ContactFormSuccessModalProps {
@@ -109,15 +110,17 @@ export function ContactFormSuccessModal({ open, onClose }: ContactFormSuccessMod
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-center mt-6">
-          <Button
-            variant="contact"
-            onClick={onClose}
-            onMouseEnter={() => setIsButtonHovered(true)}
-            onMouseLeave={() => setIsButtonHovered(false)}
-            className="w-full sm:w-auto px-8"
-          >
-            {t('contact.form.modal.button')}
-          </Button>
+          <ElectricButtonWrapper>
+            <Button
+              variant="contact"
+              onClick={onClose}
+              onMouseEnter={() => setIsButtonHovered(true)}
+              onMouseLeave={() => setIsButtonHovered(false)}
+              className="w-full sm:w-auto px-8"
+            >
+              {t('contact.form.modal.button')}
+            </Button>
+          </ElectricButtonWrapper>
         </DialogFooter>
       </DialogContent>
     </Dialog>

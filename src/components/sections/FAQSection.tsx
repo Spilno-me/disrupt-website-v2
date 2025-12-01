@@ -48,11 +48,12 @@ interface AccordionItemProps {
   item: FAQItem
   isOpen: boolean
   onToggle: () => void
+  isLast?: boolean
 }
 
-function AccordionItem({ item, isOpen, onToggle }: AccordionItemProps) {
+function AccordionItem({ item, isOpen, onToggle, isLast = false }: AccordionItemProps) {
   return (
-    <div className="border-b border-slate-200">
+    <div className={isLast ? '' : 'border-b border-dashed border-teal'}
       <button
         className="w-full flex items-center justify-between py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-md"
         onClick={onToggle}
@@ -111,19 +112,19 @@ export function FAQSection() {
 
   return (
     <section
-      className="py-16 lg:py-24 relative"
+      className="py-8 sm:py-12 lg:py-16 relative"
       data-element="faq-section"
     >
       <GridBlobBackground scale={1.5} />
-      <div className="max-w-[1440px] mx-auto px-6 relative z-[1]">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-[1]">
         {/* Dashed separator */}
-        <div className="max-w-[900px] mx-auto mb-12 lg:mb-16">
+        <div className="max-w-[900px] mx-auto mb-10">
           <div className="border-t-2 border-dashed border-teal/40" />
         </div>
 
         <div className="max-w-[620px] mx-auto">
           {/* Header */}
-          <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-[30px] leading-[1.2] tracking-tight text-left lg:text-center text-dark mb-12">
+          <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-left lg:text-center text-dark mb-10">
             Frequently Asked Questions
           </h2>
 

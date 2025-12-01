@@ -158,8 +158,8 @@ const IndustryCard = forwardRef<HTMLDivElement, IndustryCardProps>(
 
   // Parallax: image moves slower than scroll (creates depth effect)
   // Range limited to stay within image bounds (image is scaled 1.3x = 30% extra, 15% each side)
-  // Use only ~8% to avoid showing edges
-  const parallaxX = (parallaxOffset - 0.5) * 16 // -8 to +8
+  // Increased to ~12% for more noticeable movement
+  const parallaxX = (parallaxOffset - 0.5) * 24 // -12 to +12
 
   // Smaller sizes on mobile
   const expandedWidth = isMobile ? 300 : 400
@@ -523,7 +523,7 @@ export function IndustryCarouselSection() {
             // Calculate per-card parallax based on scroll progress and card position
             // Each card gets a slightly different offset based on its index
             const cardPosition = index / (INDUSTRIES.length - 1) // 0 to 1
-            const parallaxOffset = scrollProgress + (cardPosition * 0.3) // Offset each card slightly
+            const parallaxOffset = scrollProgress + (cardPosition * 0.5) // Increased offset for more movement
 
             return (
               <IndustryCard

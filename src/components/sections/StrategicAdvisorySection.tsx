@@ -76,10 +76,10 @@ function FeatureItem({ icon: Icon, title, description }: AdvisoryFeature) {
 export function StrategicAdvisorySection() {
   return (
     <section
-      className="py-11 bg-cream border-y-dashed-figma"
+      className="py-8 sm:py-12 lg:py-16 bg-cream border-y-dashed-figma"
       data-element="strategic-advisory-section"
     >
-      <div className="max-w-[1440px] mx-auto px-6 flex justify-center relative z-[1]">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 flex justify-center relative z-[1]">
         {/* Card */}
         <div className="max-w-[894px] w-full bg-white rounded-[14px] border border-dashed border-teal relative">
           {/* Badge */}
@@ -97,10 +97,7 @@ export function StrategicAdvisorySection() {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6 mb-6">
               <div className="flex flex-col gap-2">
-                <h3
-                  className="font-display font-bold text-2xl uppercase tracking-wide"
-                  style={{ color: COLORS.dark }}
-                >
+                <h3 className="text-xl sm:text-2xl font-display font-bold uppercase tracking-wide text-dark">
                   Expert Agents
                 </h3>
                 <p

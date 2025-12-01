@@ -196,48 +196,54 @@ export function ElectricButtonWrapper({ children, className = '', isActive = fal
 
   return (
     <div
-      className={`relative inline-flex ${className}`}
-      style={{ borderRadius }}
+      className={`relative inline-flex w-fit cursor-pointer ${className}`}
+      style={{ borderRadius, isolation: 'isolate' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Inner electric border */}
-      <motion.div
-        className="absolute pointer-events-none"
-        style={{
-          inset: borderInset,
-          borderRadius: innerRadius,
-          border: '1px solid transparent',
-          background: `${electricGradient} border-box`,
-          backgroundSize: '200% 100%',
-          backgroundPosition,
-          mask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
-          maskComposite: 'exclude',
-          WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
-          WebkitMaskComposite: 'xor',
-          zIndex: 10,
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: showEffect ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-      />
+      {/* Glow container - clips the glow effect */}
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+        style={{ borderRadius }}
+      >
+        {/* Inner electric border */}
+        <motion.div
+          className="absolute pointer-events-none"
+          style={{
+            inset: borderInset,
+            borderRadius: innerRadius,
+            border: '1px solid transparent',
+            background: `${electricGradient} border-box`,
+            backgroundSize: '200% 100%',
+            backgroundPosition,
+            mask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
+            maskComposite: 'exclude',
+            WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
+            WebkitMaskComposite: 'xor',
+            zIndex: 10,
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showEffect ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        />
 
-      {/* Inner glow effect */}
-      <motion.div
-        className="absolute pointer-events-none"
-        style={{
-          inset: glowInset,
-          borderRadius: glowRadius,
-          background: glowGradient.replace('0.3', '0.2').replace('0.5', '0.4'),
-          backgroundSize: '200% 100%',
-          backgroundPosition,
-          filter: 'blur(4px)',
-          zIndex: 10,
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: showEffect ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-      />
+        {/* Inner glow effect */}
+        <motion.div
+          className="absolute pointer-events-none"
+          style={{
+            inset: glowInset,
+            borderRadius: glowRadius,
+            background: glowGradient.replace('0.3', '0.2').replace('0.5', '0.4'),
+            backgroundSize: '200% 100%',
+            backgroundPosition,
+            filter: 'blur(4px)',
+            zIndex: 10,
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showEffect ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
 
       {/* Content */}
       <div className="relative z-[1]">{children}</div>
