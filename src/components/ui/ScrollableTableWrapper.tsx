@@ -83,7 +83,7 @@ export function ScrollableTableWrapper({ children, className = '' }: ScrollableT
             className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 bg-dark text-white text-xs font-medium px-3 py-2 rounded-full shadow-lg lg:hidden"
             aria-label="Scroll to see more"
           >
-            <span>Scroll</span>
+            <span>Swipe</span>
             <ChevronRight className="w-4 h-4" />
           </motion.button>
         )}
