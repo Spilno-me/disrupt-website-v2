@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion, useMotionValue, useSpring, animate, useInView } from 'motion/react'
+import { motion, useMotionValue, useSpring, animate } from 'motion/react'
 import { ElectricLucideIcon, IconName } from '@/components/ui/ElectricLucideIcon'
 import { useIsMobile } from '@/hooks'
 
@@ -12,7 +12,7 @@ const OUTER_RADIUS = 58
 const DASH_GAP_SIZE = 9.11
 
 // Animation config
-const SPIN_VELOCITY = 120 // degrees per second when hovered
+const SPIN_VELOCITY = 120 // degrees per second when active
 const SPRING_CONFIG = { damping: 20, stiffness: 100 } // for smooth start/stop
 
 // =============================================================================
@@ -28,6 +28,12 @@ export interface FeatureCardProps {
   title: string
   /** Card description - use ReactNode for rich text */
   description: React.ReactNode
+  /** External control: is this card currently animating in the sequence */
+  isSequenceActive?: boolean
+  /** External control: has this card completed its sequence animation */
+  hasCompletedSequence?: boolean
+  /** Callback when sequence animation should complete */
+  onSequenceComplete?: () => void
 }
 
 // =============================================================================
@@ -35,44 +41,26 @@ export interface FeatureCardProps {
 // =============================================================================
 
 /**
- * Feature card with animated rotating dashed border on hover.
- * Used in the "What Disrupt Does" section to showcase key features.
+ * Feature card with animated rotating dashed border.
+ * Supports both hover interaction and external sequence animation control.
+ *
+ * Animation behavior:
+ * - On scroll: Cards animate one by one via isSequenceActive prop
+ * - After sequence: Text stays visible (hasCompletedSequence)
+ * - On hover: Spin + electric effect re-triggers, text stays in place
  */
 export function FeatureCard({
   iconName,
   circleColor,
   title,
   description,
+  isSequenceActive = false,
+  hasCompletedSequence = false,
+  onSequenceComplete,
 }: FeatureCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const isMobile = useIsMobile()
-
-  // Ref for scroll detection on mobile
   const cardRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(cardRef, {
-    amount: 0.7, // Trigger when 70% visible
-    margin: "-25% 0px -25% 0px",
-  })
-
-  // Debounced active state to prevent glitchy rapid toggling
-  const [debouncedInView, setDebouncedInView] = useState(false)
-  const debounceRef = useRef<NodeJS.Timeout | null>(null)
-
-  useEffect(() => {
-    if (isInView) {
-      // Activate immediately
-      if (debounceRef.current) clearTimeout(debounceRef.current)
-      setDebouncedInView(true)
-    } else {
-      // Delay deactivation to prevent glitches
-      debounceRef.current = setTimeout(() => {
-        setDebouncedInView(false)
-      }, 150)
-    }
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current)
-    }
-  }, [isInView])
 
   // Motion values for rotation
   const rotation = useMotionValue(0)
@@ -81,16 +69,42 @@ export function FeatureCard({
   // Animation control ref
   const animationRef = useRef<ReturnType<typeof animate> | null>(null)
 
-  // Determine if animation should be active
-  const isActive = isMobile ? debouncedInView : isHovered
+  // Track if this card's sequence animation has started
+  const sequenceStartedRef = useRef(false)
 
-  // Handle animation state changes
+  // Determine if spin/electric animation should be active
+  // Active when: sequence is active OR hovering (after sequence completed)
+  const isSpinActive = isSequenceActive || (hasCompletedSequence && isHovered)
+
+  // Determine if text should be visible
+  // Visible when: sequence is active OR sequence has completed OR on mobile
+  const isTextVisible = isMobile || isSequenceActive || hasCompletedSequence
+
+  // Handle sequence animation timing
   useEffect(() => {
-    if (isActive) {
+    if (isSequenceActive && !sequenceStartedRef.current) {
+      sequenceStartedRef.current = true
+
+      // Notify parent when this card's animation duration is complete
+      const timer = setTimeout(() => {
+        onSequenceComplete?.()
+      }, 1000) // Animation duration per card
+
+      return () => clearTimeout(timer)
+    }
+
+    if (!isSequenceActive) {
+      sequenceStartedRef.current = false
+    }
+  }, [isSequenceActive, onSequenceComplete])
+
+  // Handle spin animation state changes
+  useEffect(() => {
+    if (isSpinActive) {
       // Start continuous rotation
       const currentRotation = rotation.get()
       animationRef.current = animate(rotation, currentRotation + 360000, {
-        duration: 360000 / SPIN_VELOCITY, // Time to complete many rotations
+        duration: 360000 / SPIN_VELOCITY,
         ease: 'linear',
         repeat: Infinity,
       })
@@ -107,7 +121,7 @@ export function FeatureCard({
         animationRef.current.stop()
       }
     }
-  }, [isActive, rotation])
+  }, [isSpinActive, rotation])
 
   const handleMouseEnter = () => {
     if (isMobile) return
@@ -152,13 +166,13 @@ export function FeatureCard({
         >
           <motion.div
             className="overflow-visible"
-            animate={{ scale: isActive ? 1.1 : 1 }}
+            animate={{ scale: isSpinActive ? 1.1 : 1 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
           >
             <ElectricLucideIcon
               name={iconName}
               size={48}
-              isActive={isActive}
+              isActive={isSpinActive}
             />
           </motion.div>
         </div>
@@ -169,13 +183,13 @@ export function FeatureCard({
         {title}
       </h3>
 
-      {/* Description - animated on hover (desktop only) */}
+      {/* Description - animated based on visibility state */}
       <motion.div
         className="overflow-hidden"
         initial={false}
         animate={{
-          maxHeight: isMobile ? 160 : (isHovered ? 160 : 0),
-          opacity: isMobile ? 1 : (isHovered ? 1 : 0),
+          maxHeight: isTextVisible ? 160 : 0,
+          opacity: isTextVisible ? 1 : 0,
         }}
         transition={{
           duration: 0.4,
@@ -186,7 +200,7 @@ export function FeatureCard({
           className="text-muted leading-relaxed text-sm sm:text-base max-w-[280px]"
           initial={false}
           animate={{
-            y: isMobile ? 0 : (isHovered ? 0 : -20),
+            y: isTextVisible ? 0 : -20,
           }}
           transition={{
             duration: 0.4,
