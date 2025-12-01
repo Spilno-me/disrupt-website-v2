@@ -8,6 +8,7 @@ import { StrategicAdvisorySection } from '@/components/sections/StrategicAdvisor
 import { FAQSection } from '@/components/sections/FAQSection'
 import { ReadyToAchieveSection } from '@/components/sections/ReadyToAchieveSection'
 import { ContactSection } from '@/components/sections/ContactSection'
+import { ScrollToTopButton } from '@/components/ui/ScrollToTopButton'
 
 function Product() {
   return (
@@ -18,9 +19,10 @@ function Product() {
       <ROICalculatorSection />
       <PlatformTiersSection />
       <StrategicAdvisorySection />
-      <FAQSection />
       <ReadyToAchieveSection />
+      <FAQSection />
       <ContactSection />
+      <ScrollToTopButton />
     </PageLayout>
   )
 }

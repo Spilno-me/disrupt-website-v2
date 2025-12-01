@@ -3,6 +3,7 @@ import { Check, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { scrollToElement } from '@/utils/navigation'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
+import { ScrollableTableWrapper } from '@/components/ui/ScrollableTableWrapper'
 
 // =============================================================================
 // TYPES
@@ -286,7 +287,7 @@ export function PlatformTiersSection() {
 
         {/* Core Capabilities Table */}
         <div className="bg-white rounded-[14px] overflow-hidden mb-4 border border-dashed border-slate-300">
-          <div className="overflow-x-auto">
+          <ScrollableTableWrapper>
             <table className="w-full min-w-[800px] table-fixed">
               <colgroup>
                 <col className="w-[320px]" />
@@ -388,12 +389,12 @@ export function PlatformTiersSection() {
                 </tr>
               </tbody>
             </table>
-          </div>
+          </ScrollableTableWrapper>
         </div>
 
         {/* Foundational EHS Modules Table */}
         <div className="bg-white rounded-[14px] overflow-hidden mb-4 border border-dashed border-slate-300">
-          <div className="overflow-x-auto">
+          <ScrollableTableWrapper>
             <table className="w-full min-w-[800px] table-fixed">
               <colgroup>
                 <col className="w-[320px]" />
@@ -447,12 +448,12 @@ export function PlatformTiersSection() {
                 })}
               </tbody>
             </table>
-          </div>
+          </ScrollableTableWrapper>
         </div>
 
         {/* Agentic AI Modules Table */}
         <div className="bg-white rounded-[14px] overflow-hidden mb-8 border border-dashed border-slate-300">
-          <div className="overflow-x-auto">
+          <ScrollableTableWrapper>
             <table className="w-full min-w-[800px] table-fixed">
               <colgroup>
                 <col className="w-[320px]" />
@@ -506,7 +507,7 @@ export function PlatformTiersSection() {
                 })}
               </tbody>
             </table>
-          </div>
+          </ScrollableTableWrapper>
         </div>
 
         {/* CTA */}

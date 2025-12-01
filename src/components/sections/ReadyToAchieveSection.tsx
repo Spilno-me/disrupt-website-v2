@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button'
 import { scrollToElement } from '@/utils/navigation'
-import { COLORS } from '@/constants/designTokens'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 
 // =============================================================================
@@ -26,23 +25,14 @@ export function ReadyToAchieveSection() {
             Stop paying extra for AI, upgrades, and consulting that drains your ROI today.
           </p>
 
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button
-              variant="outline"
-              className="px-8"
-              onClick={() => scrollToElement('contact')}
-            >
-              Request a Personalized Analysis
-            </Button>
-            <Button
-              variant="contact"
-              className="px-8"
-              onClick={() => scrollToElement('contact')}
-            >
-              Become a Partner
-            </Button>
-          </div>
+          {/* Button */}
+          <Button
+            variant="contact"
+            className="w-full sm:w-auto px-8"
+            onClick={() => scrollToElement('contact')}
+          >
+            Become a Partner
+          </Button>
         </div>
       </div>
     </section>
