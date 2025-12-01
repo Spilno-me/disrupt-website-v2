@@ -1,4 +1,3 @@
-import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { scrollToElement } from '@/utils/navigation'
@@ -35,7 +34,6 @@ export function WhyDifferentSection() {
           onClick={() => scrollToElement('contact')}
         >
           Contact us
-          <ArrowRight className="w-4 h-4 arrow-bounce" />
         </Button>
       </ElectricButtonWrapper>
     </ContentSection>

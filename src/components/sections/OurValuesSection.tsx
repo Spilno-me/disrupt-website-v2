@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react'
+import { AnimatedCheck } from '@/components/ui/AnimatedCheck'
 import { ContentSection } from '@/components/ui/SectionLayout'
 import { aboutImages } from '@/assets/optimized/about'
 
@@ -30,9 +30,9 @@ export function OurValuesSection() {
       dataElement="our-values-section"
     >
       <ul className="flex flex-col gap-4">
-        {VALUES.map((value) => (
+        {VALUES.map((value, index) => (
           <li key={value.title} className="flex items-start gap-3">
-            <Check className="w-5 h-5 text-[#08A4BD] flex-shrink-0 mt-0.5" />
+            <AnimatedCheck className="w-5 h-5" index={index} />
             <span className="text-muted text-base lg:text-lg leading-[1.5]">
               <strong className="text-dark">{value.title}</strong> – {value.description}
             </span>

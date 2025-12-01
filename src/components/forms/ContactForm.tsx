@@ -28,11 +28,10 @@ export function ContactForm() {
       >
         <ContactFormFields control={form.control} />
 
-        <ElectricButtonWrapper className="w-full">
+        <ElectricButtonWrapper>
           <Button
             type="submit"
             variant="contact"
-            className="w-full"
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? 'Sending...' : 'Book a Demo'}

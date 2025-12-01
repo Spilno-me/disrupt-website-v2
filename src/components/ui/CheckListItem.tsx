@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react'
+import { AnimatedCheck } from './AnimatedCheck'
 
 interface CheckListItemProps {
   /** Bold label text (e.g., "For Companies →") */
@@ -9,10 +9,14 @@ interface CheckListItemProps {
   boldLabel?: boolean
   /** Text color for the content (default: dark) */
   textColor?: 'dark' | 'muted'
+  /** Whether to animate immediately on mount (for hero sections) */
+  autoAnimate?: boolean
+  /** Index for staggered animations */
+  index?: number
 }
 
 /**
- * Reusable check list item with teal checkmark icon.
+ * Reusable check list item with animated teal checkmark icon.
  * Used across WhoWeHelpSection, ProofSection, FutureCapabilitiesSection, etc.
  */
 export function CheckListItem({
@@ -20,15 +24,18 @@ export function CheckListItem({
   text,
   boldLabel = true,
   textColor = 'dark',
+  autoAnimate = false,
+  index = 0,
 }: CheckListItemProps) {
   const textColorClass = textColor === 'dark' ? 'text-dark' : 'text-muted'
 
   return (
     <div className="flex items-start gap-3 sm:gap-4">
-      {/* Checkmark icon */}
-      <Check
-        className="w-5 h-5 sm:w-6 sm:h-6 text-[#08A4BD] flex-shrink-0 mt-0.5 sm:mt-1"
-        strokeWidth={2.5}
+      {/* Animated checkmark icon */}
+      <AnimatedCheck
+        className="w-5 h-5 sm:w-6 sm:h-6"
+        autoAnimate={autoAnimate}
+        index={index}
       />
 
       {/* Text content */}

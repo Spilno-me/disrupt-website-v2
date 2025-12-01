@@ -86,10 +86,12 @@ export function HeroSection() {
             />
           </picture>
 
-          {/* Gradient overlay */}
+          {/* Gradient overlay - dark at bottom, transparent from middle */}
           <div
             className="absolute inset-0 pointer-events-none"
-            style={{ background: GRADIENTS.heroOverlay }}
+            style={{
+              background: 'linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.2) 50%, transparent 70%)'
+            }}
           />
 
           {/* Particles */}
@@ -108,7 +110,7 @@ export function HeroSection() {
         data-element="hero-wrapper"
       >
         <div
-          className="w-full flex flex-col items-center justify-center relative h-full px-4 sm:px-6 lg:px-[36px]"
+          className="w-full flex flex-col items-center justify-between relative h-full px-4 sm:px-6 lg:px-[36px] pt-[120px] sm:pt-[140px] lg:pt-[160px] pb-8 sm:pb-10 lg:pb-14"
           data-element="hero-container"
         >
           {/* Animated Title */}
@@ -130,9 +132,9 @@ export function HeroSection() {
             </AnimatePresence>
           </div>
 
-          {/* Subtitle */}
+          {/* Subtitle - positioned near bottom */}
           <p
-            className="mt-6 sm:mt-8 text-center text-white font-semibold font-sans text-base sm:text-base lg:text-[18px] leading-6 sm:leading-6 tracking-[1px] sm:tracking-[1px] lg:tracking-[2px] max-w-[340px] sm:max-w-none z-10"
+            className="text-center text-teal font-display font-medium text-sm sm:text-base lg:text-lg max-w-[340px] sm:max-w-none z-10"
             data-element="hero-subtitle"
           >
             {HERO_SUBTITLE}

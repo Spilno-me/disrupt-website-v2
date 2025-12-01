@@ -1,18 +1,80 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
-import { ArrowRight, Building2, Factory, Zap, Pill, Truck } from 'lucide-react'
+import { motion } from 'motion/react'
+import { Building2, Factory, Zap, Pill, Truck } from 'lucide-react'
 import { SectionContainer } from '@/components/ui/SectionLayout'
+
+// Industry images - responsive versions
+// Construction
+import constructionDesktopAvif from '@/assets/optimized/product/industry-construction-desktop.avif'
+import constructionDesktopWebp from '@/assets/optimized/product/industry-construction-desktop.webp'
+import constructionDesktopPng from '@/assets/optimized/product/industry-construction-desktop.png'
+import constructionTabletAvif from '@/assets/optimized/product/industry-construction-tablet.avif'
+import constructionTabletWebp from '@/assets/optimized/product/industry-construction-tablet.webp'
+import constructionTabletPng from '@/assets/optimized/product/industry-construction-tablet.png'
+import constructionMobileAvif from '@/assets/optimized/product/industry-construction-mobile.avif'
+import constructionMobileWebp from '@/assets/optimized/product/industry-construction-mobile.webp'
+import constructionMobilePng from '@/assets/optimized/product/industry-construction-mobile.png'
+
+// Manufacturing
+import manufacturingDesktopAvif from '@/assets/optimized/product/industry-manufacturing-desktop.avif'
+import manufacturingDesktopWebp from '@/assets/optimized/product/industry-manufacturing-desktop.webp'
+import manufacturingDesktopPng from '@/assets/optimized/product/industry-manufacturing-desktop.png'
+import manufacturingTabletAvif from '@/assets/optimized/product/industry-manufacturing-tablet.avif'
+import manufacturingTabletWebp from '@/assets/optimized/product/industry-manufacturing-tablet.webp'
+import manufacturingTabletPng from '@/assets/optimized/product/industry-manufacturing-tablet.png'
+import manufacturingMobileAvif from '@/assets/optimized/product/industry-manufacturing-mobile.avif'
+import manufacturingMobileWebp from '@/assets/optimized/product/industry-manufacturing-mobile.webp'
+import manufacturingMobilePng from '@/assets/optimized/product/industry-manufacturing-mobile.png'
+
+// Energy
+import energyDesktopAvif from '@/assets/optimized/product/industry-energy-desktop.avif'
+import energyDesktopWebp from '@/assets/optimized/product/industry-energy-desktop.webp'
+import energyDesktopPng from '@/assets/optimized/product/industry-energy-desktop.png'
+import energyTabletAvif from '@/assets/optimized/product/industry-energy-tablet.avif'
+import energyTabletWebp from '@/assets/optimized/product/industry-energy-tablet.webp'
+import energyTabletPng from '@/assets/optimized/product/industry-energy-tablet.png'
+import energyMobileAvif from '@/assets/optimized/product/industry-energy-mobile.avif'
+import energyMobileWebp from '@/assets/optimized/product/industry-energy-mobile.webp'
+import energyMobilePng from '@/assets/optimized/product/industry-energy-mobile.png'
+
+// Pharma
+import pharmaDesktopAvif from '@/assets/optimized/product/industry-pharma-desktop.avif'
+import pharmaDesktopWebp from '@/assets/optimized/product/industry-pharma-desktop.webp'
+import pharmaDesktopPng from '@/assets/optimized/product/industry-pharma-desktop.png'
+import pharmaTabletAvif from '@/assets/optimized/product/industry-pharma-tablet.avif'
+import pharmaTabletWebp from '@/assets/optimized/product/industry-pharma-tablet.webp'
+import pharmaTabletPng from '@/assets/optimized/product/industry-pharma-tablet.png'
+import pharmaMobileAvif from '@/assets/optimized/product/industry-pharma-mobile.avif'
+import pharmaMobileWebp from '@/assets/optimized/product/industry-pharma-mobile.webp'
+import pharmaMobilePng from '@/assets/optimized/product/industry-pharma-mobile.png'
+
+// Logistics
+import logisticsDesktopAvif from '@/assets/optimized/product/industry-logistics-desktop.avif'
+import logisticsDesktopWebp from '@/assets/optimized/product/industry-logistics-desktop.webp'
+import logisticsDesktopPng from '@/assets/optimized/product/industry-logistics-desktop.png'
+import logisticsTabletAvif from '@/assets/optimized/product/industry-logistics-tablet.avif'
+import logisticsTabletWebp from '@/assets/optimized/product/industry-logistics-tablet.webp'
+import logisticsTabletPng from '@/assets/optimized/product/industry-logistics-tablet.png'
+import logisticsMobileAvif from '@/assets/optimized/product/industry-logistics-mobile.avif'
+import logisticsMobileWebp from '@/assets/optimized/product/industry-logistics-mobile.webp'
+import logisticsMobilePng from '@/assets/optimized/product/industry-logistics-mobile.png'
 
 // =============================================================================
 // TYPES
 // =============================================================================
+
+interface ResponsiveImages {
+  desktop: { avif: string; webp: string; png: string }
+  tablet: { avif: string; webp: string; png: string }
+  mobile: { avif: string; webp: string; png: string }
+}
 
 interface Industry {
   id: string
   name: string
   icon: React.ElementType
   description: string
-  image: string
+  images: ResponsiveImages
 }
 
 // =============================================================================
@@ -25,35 +87,55 @@ const INDUSTRIES: Industry[] = [
     name: 'Construction',
     icon: Building2,
     description: 'Streamline site safety compliance with real-time incident tracking and automated reporting.',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80',
+    images: {
+      desktop: { avif: constructionDesktopAvif, webp: constructionDesktopWebp, png: constructionDesktopPng },
+      tablet: { avif: constructionTabletAvif, webp: constructionTabletWebp, png: constructionTabletPng },
+      mobile: { avif: constructionMobileAvif, webp: constructionMobileWebp, png: constructionMobilePng },
+    },
   },
   {
     id: 'manufacturing',
     name: 'Manufacturing',
     icon: Factory,
     description: 'Optimize plant safety protocols with predictive risk analysis and workflow automation.',
-    image: 'https://images.unsplash.com/photo-1565043666747-69f6646db940?w=800&q=80',
+    images: {
+      desktop: { avif: manufacturingDesktopAvif, webp: manufacturingDesktopWebp, png: manufacturingDesktopPng },
+      tablet: { avif: manufacturingTabletAvif, webp: manufacturingTabletWebp, png: manufacturingTabletPng },
+      mobile: { avif: manufacturingMobileAvif, webp: manufacturingMobileWebp, png: manufacturingMobilePng },
+    },
   },
   {
     id: 'energy',
     name: 'Energy',
     icon: Zap,
     description: 'Ensure regulatory compliance across distributed assets with centralized monitoring.',
-    image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80',
+    images: {
+      desktop: { avif: energyDesktopAvif, webp: energyDesktopWebp, png: energyDesktopPng },
+      tablet: { avif: energyTabletAvif, webp: energyTabletWebp, png: energyTabletPng },
+      mobile: { avif: energyMobileAvif, webp: energyMobileWebp, png: energyMobilePng },
+    },
   },
   {
     id: 'pharma',
     name: 'Pharma',
     icon: Pill,
     description: 'Maintain GxP compliance with automated documentation and audit trail management.',
-    image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=800&q=80',
+    images: {
+      desktop: { avif: pharmaDesktopAvif, webp: pharmaDesktopWebp, png: pharmaDesktopPng },
+      tablet: { avif: pharmaTabletAvif, webp: pharmaTabletWebp, png: pharmaTabletPng },
+      mobile: { avif: pharmaMobileAvif, webp: pharmaMobileWebp, png: pharmaMobilePng },
+    },
   },
   {
     id: 'logistics',
     name: 'Logistics',
     icon: Truck,
     description: 'Maintain rigorous standards with automated regulatory checks.',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80',
+    images: {
+      desktop: { avif: logisticsDesktopAvif, webp: logisticsDesktopWebp, png: logisticsDesktopPng },
+      tablet: { avif: logisticsTabletAvif, webp: logisticsTabletWebp, png: logisticsTabletPng },
+      mobile: { avif: logisticsMobileAvif, webp: logisticsMobileWebp, png: logisticsMobilePng },
+    },
   },
 ]
 
@@ -72,54 +154,124 @@ function IndustryCard({ industry, isExpanded, onClick }: IndustryCardProps) {
 
   return (
     <motion.div
-      layout
       className="relative h-[500px] lg:h-[600px] rounded-xl overflow-hidden cursor-pointer border border-slate-200"
+      initial={false}
       animate={{
         width: isExpanded ? 400 : 200,
         flex: isExpanded ? '0 0 400px' : '0 0 200px',
       }}
-      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
       onClick={onClick}
+      whileHover={{ scale: isExpanded ? 1 : 1.02 }}
+      whileTap={{ scale: 0.98 }}
     >
       {/* Background Image */}
-      <div className="absolute inset-0">
-        <img
-          src={industry.image}
-          alt={industry.name}
-          className="w-full h-full object-cover"
-        />
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-      </div>
+      <motion.div
+        className="absolute inset-0"
+        initial={false}
+        animate={{ scale: isExpanded ? 1 : 1.1 }}
+        transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+      >
+        <picture>
+          {/* Mobile (up to 640px) */}
+          <source
+            media="(max-width: 640px)"
+            srcSet={industry.images.mobile.avif}
+            type="image/avif"
+          />
+          <source
+            media="(max-width: 640px)"
+            srcSet={industry.images.mobile.webp}
+            type="image/webp"
+          />
+          <source
+            media="(max-width: 640px)"
+            srcSet={industry.images.mobile.png}
+            type="image/png"
+          />
+          {/* Tablet (641px to 1024px) */}
+          <source
+            media="(max-width: 1024px)"
+            srcSet={industry.images.tablet.avif}
+            type="image/avif"
+          />
+          <source
+            media="(max-width: 1024px)"
+            srcSet={industry.images.tablet.webp}
+            type="image/webp"
+          />
+          <source
+            media="(max-width: 1024px)"
+            srcSet={industry.images.tablet.png}
+            type="image/png"
+          />
+          {/* Desktop (1025px+) */}
+          <source
+            srcSet={industry.images.desktop.avif}
+            type="image/avif"
+          />
+          <source
+            srcSet={industry.images.desktop.webp}
+            type="image/webp"
+          />
+          <img
+            src={industry.images.desktop.png}
+            alt={industry.name}
+            className="w-full h-full object-cover"
+          />
+        </picture>
+      </motion.div>
+
+      {/* Overlay gradient - positioned lower on expanded cards */}
+      <motion.div
+        className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent"
+        initial={false}
+        animate={{
+          height: isExpanded ? '50%' : '70%',
+        }}
+        transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+      />
 
       {/* Content */}
-      <div className="absolute inset-0 flex flex-col justify-end p-5">
-        {/* Icon and Title - Always visible */}
-        <div className="flex items-center gap-2 text-white mb-2">
-          <Icon className="w-5 h-5" />
-          <span className="font-medium text-sm">{industry.name}</span>
-        </div>
+      <div className="absolute inset-x-0 bottom-0 p-5">
+        {/* Icon and Title - slides up when expanded */}
+        <motion.div
+          initial={false}
+          animate={{
+            y: isExpanded ? -100 : 0,
+          }}
+          transition={{
+            duration: 0.4,
+            ease: [0.32, 0.72, 0, 1],
+            delay: isExpanded ? 0.5 : 0,
+          }}
+        >
+          <div className="flex items-center gap-2 text-white">
+            <Icon className="w-5 h-5" />
+            <span className="font-medium text-sm">{industry.name}</span>
+          </div>
+        </motion.div>
 
-        {/* Expanded Content */}
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="flex flex-col gap-3"
-            >
-              <p className="text-white/90 text-sm leading-relaxed">
-                {industry.description}
-              </p>
-              <button className="flex items-center gap-1 text-white text-sm font-medium hover:underline w-fit">
-                Learn more
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Description and Coming Soon - fades in below title after it moves up */}
+        <motion.div
+          className="absolute bottom-5 left-5 right-5"
+          initial={false}
+          animate={{
+            opacity: isExpanded ? 1 : 0,
+          }}
+          transition={{
+            duration: 0.3,
+            ease: [0.32, 0.72, 0, 1],
+            delay: isExpanded ? 0.6 : 0,
+          }}
+        >
+          <p className="text-white/90 text-sm leading-relaxed mb-2">
+            {industry.description}
+          </p>
+          <span className="text-white/70 text-sm font-medium">
+            Coming soon
+          </span>
+        </motion.div>
       </div>
     </motion.div>
   )

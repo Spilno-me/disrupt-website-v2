@@ -11,11 +11,11 @@ import { optimizedImages } from '@/assets/optimized'
 
 const WHO_WE_HELP_ITEMS = [
   {
-    label: 'For Companies →',
+    label: 'For Companies –',
     text: 'Free your teams from repetitive admin. Cut costs while training more, preventing incidents, and reaching compliance faster.',
   },
   {
-    label: 'For Consultants →',
+    label: 'For Consultants –',
     text: 'Slash paperwork. Gain visibility. Spend more time guiding strategy, not chasing data.',
   },
 ] as const
@@ -37,8 +37,8 @@ export function WhoWeHelpSection() {
       dataElement="who-we-help-section"
     >
       <div className="flex flex-col gap-4 mb-8">
-        {WHO_WE_HELP_ITEMS.map((item) => (
-          <CheckListItem key={item.label} {...item} />
+        {WHO_WE_HELP_ITEMS.map((item, index) => (
+          <CheckListItem key={item.label} {...item} index={index} />
         ))}
       </div>
 

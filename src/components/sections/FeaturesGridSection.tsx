@@ -1,4 +1,5 @@
 import { COLORS } from '@/constants/designTokens'
+import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 
 // =============================================================================
 // TYPES
@@ -66,11 +67,11 @@ function FeatureGridCard({ title, description }: FeatureCardData) {
 export function FeaturesGridSection() {
   return (
     <section
-      className="py-11 border-b border-dashed"
-      style={{ borderColor: COLORS.muted }}
+      className="py-11 relative"
       data-element="features-grid-section"
     >
-      <div className="max-w-[1440px] mx-auto px-6">
+      <GridBlobBackground scale={1.5} />
+      <div className="max-w-[1440px] mx-auto px-6 relative z-[1]">
         {/* Header */}
         <div className="flex flex-col items-center gap-4 mb-10">
           <h2

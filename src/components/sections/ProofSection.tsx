@@ -55,8 +55,8 @@ export function ProofSection() {
             {/* Content - Left on desktop */}
             <Column width="55%">
               <div className="flex flex-col gap-4">
-                {PROOF_ITEMS.map((item) => (
-                  <CheckListItem key={item.label} {...item} />
+                {PROOF_ITEMS.map((item, index) => (
+                  <CheckListItem key={item.label} {...item} index={index} />
                 ))}
               </div>
             </Column>

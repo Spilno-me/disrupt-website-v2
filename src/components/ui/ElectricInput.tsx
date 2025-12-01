@@ -112,14 +112,19 @@ export function ElectricInputWrapper({ children }: ElectricInputWrapperProps) {
 interface ElectricButtonWrapperProps {
   children: ReactNode
   className?: string
+  isActive?: boolean
 }
 
 /**
  * Wrapper component that adds electric border effect to buttons on hover.
  * Uses animated gradient that flows around the border like electricity.
+ * When isActive is true, the effect is always visible.
  */
-export function ElectricButtonWrapper({ children, className = '' }: ElectricButtonWrapperProps) {
+export function ElectricButtonWrapper({ children, className = '', isActive = false }: ElectricButtonWrapperProps) {
   const [isHovered, setIsHovered] = useState(false)
+
+  // Show effect when hovered OR when active
+  const showEffect = isHovered || isActive
 
   // Use numeric value for animation (200 to -200)
   const positionX = useMotionValue(200)
@@ -134,7 +139,7 @@ export function ElectricButtonWrapper({ children, className = '' }: ElectricButt
   const glowInset = isNavItem ? '2px' : '4px'
 
   useEffect(() => {
-    if (isHovered) {
+    if (showEffect) {
       // Reset to start position
       positionX.set(200)
       const animation = animate(positionX, -200, {
@@ -145,7 +150,7 @@ export function ElectricButtonWrapper({ children, className = '' }: ElectricButt
       })
       return () => animation.stop()
     }
-  }, [isHovered, positionX])
+  }, [showEffect, positionX])
 
   return (
     <div
@@ -171,7 +176,7 @@ export function ElectricButtonWrapper({ children, className = '' }: ElectricButt
           zIndex: 10,
         }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered ? 1 : 0 }}
+        animate={{ opacity: showEffect ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       />
 
@@ -188,7 +193,7 @@ export function ElectricButtonWrapper({ children, className = '' }: ElectricButt
           zIndex: 10,
         }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered ? 1 : 0 }}
+        animate={{ opacity: showEffect ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       />
 

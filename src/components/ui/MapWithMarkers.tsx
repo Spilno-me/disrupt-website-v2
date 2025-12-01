@@ -596,7 +596,7 @@ export function MapWithMarkers() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[520px] rounded-[16px] overflow-hidden select-none cursor-grab active:cursor-grabbing"
+      className="relative w-full h-[520px] rounded-none sm:rounded-[16px] overflow-hidden select-none cursor-grab active:cursor-grabbing"
       style={{ touchAction: 'pan-y' }}
       data-element="contact-map"
       onClick={() => setActiveMarkerId(null)}

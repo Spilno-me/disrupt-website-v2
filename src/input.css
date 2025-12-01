@@ -735,6 +735,50 @@
     );
   }
 
+  /* Responsive: borders only on tablet and up (sm: 640px+) */
+  .sm\:border-x-dashed-figma {
+    position: relative;
+  }
+
+  .sm\:border-x-dashed-figma::before,
+  .sm\:border-x-dashed-figma::after {
+    content: none;
+  }
+
+  @media (min-width: 640px) {
+    .sm\:border-x-dashed-figma::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: repeating-linear-gradient(
+        180deg,
+        var(--color-dashed-border) 0,
+        var(--color-dashed-border) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+    }
+
+    .sm\:border-x-dashed-figma::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: repeating-linear-gradient(
+        180deg,
+        var(--color-dashed-border) 0,
+        var(--color-dashed-border) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+    }
+  }
+
   @media (min-width: 1024px) {
     .lg\:border-r-dashed-figma {
       border-right-style: dashed;

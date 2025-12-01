@@ -1,13 +1,25 @@
 import { PageLayout } from '@/components/layout/PageLayout'
+import { ProductHeroSection } from '@/components/sections/ProductHeroSection'
 import { IndustryCarouselSection } from '@/components/sections/IndustryCarouselSection'
 import { FeaturesGridSection } from '@/components/sections/FeaturesGridSection'
+import { ROICalculatorSection } from '@/components/sections/ROICalculatorSection'
+import { PlatformTiersSection } from '@/components/sections/PlatformTiersSection'
+import { StrategicAdvisorySection } from '@/components/sections/StrategicAdvisorySection'
+import { FAQSection } from '@/components/sections/FAQSection'
+import { ReadyToAchieveSection } from '@/components/sections/ReadyToAchieveSection'
 import { ContactSection } from '@/components/sections/ContactSection'
 
 function Product() {
   return (
     <PageLayout>
+      <ProductHeroSection />
       <IndustryCarouselSection />
       <FeaturesGridSection />
+      <ROICalculatorSection />
+      <PlatformTiersSection />
+      <StrategicAdvisorySection />
+      <FAQSection />
+      <ReadyToAchieveSection />
       <ContactSection />
     </PageLayout>
   )

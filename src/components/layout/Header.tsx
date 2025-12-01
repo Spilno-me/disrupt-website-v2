@@ -54,28 +54,36 @@ export function Header({
     }
   }
 
-  const handleContactClick = () => {
-    if (onContactClick) {
-      onContactClick()
-    } else if (isMobile) {
-      // Delay scroll on mobile to let menu close first
-      setTimeout(() => {
-        const element = document.getElementById('contact')
-        if (element) {
-          const headerHeight = 82
-          const elementPosition = element.getBoundingClientRect().top + window.scrollY
-          const offsetPosition = elementPosition - headerHeight
+  const handleContactClick = (e: React.MouseEvent) => {
+    const contactElement = document.getElementById('contact')
 
-          animate(window.scrollY, offsetPosition, {
-            duration: 0.8,
-            ease: [0.4, 0, 0.1, 1],
-            onUpdate: (value) => window.scrollTo(0, value),
-          })
-        }
-      }, 350)
-    } else {
-      scrollToElement('contact')
+    // If contact section exists on current page, scroll to it instead of navigating
+    if (contactElement) {
+      e.preventDefault()
+
+      if (onContactClick) {
+        onContactClick()
+      } else if (isMobile) {
+        // Delay scroll on mobile to let menu close first
+        setTimeout(() => {
+          const element = document.getElementById('contact')
+          if (element) {
+            const headerHeight = 82
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY
+            const offsetPosition = elementPosition - headerHeight
+
+            animate(window.scrollY, offsetPosition, {
+              duration: 0.8,
+              ease: [0.4, 0, 0.1, 1],
+              onUpdate: (value) => window.scrollTo(0, value),
+            })
+          }
+        }, 350)
+      } else {
+        scrollToElement('contact')
+      }
     }
+    // If no contact section, let the Link navigate to /#contact
   }
 
   const isActiveRoute = (path: string) => {
@@ -106,25 +114,18 @@ export function Header({
             <div className="flex items-center gap-1">
               {NAV_ITEMS.map((item) => {
                 const isActive = isActiveRoute(item.path)
-                const link = (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`h-9 px-4 py-2 rounded-[8px] text-sm font-sans font-medium leading-[1.43] transition-colors flex items-center justify-center gap-2 cursor-pointer ${
-                      isActive
-                        ? 'text-muted bg-white/30 backdrop-blur-md'
-                        : 'text-dark hover:bg-white/10'
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                )
-
-                return isActive ? (
-                  <div key={item.path}>{link}</div>
-                ) : (
-                  <ElectricButtonWrapper key={item.path} className="nav-item">
-                    {link}
+                return (
+                  <ElectricButtonWrapper key={item.path} className="nav-item" isActive={isActive}>
+                    <Link
+                      to={item.path}
+                      className={`h-9 px-4 py-2 rounded-[8px] text-sm font-sans font-medium leading-[1.43] transition-colors flex items-center justify-center gap-2 cursor-pointer ${
+                        isActive
+                          ? 'text-dark'
+                          : 'text-dark hover:bg-white/10'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
                   </ElectricButtonWrapper>
                 )
               })}

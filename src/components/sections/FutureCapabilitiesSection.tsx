@@ -29,8 +29,8 @@ export function FutureCapabilitiesSection() {
       dataElement="future-capabilities-section"
     >
       <div className="flex flex-col gap-4">
-        {FUTURE_CAPABILITIES.map((item) => (
-          <CheckListItem key={item.label} {...item} boldLabel={false} />
+        {FUTURE_CAPABILITIES.map((item, index) => (
+          <CheckListItem key={item.label} {...item} boldLabel={false} index={index} />
         ))}
       </div>
     </ContentSection>

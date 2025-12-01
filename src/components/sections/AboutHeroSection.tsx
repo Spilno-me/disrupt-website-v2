@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
-import { Check } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 import { HeroParticles } from '@/components/ui/HeroParticles'
+import { MouseParticleRenderer } from '@/components/ui/MouseParticleRenderer'
+import { useMouseParticles } from '@/hooks/useMouseParticles'
+import { AnimatedCheck } from '@/components/ui/AnimatedCheck'
 import { aboutImages } from '@/assets/optimized/about'
 
 // =============================================================================
@@ -18,6 +20,13 @@ const SLIDE_INTERVAL = 4000
 
 export function AboutHeroSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [imageLoaded, setImageLoaded] = useState(false)
+  const heroFrameRef = useRef<HTMLDivElement>(null)
+
+  const { particles, handleMouseMove } = useMouseParticles({
+    enabled: imageLoaded,
+    containerRef: heroFrameRef,
+  })
 
   // Title slideshow
   useEffect(() => {
@@ -29,124 +38,129 @@ export function AboutHeroSection() {
 
   return (
     <section
-      className="relative mt-[82px]"
+      className="relative mb-8 lg:mb-[56px] mt-[82px]"
       data-element="about-hero-section"
+      onMouseMove={handleMouseMove}
     >
-      {/* Grid Blob Background - visible in light areas */}
-      <GridBlobBackground scale={1.5} />
+      {/* Grid Blob Background */}
+      <GridBlobBackground scale={1.8} />
 
-      {/* Hero Container - dark background with content */}
+      {/* Background Frame */}
       <div
-        className="relative z-[1] mx-auto px-0 sm:px-6 max-w-[1440px]"
-        data-element="about-hero-container"
+        className="absolute inset-x-0 top-0 flex justify-center z-[1] px-0 sm:px-6"
+        data-element="about-hero-bg-wrapper"
       >
-        {/* Dark Hero Frame */}
         <div
-          className="relative w-full min-h-[500px] lg:min-h-[560px] rounded-none sm:rounded-b-[10px] overflow-hidden bg-black"
+          ref={heroFrameRef}
+          className="w-full h-[380px] sm:h-[420px] lg:h-[499px] rounded-none sm:rounded-b-[10px] overflow-hidden relative max-w-[1440px] bg-black"
           data-element="about-hero-frame"
         >
-          {/* Background Image - positioned to left */}
-          <div className="absolute inset-0 lg:right-[40%]">
-            <picture>
-              {/* AVIF - best compression */}
-              <source
-                media="(max-width: 639px)"
-                srcSet={aboutImages.aboutHero.mobile.avif}
-                type="image/avif"
-              />
-              <source
-                media="(max-width: 1023px)"
-                srcSet={aboutImages.aboutHero.tablet.avif}
-                type="image/avif"
-              />
-              <source
-                srcSet={aboutImages.aboutHero.desktop.avif}
-                type="image/avif"
-              />
-              {/* WebP - wide support */}
-              <source
-                media="(max-width: 639px)"
-                srcSet={aboutImages.aboutHero.mobile.webp}
-                type="image/webp"
-              />
-              <source
-                media="(max-width: 1023px)"
-                srcSet={aboutImages.aboutHero.tablet.webp}
-                type="image/webp"
-              />
-              <source
-                srcSet={aboutImages.aboutHero.desktop.webp}
-                type="image/webp"
-              />
-              {/* PNG fallback */}
-              <img
-                src={aboutImages.aboutHero.desktop.fallback}
-                alt=""
-                className="w-full h-full object-cover object-center lg:object-left"
-              />
-            </picture>
-          </div>
+          {/* Background Image - centered */}
+          <picture>
+            <source
+              media="(max-width: 639px)"
+              srcSet={aboutImages.aboutHero.mobile.avif}
+              type="image/avif"
+            />
+            <source
+              media="(max-width: 1023px)"
+              srcSet={aboutImages.aboutHero.tablet.avif}
+              type="image/avif"
+            />
+            <source
+              srcSet={aboutImages.aboutHero.desktop.avif}
+              type="image/avif"
+            />
+            <source
+              media="(max-width: 639px)"
+              srcSet={aboutImages.aboutHero.mobile.webp}
+              type="image/webp"
+            />
+            <source
+              media="(max-width: 1023px)"
+              srcSet={aboutImages.aboutHero.tablet.webp}
+              type="image/webp"
+            />
+            <source
+              srcSet={aboutImages.aboutHero.desktop.webp}
+              type="image/webp"
+            />
+            <img
+              src={aboutImages.aboutHero.desktop.fallback}
+              alt=""
+              className="w-full h-full object-cover object-center"
+              onLoad={() => setImageLoaded(true)}
+            />
+          </picture>
 
-          {/* Gradient overlay - black on top fading to transparent for text readability */}
+          {/* Gradient overlay */}
           <div
             className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/70 via-black/40 to-transparent"
           />
 
-          {/* Static floating particles */}
-          <HeroParticles />
+          {/* Particles */}
+          {imageLoaded && (
+            <>
+              <HeroParticles />
+              <MouseParticleRenderer particles={particles} />
+            </>
+          )}
+        </div>
+      </div>
 
-          {/* Content Grid - Two Columns */}
-          <div className="relative z-10 flex flex-col lg:flex-row h-full min-h-[500px] lg:min-h-[560px]">
-            {/* Left Column - Title with Slideshow */}
-            <div className="flex-1 flex items-start justify-start p-6 pt-12 sm:p-8 sm:pt-16 lg:p-12 lg:pl-16 lg:pt-24">
-              <div
-                className="relative h-[80px] sm:h-[90px] lg:h-[100px] w-full max-w-[600px]"
-                data-element="about-hero-title"
-              >
-                <AnimatePresence mode="wait">
-                  <motion.h1
-                    key={currentIndex}
-                    initial={{ opacity: 0, y: -30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 30 }}
-                    transition={{ duration: 0.4, ease: 'easeInOut' }}
-                    className="absolute inset-0 flex items-center font-display font-bold text-white text-[28px] sm:text-[32px] lg:text-[36px] leading-[1.4] tracking-[1px]"
-                  >
-                    {HERO_TITLES[currentIndex]}
-                  </motion.h1>
-                </AnimatePresence>
-              </div>
+      {/* Content */}
+      <div
+        className="mx-auto relative z-[2] flex flex-col w-full h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 sm:px-6 max-w-[1440px]"
+        data-element="about-hero-wrapper"
+      >
+        {/* Content Grid - Two Columns */}
+        <div className="w-full flex flex-col lg:flex-row h-full px-4 sm:px-6 lg:px-[36px]">
+          {/* Left Column - Title with Slideshow */}
+          <div className="flex-1 flex items-start justify-start pt-12 sm:pt-16 lg:pt-24">
+            <div
+              className="relative h-[80px] sm:h-[90px] lg:h-[100px] w-full max-w-[600px]"
+              data-element="about-hero-title"
+            >
+              <AnimatePresence mode="wait">
+                <motion.h1
+                  key={currentIndex}
+                  initial={{ opacity: 0, y: -30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 30 }}
+                  transition={{ duration: 0.4, ease: 'easeInOut' }}
+                  className="absolute inset-0 flex items-start font-display font-bold text-white text-[32px] sm:text-[32px] lg:text-[48px] leading-[44px] sm:leading-[48px] lg:leading-[60px] tracking-[2.5px] sm:tracking-[3px] lg:tracking-[4px]"
+                >
+                  {HERO_TITLES[currentIndex]}
+                </motion.h1>
+              </AnimatePresence>
             </div>
+          </div>
 
-            {/* Right Column - Description */}
-            <div className="flex-1 flex items-start justify-start lg:justify-end p-6 sm:p-8 lg:p-12 lg:pr-16 lg:pt-24">
-              <div className="flex flex-col gap-5 max-w-[480px] text-white">
-                <p className="font-sans text-[15px] sm:text-base lg:text-[17px] leading-[1.6] opacity-90">
-                  Compliance has buried teams in admin for too long. We're here to change that.
-                </p>
+          {/* Right Column - Description */}
+          <div className="flex-1 flex items-start justify-start lg:justify-end pt-4 lg:pt-24">
+            <div className="flex flex-col gap-5 max-w-[480px]">
+              <p className="font-display font-medium text-teal text-sm sm:text-base lg:text-lg">
+                Compliance has buried teams in admin for too long. We're here to change that.
+              </p>
 
-                <ul className="flex flex-col gap-3 font-sans text-[14px] sm:text-[15px] lg:text-base leading-[1.5]">
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#08A4BD] flex-shrink-0 mt-0.5" />
-                    <span className="opacity-90">Safer workplaces through smarter compliance</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#08A4BD] flex-shrink-0 mt-0.5" />
-                    <span className="opacity-90">AI that eliminates admin, not just digitizes it</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-[#08A4BD] flex-shrink-0 mt-0.5" />
-                    <span className="opacity-90">More time for people, less time on paperwork</span>
-                  </li>
-                </ul>
-              </div>
+              <ul className="flex flex-col gap-3 font-sans text-[14px] sm:text-[15px] lg:text-base leading-[1.5] text-white">
+                <li className="flex items-start gap-3">
+                  <AnimatedCheck className="w-5 h-5" autoAnimate index={0} />
+                  <span className="opacity-90">Safer workplaces through smarter compliance</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <AnimatedCheck className="w-5 h-5" autoAnimate index={1} />
+                  <span className="opacity-90">AI that eliminates admin, not just digitizes it</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <AnimatedCheck className="w-5 h-5" autoAnimate index={2} />
+                  <span className="opacity-90">More time for people, less time on paperwork</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Bottom spacing for sections below */}
-      <div className="h-8 lg:h-14" />
     </section>
   )
 }
