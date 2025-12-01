@@ -117,18 +117,39 @@ export const TYPOGRAPHY = {
 // =============================================================================
 
 export const ANIMATION = {
+  // Duration constants (in seconds)
+  duration: {
+    INSTANT: 0.1,
+    FAST: 0.2,
+    NORMAL: 0.3,
+    SMOOTH: 0.4,
+    SLOW: 0.5,
+    SCROLL: 0.8,
+    SCROLL_LONG: 1.4,
+  },
+
+  // Common easing curves
+  easing: {
+    EASE_OUT: [0.4, 0, 0.1, 1] as const,
+    EASE_IN_OUT: 'easeInOut' as const,
+    SPRING_CAROUSEL: [0.32, 0.72, 0, 1] as const,
+  },
+
+  // Menu animation delay (ms)
+  MENU_CLOSE_DELAY_MS: 350,
+
   // Particle system (HeroSection)
   particles: {
-    SPAWN_THROTTLE_MS: 50,       // Faster spawning (was 150)
-    MAX_ACTIVE_PARTICLES: 30,    // More particles allowed (was 12)
-    SPAWN_PROBABILITY: 0.9,      // 90% chance to spawn (was 70%)
+    SPAWN_THROTTLE_MS: 50,
+    MAX_ACTIVE_PARTICLES: 30,
+    SPAWN_PROBABILITY: 0.9,
     LIFETIME_MS: 3500,
     INITIAL_SPAWN_COUNT: 30,
   },
 
   // Rotation animation (FeatureCard, LinkedInButton)
   rotation: {
-    MAX_SPEED: 1,                // degrees per frame
+    MAX_SPEED: 1,
     ACCELERATION: 0.05,
     DECELERATION: 0.03,
   },
@@ -173,6 +194,32 @@ export const CLASSES = {
 
   // Button base
   buttonPrimary: `h-9 px-4 py-2 rounded-[${RADIUS.md}] text-sm font-medium bg-[${COLORS.dark}] text-white hover:opacity-90 cursor-pointer`,
+} as const
+
+// =============================================================================
+// LAYOUT CONSTANTS
+// =============================================================================
+
+export const LAYOUT = {
+  /** Header height in pixels - used for scroll offsets and positioning */
+  HEADER_HEIGHT_PX: 82,
+  /** Extra padding below header when scrolling to elements */
+  SCROLL_OFFSET_PX: 16,
+  /** Y position for header contrast sampling */
+  HEADER_SAMPLE_Y: 50,
+} as const
+
+// =============================================================================
+// COLOR CONSTANTS
+// =============================================================================
+
+export const COLOR_CONSTANTS = {
+  /** Default cream background color (rgb) */
+  DEFAULT_BG: 'rgb(251, 251, 243)',
+  /** Assumed dark color for hero sections with images */
+  ASSUMED_DARK: 'rgb(50, 50, 50)',
+  /** Brightness threshold for determining dark vs light text */
+  BRIGHTNESS_THRESHOLD: 128,
 } as const
 
 // =============================================================================

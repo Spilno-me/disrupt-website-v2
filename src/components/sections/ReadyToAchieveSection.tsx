@@ -27,15 +27,17 @@ export function ReadyToAchieveSection() {
           </p>
 
           {/* Button */}
-          <ElectricButtonWrapper>
-            <Button
-              variant="contact"
-              className="w-full sm:w-auto px-8"
-              onClick={() => scrollToElement('contact')}
-            >
-              Become a Partner
-            </Button>
-          </ElectricButtonWrapper>
+          <div className="self-end sm:self-auto">
+            <ElectricButtonWrapper>
+              <Button
+                variant="contact"
+                className="px-8"
+                onClick={() => scrollToElement('contact')}
+              >
+                Become a Partner
+              </Button>
+            </ElectricButtonWrapper>
+          </div>
         </div>
       </div>
     </section>

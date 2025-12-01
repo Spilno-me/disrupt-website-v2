@@ -17,7 +17,12 @@ export function useContactFormSubmission({ form, onSuccess, onError }: UseContac
 
       handleSubmissionSuccess(data)
       form.reset()
-    } catch {
+    } catch (error) {
+      console.error('Contact form submission failed:', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        email: data.email,
+        company: data.company,
+      })
       handleSubmissionError()
     }
   }

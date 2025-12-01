@@ -138,7 +138,7 @@ export function AboutHeroSection() {
           </div>
 
           {/* Right Column - Description */}
-          <div className="lg:w-[45%] flex items-start justify-start lg:justify-end pt-4 lg:pt-24">
+          <div className="lg:w-[45%] flex items-start justify-start lg:justify-end pt-12 sm:pt-8 lg:pt-24">
             <div className="flex flex-col gap-5 max-w-[420px]">
               <p className="font-display font-medium text-teal text-sm sm:text-base lg:text-lg">
                 Compliance has buried teams in admin for too long. We're here to change that.

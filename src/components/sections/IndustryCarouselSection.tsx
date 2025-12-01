@@ -260,7 +260,7 @@ const IndustryCard = forwardRef<HTMLDivElement, IndustryCardProps>(
       />
 
       {/* Content */}
-      <div className="absolute inset-x-0 bottom-0 p-5">
+      <div className="absolute inset-x-0 bottom-0 p-3 sm:p-5">
         {/* Icon and Title - slides up when expanded */}
         <motion.div
           initial={false}
@@ -273,9 +273,9 @@ const IndustryCard = forwardRef<HTMLDivElement, IndustryCardProps>(
             delay: isExpanded ? 0.5 : 0,
           }}
         >
-          <div className="flex items-center gap-3 text-white">
+          <div className="flex items-center gap-2 sm:gap-3 text-white">
             <motion.div
-              className="flex items-center justify-center"
+              className="flex items-center justify-center flex-shrink-0"
               initial={false}
               animate={{
                 backgroundColor: isExpanded ? 'rgba(255,255,255,0.15)' : 'transparent',
@@ -286,13 +286,13 @@ const IndustryCard = forwardRef<HTMLDivElement, IndustryCardProps>(
             >
               <Icon className="w-5 h-5" />
             </motion.div>
-            <span className="font-medium text-sm">{industry.name}</span>
+            <span className="font-medium text-sm truncate">{industry.name}</span>
           </div>
         </motion.div>
 
         {/* Description and Coming Soon - fades in below title after it moves up */}
         <motion.div
-          className="absolute bottom-5 left-5 right-5"
+          className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5"
           initial={false}
           animate={{
             opacity: isExpanded ? 1 : 0,
@@ -342,11 +342,28 @@ export function IndustryCarouselSection() {
   // Auto-scroll on mobile
   const isAutoScrollingRef = useRef(isAutoScrolling)
   const scrollDirectionRef = useRef(1) // 1 = right, -1 = left
+  const isInViewportRef = useRef(false)
 
   // Keep ref in sync with state
   useEffect(() => {
     isAutoScrollingRef.current = isAutoScrolling
   }, [isAutoScrolling])
+
+  // Track if carousel is in viewport (Safari won't scroll elements outside viewport)
+  useEffect(() => {
+    const carousel = carouselRef.current
+    if (!carousel || !isMobile) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInViewportRef.current = entry.isIntersecting
+      },
+      { threshold: 0.1 }
+    )
+
+    observer.observe(carousel)
+    return () => observer.disconnect()
+  }, [isMobile])
 
   useEffect(() => {
     // Only run on mobile
@@ -359,22 +376,23 @@ export function IndustryCarouselSection() {
       return
     }
 
-    const scrollSpeed = 0.3 // pixels per frame
-    let frameCount = 0
+    const scrollSpeed = 0.5 // pixels per frame (increased for Safari)
+    let lastTime = 0
+    const targetInterval = 16 // ~60fps
 
-    const animate = () => {
+    const animate = (currentTime: number) => {
       const currentCarousel = carouselRef.current
       if (!currentCarousel) {
         autoScrollRef.current = requestAnimationFrame(animate)
         return
       }
 
-      // Only scroll every 2nd frame for smoother animation
-      frameCount++
-      if (frameCount % 2 !== 0) {
+      // Throttle to ~60fps using timestamp (more reliable than frame counting on Safari)
+      if (currentTime - lastTime < targetInterval) {
         autoScrollRef.current = requestAnimationFrame(animate)
         return
       }
+      lastTime = currentTime
 
       const maxScroll = currentCarousel.scrollWidth - currentCarousel.clientWidth
 
@@ -384,8 +402,8 @@ export function IndustryCarouselSection() {
         setScrollProgress(progress)
       }
 
-      // Check the ref for current value
-      if (isAutoScrollingRef.current) {
+      // Check the ref for current value - only scroll if in viewport (Safari requirement)
+      if (isAutoScrollingRef.current && isInViewportRef.current) {
         // Only scroll if there's content to scroll
         if (maxScroll > 0) {
           const currentScroll = currentCarousel.scrollLeft
@@ -397,7 +415,9 @@ export function IndustryCarouselSection() {
             scrollDirectionRef.current = 1
           }
 
-          currentCarousel.scrollLeft += scrollSpeed * scrollDirectionRef.current
+          // Use scrollTo for better Safari compatibility
+          const newScrollLeft = currentScroll + (scrollSpeed * scrollDirectionRef.current)
+          currentCarousel.scrollLeft = newScrollLeft
         }
       }
 
@@ -407,10 +427,23 @@ export function IndustryCarouselSection() {
     // Longer delay to ensure cards are rendered with proper widths
     const startTimeout = setTimeout(() => {
       autoScrollRef.current = requestAnimationFrame(animate)
-    }, 500)
+    }, 800)
+
+    // Safari sometimes pauses rAF when page loses focus - restart on visibility change
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && isAutoScrollingRef.current) {
+        if (autoScrollRef.current) {
+          cancelAnimationFrame(autoScrollRef.current)
+        }
+        lastTime = 0
+        autoScrollRef.current = requestAnimationFrame(animate)
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
 
     return () => {
       clearTimeout(startTimeout)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
       if (autoScrollRef.current) {
         cancelAnimationFrame(autoScrollRef.current)
         autoScrollRef.current = null

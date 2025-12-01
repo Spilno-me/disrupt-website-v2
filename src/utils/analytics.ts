@@ -1,4 +1,3 @@
-
 declare global {
   interface Window {
     gtag: (...args: any[]) => void
@@ -6,15 +5,28 @@ declare global {
   }
 }
 
-export const initializeGA = () => {
-  if (typeof window === 'undefined' || !window.gtag) {
+const isAnalyticsAvailable = (): boolean => {
+  if (typeof window === 'undefined') {
+    return false
+  }
+  if (!window.gtag) {
+    if (import.meta.env.DEV) {
+      console.debug('Analytics: gtag not available')
+    }
+    return false
+  }
+  return true
+}
+
+export const initializeGA = (): void => {
+  if (!isAnalyticsAvailable()) {
     return
   }
   // GA4 is already initialized in HTML, this is just a check
 }
 
-export const trackPageView = (path: string, title?: string) => {
-  if (typeof window === 'undefined' || !window.gtag) {
+export const trackPageView = (path: string, title?: string): void => {
+  if (!isAnalyticsAvailable()) {
     return
   }
 
@@ -25,8 +37,8 @@ export const trackPageView = (path: string, title?: string) => {
   })
 }
 
-export const trackEvent = (eventName: string, parameters: Record<string, any> = {}) => {
-  if (typeof window === 'undefined' || !window.gtag) {
+export const trackEvent = (eventName: string, parameters: Record<string, any> = {}): void => {
+  if (!isAnalyticsAvailable()) {
     return
   }
 

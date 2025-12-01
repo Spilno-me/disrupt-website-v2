@@ -15,7 +15,7 @@ export function ContactSection() {
             <div className="max-w-lg mx-auto flex flex-col gap-6 sm:gap-8 lg:gap-10">
               {/* Header */}
               <div className="flex flex-col max-w-xl gap-4">
-                <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-dark">
+                <h2 className="text-xl font-display font-bold leading-[40px] tracking-normal text-dark">
                   Ready to free your teams from compliance admin?
                 </h2>
                 <p className="text-sm sm:text-base lg:text-lg text-muted leading-relaxed">

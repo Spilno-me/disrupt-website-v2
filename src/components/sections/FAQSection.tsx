@@ -127,7 +127,7 @@ export function FAQSection() {
         <div className="max-w-[620px] mx-auto">
           {/* Header */}
           <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-left lg:text-center text-dark mb-10">
-            Frequently Asked Questions
+            FAQs
           </h2>
 
           {/* Accordion */}

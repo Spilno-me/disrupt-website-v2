@@ -5,6 +5,7 @@ import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "motion/react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { LAYOUT } from "@/constants/designTokens"
 
 function AnimatedBurger({ isOpen }: { isOpen: boolean }) {
   return (
@@ -65,7 +66,8 @@ export function MobileMenu({ children, className, onItemClick }: MobileMenuProps
             initial={{ y: -300 }}
             animate={{ y: 0, transition: { type: "spring", stiffness: 400, damping: 25 } }}
             exit={{ y: -300, transition: { duration: 0.15, ease: "easeIn" } }}
-            className="fixed top-0 inset-x-0 pt-[82px] bg-white shadow-lg z-[40] md:hidden"
+            className="fixed top-0 inset-x-0 bg-white shadow-lg z-[40] md:hidden"
+            style={{ paddingTop: `${LAYOUT.HEADER_HEIGHT_PX}px` }}
           >
             <div className="w-full px-4 py-4 space-y-4 max-w-none" onClick={handleItemClick}>
               {children}

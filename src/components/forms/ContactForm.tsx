@@ -50,15 +50,17 @@ export function ContactForm() {
         >
           <ContactFormFields control={form.control} />
 
-          <ElectricButtonWrapper>
-            <Button
-              type="submit"
-              variant="contact"
-              disabled={form.formState.isSubmitting}
-            >
-              {form.formState.isSubmitting ? 'Sending...' : 'Book a Demo'}
-            </Button>
-          </ElectricButtonWrapper>
+          <div className="flex justify-end sm:justify-start">
+            <ElectricButtonWrapper>
+              <Button
+                type="submit"
+                variant="contact"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting ? 'Sending...' : 'Book a Demo'}
+              </Button>
+            </ElectricButtonWrapper>
+          </div>
         </form>
       </Form>
 

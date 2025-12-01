@@ -1,24 +1,11 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { animate } from 'motion/react'
+import { Link, useLocation } from 'react-router-dom'
 import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
 import { COMPANY_INFO } from '@/constants/appConstants'
-import { scrollToElement } from '@/utils/navigation'
+import { scrollToElement, scrollToElementWithDelay, smoothScrollToTop } from '@/utils/navigation'
 import { MobileMenu } from '@/components/ui/mobile-menu'
 import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import { useHeaderContrast } from '@/hooks/useContrastColor'
-
-// Smooth scroll to top using motion library
-function smoothScrollToTop(): void {
-  const startPosition = window.scrollY
-  if (startPosition === 0) return
-
-  animate(startPosition, 0, {
-    duration: 1.4,
-    ease: [0.4, 0, 0.1, 1], // slower acceleration, gentle brake at end
-    onUpdate: (value) => window.scrollTo(0, value),
-  })
-}
 
 interface HeaderProps {
   showContactButton?: boolean
@@ -38,7 +25,6 @@ export function Header({
   onLogoClick
 }: HeaderProps) {
   const location = useLocation()
-  const navigate = useNavigate()
   const isMobile = useIsMobile()
   const contrastMode = useHeaderContrast()
 
@@ -69,21 +55,7 @@ export function Header({
       if (onContactClick) {
         onContactClick()
       } else if (isMobile) {
-        // Delay scroll on mobile to let menu close first
-        setTimeout(() => {
-          const element = document.getElementById('contact')
-          if (element) {
-            const headerHeight = 82
-            const elementPosition = element.getBoundingClientRect().top + window.scrollY
-            const offsetPosition = elementPosition - headerHeight
-
-            animate(window.scrollY, offsetPosition, {
-              duration: 0.8,
-              ease: [0.4, 0, 0.1, 1],
-              onUpdate: (value) => window.scrollTo(0, value),
-            })
-          }
-        }, 350)
+        scrollToElementWithDelay('contact')
       } else {
         scrollToElement('contact')
       }
