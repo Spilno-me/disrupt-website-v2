@@ -154,17 +154,11 @@ export function ROICalculatorSection() {
     >
       <div className="max-w-[1440px] mx-auto px-6">
         {/* Header */}
-        <div className="flex flex-col items-center gap-5 mb-11">
-          <h2
-            className="font-display font-bold text-2xl sm:text-3xl lg:text-[30px] leading-[1.2] tracking-tight text-center"
-            style={{ color: COLORS.dark }}
-          >
+        <div className="flex flex-col items-start lg:items-center gap-3 lg:gap-5 mb-11">
+          <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-[30px] leading-[1.2] tracking-tight text-left lg:text-center text-dark">
             ROI CALCULATOR: See Your Savings
           </h2>
-          <p
-            className="font-sans text-base leading-[1.5] text-center max-w-[800px]"
-            style={{ color: COLORS.muted }}
-          >
+          <p className="font-sans text-base leading-[1.5] text-left lg:text-center max-w-[800px] text-teal">
             Drag the sliders to see how much incumbent "Flat-Tax" fees are costing you versus our Flat-Rate model.
           </p>
         </div>
@@ -233,7 +227,7 @@ export function ROICalculatorSection() {
             </div>
 
             {/* Right Side - Results */}
-            <div className="flex-1 p-6 lg:p-8 lg:pl-12 lg:border-l border-slate-200 flex flex-col justify-center gap-8">
+            <div className="flex-1 p-6 lg:p-8 lg:pl-12 border-t lg:border-t-0 lg:border-l border-slate-200 flex flex-col justify-center gap-8">
               <CostDisplay
                 label="Incumbent Annual Cost"
                 amount={calculations.incumbentAnnualCost}

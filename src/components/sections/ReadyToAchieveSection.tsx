@@ -15,20 +15,14 @@ export function ReadyToAchieveSection() {
     >
       <GridBlobBackground scale={1.5} />
       <div className="max-w-[1440px] mx-auto px-6 relative z-[1]">
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-start lg:items-center text-left lg:text-center">
           {/* Heading */}
-          <h2
-            className="font-display font-bold text-2xl sm:text-3xl lg:text-[36px] leading-[1.11] mb-6"
-            style={{ color: '#341E63' }}
-          >
+          <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-[36px] leading-[1.11] mb-4 lg:mb-6 text-dark">
             Ready to Achieve Predictive Prevention?
           </h2>
 
           {/* Subheading */}
-          <p
-            className="font-sans text-base leading-[1.5] max-w-[560px] mb-8"
-            style={{ color: COLORS.muted }}
-          >
+          <p className="font-sans text-base leading-[1.5] max-w-[560px] mb-8 text-teal">
             Stop paying extra for AI, upgrades, and consulting that drains your ROI today.
           </p>
 

@@ -159,11 +159,13 @@ function FeatureCell({
   isHighlighted,
   isPrice,
   isDefinition,
+  isLastRow,
 }: {
   value: 'check' | 'x' | string
   isHighlighted?: boolean
   isPrice?: boolean
   isDefinition?: boolean
+  isLastRow?: boolean
 }) {
   const isCheck = value === 'check'
   const isX = value === 'x'
@@ -172,9 +174,9 @@ function FeatureCell({
 
   return (
     <td
-      className={`px-4 py-4 text-center align-middle border-b border-slate-200 ${
-        isHighlighted ? 'bg-dark text-white' : ''
-      }`}
+      className={`px-4 py-4 text-center align-middle ${
+        isLastRow ? '' : 'border-b border-slate-200'
+      } ${isHighlighted ? 'bg-dark text-white' : ''}`}
     >
       {isCheck && (
         <Check
@@ -283,7 +285,7 @@ export function PlatformTiersSection() {
         </div>
 
         {/* Core Capabilities Table */}
-        <div className="bg-white rounded-[14px] overflow-hidden mb-4">
+        <div className="bg-white rounded-[14px] overflow-hidden mb-4 border border-dashed border-slate-300">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px] table-fixed">
               <colgroup>
@@ -316,21 +318,23 @@ export function PlatformTiersSection() {
               </thead>
               <tbody>
                 {/* Annual Platform Fee */}
-                <tr className="bg-blue-50/30">
+                <tr className="bg-[#5E4F7E]/10">
                   <td className="px-4 py-4 border-b border-slate-200">
                     <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
                       Annual Platform Fee
                     </span>
                     <span className="font-sans text-xs block mt-1" style={{ color: COLORS.muted }}>
-                      Quoted based on total business siz...
+                      Quoted based on total business size
                     </span>
                   </td>
-                  <td className="px-4 py-4 text-center border-b border-slate-200">&nbsp;</td>
-                  <td className="px-4 py-4 text-center border-b border-slate-200">&nbsp;</td>
-                  <td className="px-4 py-4 text-center border-b border-slate-200 bg-dark">
-                    <span className="text-sm font-medium text-teal">Get a Custom Quote</span>
+                  <td colSpan={4} className="px-4 py-4 text-center border-b border-slate-200">
+                    <button
+                      onClick={() => scrollToElement('contact')}
+                      className="text-sm font-medium text-teal hover:underline cursor-pointer"
+                    >
+                      Get a Custom Quote
+                    </button>
                   </td>
-                  <td className="px-4 py-4 text-center border-b border-slate-200">&nbsp;</td>
                 </tr>
 
                 {/* Per-User Fee */}
@@ -359,9 +363,9 @@ export function PlatformTiersSection() {
                   ))}
                 </tr>
 
-                {/* Definition */}
+                {/* Definition - Last row, no bottom border */}
                 <tr>
-                  <td className="px-4 py-4 border-b border-slate-200">
+                  <td className="px-4 py-4">
                     <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
                       Definition:
                     </span>
@@ -369,9 +373,7 @@ export function PlatformTiersSection() {
                   {PRICING_TIERS.map((tier) => (
                     <td
                       key={tier.name}
-                      className={`px-4 py-4 border-b border-slate-200 ${
-                        tier.isHighlighted ? 'bg-dark' : ''
-                      }`}
+                      className={`px-4 py-4 ${tier.isHighlighted ? 'bg-dark' : ''}`}
                     >
                       <span
                         className={`text-xs leading-relaxed block ${
@@ -390,7 +392,7 @@ export function PlatformTiersSection() {
         </div>
 
         {/* Foundational EHS Modules Table */}
-        <div className="bg-white rounded-[14px] overflow-hidden mb-4">
+        <div className="bg-white rounded-[14px] overflow-hidden mb-4 border border-dashed border-slate-300">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px] table-fixed">
               <colgroup>
@@ -422,31 +424,34 @@ export function PlatformTiersSection() {
                 </tr>
               </thead>
               <tbody>
-                {FOUNDATIONAL_EHS_MODULES.map((row, idx) => (
-                  <tr key={row.label} className={idx % 2 === 0 ? '' : ''}>
-                    <td className="px-4 py-4 border-b border-slate-200">
-                      <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
-                        {row.label} <span className="font-normal">{row.description?.split('.')[0]}.</span>
-                      </span>
-                      {row.description?.includes('Target:') && (
-                        <span className="font-sans text-xs block mt-1" style={{ color: COLORS.teal }}>
-                          Target: {row.description.split('Target:')[1]}
+                {FOUNDATIONAL_EHS_MODULES.map((row, idx) => {
+                  const isLastRow = idx === FOUNDATIONAL_EHS_MODULES.length - 1
+                  return (
+                    <tr key={row.label}>
+                      <td className={`px-4 py-4 ${isLastRow ? '' : 'border-b border-slate-200'}`}>
+                        <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
+                          {row.label} <span className="font-normal">{row.description?.split('.')[0]}.</span>
                         </span>
-                      )}
-                    </td>
-                    <FeatureCell value={row.viewer} />
-                    <FeatureCell value={row.contributor} />
-                    <FeatureCell value={row.powerUser} isHighlighted />
-                    <FeatureCell value={row.creator} />
-                  </tr>
-                ))}
+                        {row.description?.includes('Target:') && (
+                          <span className="font-sans text-xs block mt-1" style={{ color: COLORS.teal }}>
+                            Target: {row.description.split('Target:')[1]}
+                          </span>
+                        )}
+                      </td>
+                      <FeatureCell value={row.viewer} isLastRow={isLastRow} />
+                      <FeatureCell value={row.contributor} isLastRow={isLastRow} />
+                      <FeatureCell value={row.powerUser} isHighlighted isLastRow={isLastRow} />
+                      <FeatureCell value={row.creator} isLastRow={isLastRow} />
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>
         </div>
 
         {/* Agentic AI Modules Table */}
-        <div className="bg-white rounded-[14px] overflow-hidden mb-8">
+        <div className="bg-white rounded-[14px] overflow-hidden mb-8 border border-dashed border-slate-300">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px] table-fixed">
               <colgroup>
@@ -478,24 +483,27 @@ export function PlatformTiersSection() {
                 </tr>
               </thead>
               <tbody>
-                {AGENTIC_AI_MODULES.map((row) => (
-                  <tr key={row.label}>
-                    <td className="px-4 py-4 border-b border-slate-200">
-                      <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
-                        {row.label}
-                      </span>
-                      {row.description && (
-                        <span className="font-sans text-xs block mt-1" style={{ color: COLORS.muted }}>
-                          {row.description}
+                {AGENTIC_AI_MODULES.map((row, idx) => {
+                  const isLastRow = idx === AGENTIC_AI_MODULES.length - 1
+                  return (
+                    <tr key={row.label}>
+                      <td className={`px-4 py-4 ${isLastRow ? '' : 'border-b border-slate-200'}`}>
+                        <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
+                          {row.label}
                         </span>
-                      )}
-                    </td>
-                    <FeatureCell value={row.viewer} />
-                    <FeatureCell value={row.contributor} />
-                    <FeatureCell value={row.powerUser} isHighlighted />
-                    <FeatureCell value={row.creator} />
-                  </tr>
-                ))}
+                        {row.description && (
+                          <span className="font-sans text-xs block mt-1" style={{ color: COLORS.teal }}>
+                            {row.description}
+                          </span>
+                        )}
+                      </td>
+                      <FeatureCell value={row.viewer} isLastRow={isLastRow} />
+                      <FeatureCell value={row.contributor} isLastRow={isLastRow} />
+                      <FeatureCell value={row.powerUser} isHighlighted isLastRow={isLastRow} />
+                      <FeatureCell value={row.creator} isLastRow={isLastRow} />
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>

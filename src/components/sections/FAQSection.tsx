@@ -118,10 +118,7 @@ export function FAQSection() {
       <div className="max-w-[1440px] mx-auto px-6 relative z-[1]">
         <div className="max-w-[620px] mx-auto">
           {/* Header */}
-          <h2
-            className="font-display font-bold text-2xl sm:text-3xl lg:text-[30px] leading-[1.2] tracking-tight text-center mb-12"
-            style={{ color: '#341E63' }}
-          >
+          <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-[30px] leading-[1.2] tracking-tight text-left lg:text-center text-dark mb-12">
             Frequently Asked Questions
           </h2>
 

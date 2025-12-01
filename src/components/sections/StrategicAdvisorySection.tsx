@@ -85,7 +85,7 @@ export function StrategicAdvisorySection() {
           {/* Badge */}
           <div className="absolute -top-3 left-1/2 -translate-x-1/2">
             <span
-              className="px-3 py-1 rounded-full text-xs font-semibold text-white"
+              className="px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold text-white whitespace-nowrap"
               style={{ backgroundColor: '#DC2626' }}
             >
               STRATEGIC ADVISORY ADD-ON

@@ -142,8 +142,7 @@ function PrivacyPolicy() {
                 </p>
                 <ul className="list-disc ml-6 mb-4">
                   <li><strong>Data Protection Officer (DPO)</strong></li>
-                  <li>Email: <strong><a href="mailto:privacy@disr.com" className="text-teal hover:underline">privacy@disr.com</a></strong></li>
-                  <li>Address:</li>
+                  <li>Email: <strong><a href="mailto:privacy@disruptinc.io" className="text-teal hover:underline">privacy@disruptinc.io</a></strong></li>
                 </ul>
                 <p>For EU/EEA residents, you may also contact your local <strong>supervisory authority</strong>.</p>
               </section>

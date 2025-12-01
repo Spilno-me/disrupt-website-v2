@@ -295,7 +295,7 @@ export function IndustryCarouselSection() {
     >
       <SectionContainer>
         {/* Header */}
-        <div className="text-center mb-10 lg:mb-16">
+        <div className="text-left lg:text-center mb-10 lg:mb-16">
           <h2 className="text-2xl sm:text-3xl lg:text-[36px] font-display font-bold text-dark leading-tight">
             Empowering Disruptors in
           </h2>
