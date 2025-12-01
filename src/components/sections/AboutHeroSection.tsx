@@ -15,6 +15,14 @@ import { aboutImages } from '@/assets/optimized/about'
 const HERO_TITLES = ['Built to protect people', 'Designed to redefine compliance']
 const SLIDE_INTERVAL = 4000
 
+const BULLET_POINTS = [
+  'Safer workplaces through smarter compliance',
+  'AI that eliminates admin, not just digitizes it',
+  'More time for people, less time on paperwork',
+]
+
+const SUBTITLE = "Compliance has buried teams in admin for too long. We're here to change that."
+
 // =============================================================================
 // COMPONENT
 // =============================================================================
@@ -64,9 +72,12 @@ export function AboutHeroSection() {
             onLoad={() => setImageLoaded(true)}
           />
 
-          {/* Gradient overlay */}
+          {/* Bottom gradient - darker at bottom for text readability */}
           <div
-            className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/70 via-black/40 to-transparent"
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 35%, rgba(0,0,0,0.2) 55%, transparent 75%)'
+            }}
           />
 
           {/* Particles */}
@@ -84,49 +95,47 @@ export function AboutHeroSection() {
         className="mx-auto relative z-[2] flex flex-col w-full h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 sm:px-6 max-w-[1440px]"
         data-element="about-hero-wrapper"
       >
-        {/* Content Grid - Two Columns */}
-        <div className="w-full flex flex-col lg:flex-row lg:gap-8 h-full px-4 sm:px-6 lg:px-[36px]">
-          {/* Left Column - Title with Slideshow */}
-          <div className="lg:w-[55%] flex items-start justify-start pt-12 sm:pt-16 lg:pt-24">
-            <div
-              className="relative h-[80px] sm:h-[90px] lg:h-[100px] w-full"
-              data-element="about-hero-title"
-            >
-              <AnimatePresence mode="wait">
-                <motion.h1
-                  key={currentIndex}
-                  initial={{ opacity: 0, y: -30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 30 }}
-                  transition={{ duration: 0.4, ease: 'easeInOut' }}
-                  className="absolute inset-0 flex items-start font-display font-bold text-white text-[32px] sm:text-[32px] lg:text-[48px] leading-[44px] sm:leading-[48px] lg:leading-[60px] tracking-[2.5px] sm:tracking-[3px] lg:tracking-[4px]"
-                >
-                  {HERO_TITLES[currentIndex]}
-                </motion.h1>
-              </AnimatePresence>
+        <div
+          className="w-full flex flex-col items-start justify-center relative h-full px-4 sm:px-6 lg:px-[36px]"
+          data-element="about-hero-container"
+        >
+          {/* Two Column Layout */}
+          <div className="w-full flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 lg:gap-8">
+            {/* Left Column - Animated Title */}
+            <div className="lg:flex-1">
+              <div
+                className="relative h-[80px] sm:h-[100px] lg:h-[140px]"
+                data-element="about-hero-title"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.h1
+                    key={currentIndex}
+                    initial={{ opacity: 0, y: -40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 40 }}
+                    transition={{ duration: 0.4, ease: 'easeInOut' }}
+                    className="absolute inset-0 flex items-start font-display font-bold text-white text-[32px] sm:text-[40px] lg:text-[56px] leading-[1.15] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px]"
+                  >
+                    {HERO_TITLES[currentIndex]}
+                  </motion.h1>
+                </AnimatePresence>
+              </div>
             </div>
-          </div>
 
-          {/* Right Column - Description */}
-          <div className="lg:w-[45%] flex items-start justify-start lg:justify-end pt-12 sm:pt-8 lg:pt-24">
-            <div className="flex flex-col gap-5 max-w-[420px]">
-              <p className="font-display font-medium text-teal text-sm sm:text-base lg:text-lg">
-                Compliance has buried teams in admin for too long. We're here to change that.
+            {/* Right Column - Subtitle & Bullet Points */}
+            <div className="lg:max-w-[420px]">
+              {/* Subtitle */}
+              <p className="font-display font-medium text-teal text-sm sm:text-base lg:text-lg mb-5">
+                {SUBTITLE}
               </p>
 
-              <ul className="flex flex-col gap-3 font-sans text-[14px] sm:text-[15px] lg:text-base leading-[1.5] text-white">
-                <li className="flex items-start gap-3">
-                  <AnimatedCheck className="w-5 h-5" autoAnimate index={0} />
-                  <span className="opacity-90">Safer workplaces through smarter compliance</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <AnimatedCheck className="w-5 h-5" autoAnimate index={1} />
-                  <span className="opacity-90">AI that eliminates admin, not just digitizes it</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <AnimatedCheck className="w-5 h-5" autoAnimate index={2} />
-                  <span className="opacity-90">More time for people, less time on paperwork</span>
-                </li>
+              <ul className="flex flex-col gap-2.5 font-sans text-[14px] sm:text-[15px] lg:text-base leading-[1.5] text-white">
+                {BULLET_POINTS.map((point, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <AnimatedCheck className="w-5 h-5 flex-shrink-0" autoAnimate index={index} />
+                    <span className="opacity-90">{point}</span>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
-import { ResponsivePicture, type ResponsiveImageSets } from './ResponsivePicture'
+import { ParallaxImage } from './ParallaxImage'
+import { type ResponsiveImageSets } from './ResponsivePicture'
 
 // =============================================================================
 // TYPES
@@ -22,6 +23,7 @@ interface ResponsiveImageProps {
  * - Full width on mobile with fixed 240px height
  * - Fixed 320px height on tablet, 400px on desktop for consistency
  * - object-cover fills container, rounded corners and shadow on tablet+
+ * - Parallax effect on scroll for depth
  */
 export function ResponsiveImage({
   images,
@@ -39,10 +41,11 @@ export function ResponsiveImage({
         containerClassName
       )}
     >
-      <ResponsivePicture
+      <ParallaxImage
         images={images}
         alt={alt}
         className={className}
+        intensity={50}
       />
     </div>
   )

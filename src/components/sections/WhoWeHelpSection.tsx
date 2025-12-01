@@ -35,6 +35,7 @@ export function WhoWeHelpSection() {
       showBlob
       imagePosition="right"
       dataElement="who-we-help-section"
+      imageClassName="object-[70%_center]"
     >
       <div className="flex flex-col gap-4 mb-8">
         {WHO_WE_HELP_ITEMS.map((item, index) => (

@@ -97,7 +97,7 @@ export const ResponsivePicture = forwardRef<HTMLImageElement, ResponsivePictureP
           decoding={decoding}
           onLoad={onLoad}
           onError={onError}
-          className={cn('w-full h-full object-cover scale-110', className)}
+          className={cn('w-full h-full object-cover', className)}
         />
       </picture>
     )
