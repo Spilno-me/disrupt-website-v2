@@ -14,12 +14,17 @@ export const COLORS = {
   teal: '#08A4BD',           // Accent, links, active states
   ferrariRed: '#F70D1A',     // Brand accent (logo red)
   muted: '#5E4F7E',          // Secondary/muted text (dusty purple)
+  darkPurple: '#341E63',     // Section headings, pricing tables
 
   // Feature card circle colors
   circleBlue: '#3B82F6',     // Automate
   circleRed: '#EF4444',      // Advice
   circleYellow: '#EAB308',   // Adapt
   circleGreen: '#22C55E',    // Scale
+
+  // UI Colors
+  slate: '#CBD5E1',          // Disabled/inactive states
+  lightPurple: '#F5F1FD',    // Light backgrounds
 
   // LinkedIn brand
   linkedInBlue: '#0A66C2',

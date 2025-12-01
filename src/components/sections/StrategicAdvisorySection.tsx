@@ -46,15 +46,14 @@ function FeatureItem({ icon: Icon, title, description }: AdvisoryFeature) {
   return (
     <div className="flex gap-4">
       <div
-        className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center"
-        style={{ backgroundColor: 'rgba(96, 57, 179, 0.1)' }}
+        className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center bg-darkPurple/10"
       >
-        <Icon className="w-6 h-6" style={{ color: '#341E63' }} strokeWidth={2} />
+        <Icon className="w-6 h-6" style={{ color: COLORS.darkPurple }} strokeWidth={2} />
       </div>
       <div className="flex flex-col gap-1">
         <h4
           className="font-sans font-bold text-base tracking-tight"
-          style={{ color: '#341E63' }}
+          style={{ color: COLORS.darkPurple }}
         >
           {title}
         </h4>
@@ -86,7 +85,7 @@ export function StrategicAdvisorySection() {
           <div className="absolute -top-3 left-1/2 -translate-x-1/2">
             <span
               className="px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold text-white whitespace-nowrap"
-              style={{ backgroundColor: '#DC2626' }}
+              style={{ backgroundColor: COLORS.circleRed }}
             >
               STRATEGIC ADVISORY ADD-ON
             </span>

@@ -60,6 +60,9 @@
   --color-teal: #08A4BD;            /* Accent / links */
   --color-ferrari-red: #F70D1A;     /* Brand accent (logo red) */
   --color-muted: #5E4F7E;           /* Secondary/paragraph text (dusty purple) */
+  --color-darkPurple: #341E63;      /* Section headings, pricing tables */
+  --color-slate: #CBD5E1;           /* Disabled/inactive states */
+  --color-lightPurple: #F5F1FD;     /* Light backgrounds */
 
   /* Feature Card Circle Colors */
   --color-circle-blue: #3B82F6;     /* Automate */

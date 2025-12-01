@@ -189,7 +189,7 @@ function FeatureCell({
       {isX && (
         <X
           className="w-5 h-5 mx-auto"
-          style={{ color: isHighlighted ? 'rgba(255,255,255,0.5)' : '#CBD5E1' }}
+          style={{ color: isHighlighted ? 'rgba(255,255,255,0.5)' : COLORS.slate }}
         />
       )}
       {isGetQuote && (
@@ -203,7 +203,7 @@ function FeatureCell({
       {isPrice && !isCheck && !isX && !isEmpty && !isGetQuote && (
         <span
           className={`font-display font-bold text-xl lg:text-2xl ${isHighlighted ? 'text-white' : ''}`}
-          style={{ color: isHighlighted ? undefined : '#341E63' }}
+          style={{ color: isHighlighted ? undefined : COLORS.darkPurple }}
         >
           {value}
         </span>
@@ -351,7 +351,7 @@ export function PlatformTiersSection() {
                         className={`font-display font-bold text-xl lg:text-2xl ${
                           tier.isHighlighted ? 'text-white' : ''
                         }`}
-                        style={{ color: tier.isHighlighted ? undefined : '#341E63' }}
+                        style={{ color: tier.isHighlighted ? undefined : COLORS.darkPurple }}
                       >
                         {tier.price}
                       </span>
@@ -402,7 +402,7 @@ export function PlatformTiersSection() {
                 <tr>
                   <th
                     className="px-4 py-4 text-left bg-slate-100 font-sans font-semibold text-sm uppercase tracking-wider"
-                    style={{ color: '#341E63' }}
+                    style={{ color: COLORS.darkPurple }}
                   >
                     FOUNDATIONAL EHS MODULES (The Data Engine)
                   </th>
@@ -461,7 +461,7 @@ export function PlatformTiersSection() {
                 <tr>
                   <th
                     className="px-4 py-4 text-left bg-slate-100 font-sans font-semibold text-sm uppercase tracking-wider"
-                    style={{ color: '#341E63' }}
+                    style={{ color: COLORS.darkPurple }}
                   >
                     AGENTIC AI MODULES (The Automation Layer)
                   </th>

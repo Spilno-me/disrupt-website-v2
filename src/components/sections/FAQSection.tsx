@@ -53,7 +53,7 @@ interface AccordionItemProps {
 
 function AccordionItem({ item, isOpen, onToggle, isLast = false }: AccordionItemProps) {
   return (
-    <div className={isLast ? '' : 'border-b border-dashed border-teal'}
+    <div className={isLast ? '' : 'border-b border-dashed border-teal'}>
       <button
         className="w-full flex items-center justify-between py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-md"
         onClick={onToggle}
@@ -61,7 +61,7 @@ function AccordionItem({ item, isOpen, onToggle, isLast = false }: AccordionItem
       >
         <span
           className="font-sans font-medium text-sm pr-4"
-          style={{ color: '#341E63' }}
+          style={{ color: COLORS.darkPurple }}
         >
           {item.question}
         </span>
@@ -86,12 +86,14 @@ function AccordionItem({ item, isOpen, onToggle, isLast = false }: AccordionItem
             transition={{ duration: 0.2, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <p
-              className="pb-4 font-sans text-sm leading-relaxed"
-              style={{ color: '#341E63' }}
-            >
-              {item.answer}
-            </p>
+            <div className="bg-teal/5 rounded-md p-4 mb-4">
+              <p
+                className="font-sans text-sm leading-relaxed"
+                style={{ color: COLORS.darkPurple }}
+              >
+                {item.answer}
+              </p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -129,13 +131,14 @@ export function FAQSection() {
           </h2>
 
           {/* Accordion */}
-          <div className="bg-white rounded-lg">
+          <div className="bg-white rounded-lg border border-dashed border-teal p-6">
             {FAQ_ITEMS.map((item, index) => (
               <AccordionItem
                 key={item.question}
                 item={item}
                 isOpen={openIndex === index}
                 onToggle={() => handleToggle(index)}
+                isLast={index === FAQ_ITEMS.length - 1}
               />
             ))}
           </div>

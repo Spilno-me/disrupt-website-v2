@@ -89,13 +89,13 @@ function CostDisplay({ label, amount, subtitle, variant }: CostDisplayProps) {
   const amountColors = {
     incumbent: COLORS.ferrariRed,
     agentic: COLORS.dark,
-    savings: '#22C55E',
+    savings: COLORS.circleGreen,
   }
 
   const subtitleColors = {
-    incumbent: '#F87171',
+    incumbent: COLORS.circleRed,
     agentic: COLORS.muted,
-    savings: '#22C55E',
+    savings: COLORS.circleGreen,
   }
 
   const labelStyles = variant === 'agentic'
@@ -194,7 +194,7 @@ export function ROICalculatorSection() {
                 {/* Assumptions Box */}
                 <div
                   className="p-4 rounded-md"
-                  style={{ backgroundColor: '#F5F1FD' }}
+                  style={{ backgroundColor: COLORS.lightPurple }}
                 >
                   <p
                     className="font-sans font-semibold text-xs mb-2"
