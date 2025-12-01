@@ -168,7 +168,7 @@ describe('ContactForm Email Tests', () => {
   describe('Email Integration Tests', () => {
     it('should send email to contact@disruptinc.io when form is submitted', async () => {
       const user = userEvent.setup()
-      
+
       // Mock successful email sending
       vi.mocked(sendContactForm).mockResolvedValue({
         success: true,
@@ -182,11 +182,11 @@ describe('ContactForm Email Tests', () => {
         expect(screen.getByText('Book a Demo')).toBeInTheDocument()
       })
 
-      // Fill out the form
-      const nameInput = screen.getByLabelText('Name')
-      const emailInput = screen.getByLabelText('Email*')
-      const companyInput = screen.getByLabelText('Company*')
-      const messageInput = screen.getByLabelText('Message')
+      // Fill out the form using placeholder text to find inputs
+      const nameInput = screen.getByPlaceholderText('Name')
+      const emailInput = screen.getByPlaceholderText('Email*')
+      const companyInput = screen.getByPlaceholderText('Company*')
+      const messageInput = screen.getByPlaceholderText('Leave a message')
       const privacyCheckbox = screen.getByRole('checkbox')
 
       await user.type(nameInput, 'Test User')
@@ -214,10 +214,10 @@ describe('ContactForm Email Tests', () => {
       render(<ContactForm />, { wrapper: ContactFormWrapper })
 
       await waitFor(() => {
-        expect(screen.getByLabelText('Name')).toBeInTheDocument()
-        expect(screen.getByLabelText('Email*')).toBeInTheDocument()
-        expect(screen.getByLabelText('Company*')).toBeInTheDocument()
-        expect(screen.getByLabelText('Message')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('Name')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('Email*')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('Company*')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('Leave a message')).toBeInTheDocument()
         expect(screen.getByText('Book a Demo')).toBeInTheDocument()
       })
     })
