@@ -2,8 +2,9 @@ import { useState, useRef } from 'react'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 import { HeroParticles } from '@/components/ui/HeroParticles'
 import { MouseParticleRenderer } from '@/components/ui/MouseParticleRenderer'
+import { BlurImage } from '@/components/ui/BlurImage'
 import { useMouseParticles } from '@/hooks/useMouseParticles'
-import productHeroImage from '@/assets/optimized/product/product-hero-frame.png'
+import { productImages } from '@/assets/optimized/product'
 
 // =============================================================================
 // CONSTANTS
@@ -44,11 +45,11 @@ export function ProductHeroSection() {
           data-element="product-hero-bg-frame"
           data-dark-background="true"
         >
-          {/* Hero Image */}
-          <img
-            src={productHeroImage}
-            alt=""
-            className="w-full h-full object-cover object-[center_30%] sm:object-center"
+          {/* Hero Image with blur-up loading */}
+          <BlurImage
+            images={productImages.productHero}
+            placeholder={productImages.productHero.placeholder}
+            className="object-[center_30%] sm:object-center"
             onLoad={() => setImageLoaded(true)}
           />
 

@@ -25,7 +25,7 @@ export function FutureCapabilitiesSection() {
       imageAlt="Construction worker using tablet"
       background="white"
       showBlob
-      imagePosition="left"
+      imagePosition="right"
       dataElement="future-capabilities-section"
     >
       <div className="flex flex-col gap-4">

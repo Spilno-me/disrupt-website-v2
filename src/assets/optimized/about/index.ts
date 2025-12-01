@@ -63,6 +63,7 @@ import aboutHeroTabletPng from './about-hero-tablet.png'
 import aboutHeroDesktopWebp from './about-hero-desktop.webp'
 import aboutHeroDesktopAvif from './about-hero-desktop.avif'
 import aboutHeroDesktopPng from './about-hero-desktop.png'
+import aboutHeroPlaceholder from '../placeholders/about-hero-desktop-placeholder.webp'
 
 // Proof at Glance
 import proofAtGlanceMobileWebp from './proof-at-glance-mobile.webp'
@@ -177,6 +178,7 @@ export const aboutImages = {
       avif: aboutHeroDesktopAvif,
       fallback: aboutHeroDesktopPng,
     },
+    placeholder: aboutHeroPlaceholder,
   },
   proofAtGlance: {
     mobile: {

@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from 'motion/react'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 import { HeroParticles } from '@/components/ui/HeroParticles'
 import { MouseParticleRenderer } from '@/components/ui/MouseParticleRenderer'
+import { BlurImage } from '@/components/ui/BlurImage'
 import { useHeroTitleRotation } from '@/hooks/useHeroTitleRotation'
 import { useMouseParticles } from '@/hooks/useMouseParticles'
-import { SPACING, GRADIENTS } from '@/constants/designTokens'
 import { optimizedImages } from '@/assets/optimized'
 import './HeroParticles.css'
 
@@ -49,43 +49,13 @@ export function HeroSection() {
           data-element="hero-bg-frame"
           data-dark-background="true"
         >
-          {/* Responsive Hero Image */}
-          <picture>
-            <source
-              media="(max-width: 639px)"
-              srcSet={optimizedImages.heroFrame.mobile.avif}
-              type="image/avif"
-            />
-            <source
-              media="(max-width: 1023px)"
-              srcSet={optimizedImages.heroFrame.tablet.avif}
-              type="image/avif"
-            />
-            <source
-              srcSet={optimizedImages.heroFrame.desktop.avif}
-              type="image/avif"
-            />
-            <source
-              media="(max-width: 639px)"
-              srcSet={optimizedImages.heroFrame.mobile.webp}
-              type="image/webp"
-            />
-            <source
-              media="(max-width: 1023px)"
-              srcSet={optimizedImages.heroFrame.tablet.webp}
-              type="image/webp"
-            />
-            <source
-              srcSet={optimizedImages.heroFrame.desktop.webp}
-              type="image/webp"
-            />
-            <img
-              src={optimizedImages.heroFrame.desktop.fallback}
-              alt=""
-              className="w-full h-full object-cover object-[center_30%] sm:object-center"
-              onLoad={() => setImageLoaded(true)}
-            />
-          </picture>
+          {/* Responsive Hero Image with blur-up loading */}
+          <BlurImage
+            images={optimizedImages.heroFrame}
+            placeholder={optimizedImages.heroFrame.placeholder}
+            className="object-[center_30%] sm:object-center"
+            onLoad={() => setImageLoaded(true)}
+          />
 
           {/* Gradient overlay - dark at bottom, transparent from middle */}
           <div

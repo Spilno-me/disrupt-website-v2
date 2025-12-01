@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 import { HeroParticles } from '@/components/ui/HeroParticles'
 import { MouseParticleRenderer } from '@/components/ui/MouseParticleRenderer'
+import { BlurImage } from '@/components/ui/BlurImage'
 import { useMouseParticles } from '@/hooks/useMouseParticles'
 import { AnimatedCheck } from '@/components/ui/AnimatedCheck'
 import { aboutImages } from '@/assets/optimized/about'
@@ -56,43 +57,12 @@ export function AboutHeroSection() {
           data-element="about-hero-frame"
           data-dark-background="true"
         >
-          {/* Background Image - centered */}
-          <picture>
-            <source
-              media="(max-width: 639px)"
-              srcSet={aboutImages.aboutHero.mobile.avif}
-              type="image/avif"
-            />
-            <source
-              media="(max-width: 1023px)"
-              srcSet={aboutImages.aboutHero.tablet.avif}
-              type="image/avif"
-            />
-            <source
-              srcSet={aboutImages.aboutHero.desktop.avif}
-              type="image/avif"
-            />
-            <source
-              media="(max-width: 639px)"
-              srcSet={aboutImages.aboutHero.mobile.webp}
-              type="image/webp"
-            />
-            <source
-              media="(max-width: 1023px)"
-              srcSet={aboutImages.aboutHero.tablet.webp}
-              type="image/webp"
-            />
-            <source
-              srcSet={aboutImages.aboutHero.desktop.webp}
-              type="image/webp"
-            />
-            <img
-              src={aboutImages.aboutHero.desktop.fallback}
-              alt=""
-              className="w-full h-full object-cover object-center"
-              onLoad={() => setImageLoaded(true)}
-            />
-          </picture>
+          {/* Background Image with blur-up loading */}
+          <BlurImage
+            images={aboutImages.aboutHero}
+            placeholder={aboutImages.aboutHero.placeholder}
+            onLoad={() => setImageLoaded(true)}
+          />
 
           {/* Gradient overlay */}
           <div
