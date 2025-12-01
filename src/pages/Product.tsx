@@ -3,6 +3,7 @@ import { ProductHeroSection } from '@/components/sections/ProductHeroSection'
 import { IndustryCarouselSection } from '@/components/sections/IndustryCarouselSection'
 import { FeaturesGridSection } from '@/components/sections/FeaturesGridSection'
 import { ROICalculatorSection } from '@/components/sections/ROICalculatorSection'
+import { PricingCardsSection } from '@/components/sections/PricingCardsSection'
 import { PlatformTiersSection } from '@/components/sections/PlatformTiersSection'
 import { StrategicAdvisorySection } from '@/components/sections/StrategicAdvisorySection'
 import { FAQSection } from '@/components/sections/FAQSection'
@@ -17,6 +18,7 @@ function Product() {
       <IndustryCarouselSection />
       <FeaturesGridSection />
       <ROICalculatorSection />
+      <PricingCardsSection />
       <PlatformTiersSection />
       <StrategicAdvisorySection />
       <ReadyToAchieveSection />
