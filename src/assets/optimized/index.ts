@@ -211,6 +211,8 @@ export const optimizedImages = {
       avif: feature5DesktopAvif,
       fallback: feature5DesktopPng,
     },
+    // Uses same placeholder as feature3 since they share the same image
+    placeholder: feature3Placeholder,
   },
   whoWeHelp: {
     mobile: {

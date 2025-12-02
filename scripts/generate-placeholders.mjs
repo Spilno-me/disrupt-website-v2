@@ -10,6 +10,7 @@ const QUALITY = 20
 const SOURCE_DIRS = [
   { src: 'src/assets/optimized', pattern: /hero-frame.*\.png$/ },
   { src: 'src/assets/optimized/product', pattern: /product-hero.*\.png$/ },
+  { src: 'src/assets/optimized/product', pattern: /industry-.*-desktop\.png$/ },
   { src: 'src/assets/optimized/about', pattern: /about-hero.*\.png$/ },
 ]
 

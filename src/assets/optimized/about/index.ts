@@ -63,7 +63,15 @@ import aboutHeroTabletPng from './about-hero-tablet.png'
 import aboutHeroDesktopWebp from './about-hero-desktop.webp'
 import aboutHeroDesktopAvif from './about-hero-desktop.avif'
 import aboutHeroDesktopPng from './about-hero-desktop.png'
+
+// Placeholders
 import aboutHeroPlaceholder from '../placeholders/about-hero-desktop-placeholder.webp'
+import ourStoryPlaceholder from '../placeholders/our-story-desktop-placeholder.webp'
+import ourMissionPlaceholder from '../placeholders/our-mission-desktop-placeholder.webp'
+import ourVisionPlaceholder from '../placeholders/our-vision-desktop-placeholder.webp'
+import ourValuesPlaceholder from '../placeholders/our-values-desktop-placeholder.webp'
+import partnersPlaceholder from '../placeholders/partners-desktop-placeholder.webp'
+import proofAtGlancePlaceholder from '../placeholders/proof-at-glance-desktop-placeholder.webp'
 
 // Proof at Glance
 import proofAtGlanceMobileWebp from './proof-at-glance-mobile.webp'
@@ -93,6 +101,7 @@ export const aboutImages = {
       avif: ourStoryDesktopAvif,
       fallback: ourStoryDesktopPng,
     },
+    placeholder: ourStoryPlaceholder,
   },
   ourMission: {
     mobile: {
@@ -110,6 +119,7 @@ export const aboutImages = {
       avif: ourMissionDesktopAvif,
       fallback: ourMissionDesktopPng,
     },
+    placeholder: ourMissionPlaceholder,
   },
   ourVision: {
     mobile: {
@@ -127,6 +137,7 @@ export const aboutImages = {
       avif: ourVisionDesktopAvif,
       fallback: ourVisionDesktopPng,
     },
+    placeholder: ourVisionPlaceholder,
   },
   ourValues: {
     mobile: {
@@ -144,6 +155,7 @@ export const aboutImages = {
       avif: ourValuesDesktopAvif,
       fallback: ourValuesDesktopPng,
     },
+    placeholder: ourValuesPlaceholder,
   },
   partners: {
     mobile: {
@@ -161,6 +173,7 @@ export const aboutImages = {
       avif: partnersDesktopAvif,
       fallback: partnersDesktopPng,
     },
+    placeholder: partnersPlaceholder,
   },
   aboutHero: {
     mobile: {
@@ -196,5 +209,6 @@ export const aboutImages = {
       avif: proofAtGlanceDesktopAvif,
       fallback: proofAtGlanceDesktopPng,
     },
+    placeholder: proofAtGlancePlaceholder,
   },
 }

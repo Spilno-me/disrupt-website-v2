@@ -1,5 +1,5 @@
-import { useState, useRef, useCallback, forwardRef, useEffect } from 'react'
-import { motion } from 'motion/react'
+import { useState, useRef, useCallback, forwardRef, useEffect, memo } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import { Building2, Factory, Zap, Pill, Truck } from 'lucide-react'
 import { SectionContainer } from '@/components/ui/SectionLayout'
@@ -60,6 +60,13 @@ import logisticsMobileAvif from '@/assets/optimized/product/industry-logistics-m
 import logisticsMobileWebp from '@/assets/optimized/product/industry-logistics-mobile.webp'
 import logisticsMobilePng from '@/assets/optimized/product/industry-logistics-mobile.png'
 
+// Placeholders
+import constructionPlaceholder from '@/assets/optimized/placeholders/industry-construction-desktop-placeholder.webp'
+import manufacturingPlaceholder from '@/assets/optimized/placeholders/industry-manufacturing-desktop-placeholder.webp'
+import energyPlaceholder from '@/assets/optimized/placeholders/industry-energy-desktop-placeholder.webp'
+import pharmaPlaceholder from '@/assets/optimized/placeholders/industry-pharma-desktop-placeholder.webp'
+import logisticsPlaceholder from '@/assets/optimized/placeholders/industry-logistics-desktop-placeholder.webp'
+
 // =============================================================================
 // TYPES
 // =============================================================================
@@ -68,6 +75,7 @@ interface ResponsiveImages {
   desktop: { avif: string; webp: string; png: string }
   tablet: { avif: string; webp: string; png: string }
   mobile: { avif: string; webp: string; png: string }
+  placeholder?: string
 }
 
 interface Industry {
@@ -92,6 +100,7 @@ const INDUSTRIES: Industry[] = [
       desktop: { avif: constructionDesktopAvif, webp: constructionDesktopWebp, png: constructionDesktopPng },
       tablet: { avif: constructionTabletAvif, webp: constructionTabletWebp, png: constructionTabletPng },
       mobile: { avif: constructionMobileAvif, webp: constructionMobileWebp, png: constructionMobilePng },
+      placeholder: constructionPlaceholder,
     },
   },
   {
@@ -103,6 +112,7 @@ const INDUSTRIES: Industry[] = [
       desktop: { avif: manufacturingDesktopAvif, webp: manufacturingDesktopWebp, png: manufacturingDesktopPng },
       tablet: { avif: manufacturingTabletAvif, webp: manufacturingTabletWebp, png: manufacturingTabletPng },
       mobile: { avif: manufacturingMobileAvif, webp: manufacturingMobileWebp, png: manufacturingMobilePng },
+      placeholder: manufacturingPlaceholder,
     },
   },
   {
@@ -114,6 +124,7 @@ const INDUSTRIES: Industry[] = [
       desktop: { avif: energyDesktopAvif, webp: energyDesktopWebp, png: energyDesktopPng },
       tablet: { avif: energyTabletAvif, webp: energyTabletWebp, png: energyTabletPng },
       mobile: { avif: energyMobileAvif, webp: energyMobileWebp, png: energyMobilePng },
+      placeholder: energyPlaceholder,
     },
   },
   {
@@ -125,6 +136,7 @@ const INDUSTRIES: Industry[] = [
       desktop: { avif: pharmaDesktopAvif, webp: pharmaDesktopWebp, png: pharmaDesktopPng },
       tablet: { avif: pharmaTabletAvif, webp: pharmaTabletWebp, png: pharmaTabletPng },
       mobile: { avif: pharmaMobileAvif, webp: pharmaMobileWebp, png: pharmaMobilePng },
+      placeholder: pharmaPlaceholder,
     },
   },
   {
@@ -136,6 +148,7 @@ const INDUSTRIES: Industry[] = [
       desktop: { avif: logisticsDesktopAvif, webp: logisticsDesktopWebp, png: logisticsDesktopPng },
       tablet: { avif: logisticsTabletAvif, webp: logisticsTabletWebp, png: logisticsTabletPng },
       mobile: { avif: logisticsMobileAvif, webp: logisticsMobileWebp, png: logisticsMobilePng },
+      placeholder: logisticsPlaceholder,
     },
   },
 ]
@@ -155,6 +168,7 @@ interface IndustryCardProps {
 const IndustryCard = forwardRef<HTMLDivElement, IndustryCardProps>(
   ({ industry, isExpanded, onClick, isMobile, parallaxOffset }, ref) => {
   const Icon = industry.icon
+  const [isLoaded, setIsLoaded] = useState(false)
 
   // Parallax: image moves slower than scroll (creates depth effect)
   // Range limited to stay within image bounds (image is scaled 1.3x = 30% extra, 15% each side)
@@ -194,8 +208,28 @@ const IndustryCard = forwardRef<HTMLDivElement, IndustryCardProps>(
           x: { duration: 0.15, ease: 'easeOut' },
         }}
       >
-        <div className="w-full h-full">
-          <picture>
+        <div className="w-full h-full relative">
+          {/* Blur placeholder */}
+          {industry.images.placeholder && (
+            <motion.img
+              src={industry.images.placeholder}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ filter: 'blur(20px)', transform: 'scale(1.1)' }}
+              initial={{ opacity: 1 }}
+              animate={{ opacity: isLoaded ? 0 : 1 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+            />
+          )}
+
+          {/* Full resolution picture */}
+          <motion.picture
+            className="block w-full h-full"
+            initial={{ opacity: industry.images.placeholder ? 0 : 1 }}
+            animate={{ opacity: isLoaded || !industry.images.placeholder ? 1 : 0 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+          >
             {/* Mobile (up to 640px) */}
             <source
               media="(max-width: 640px)"
@@ -241,8 +275,9 @@ const IndustryCard = forwardRef<HTMLDivElement, IndustryCardProps>(
               src={industry.images.desktop.png}
               alt={industry.name}
               className="w-full h-full object-cover"
+              onLoad={() => setIsLoaded(true)}
             />
-          </picture>
+          </motion.picture>
         </div>
       </motion.div>
 
