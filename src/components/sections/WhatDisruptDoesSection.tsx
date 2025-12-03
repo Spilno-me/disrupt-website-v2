@@ -1,8 +1,30 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { useInView } from 'motion/react'
 import { FeatureCard, FeatureCardProps } from '@/components/ui/FeatureCard'
 import { SectionContainer, SectionHeading } from '@/components/ui/SectionLayout'
 import { COLORS } from '@/constants/designTokens'
+
+// =============================================================================
+// TABLET DETECTION HOOK
+// =============================================================================
+
+function useIsTablet() {
+  const [isTablet, setIsTablet] = useState(false)
+
+  useEffect(() => {
+    const checkTablet = () => {
+      const width = window.innerWidth
+      // Tablet: 640px to 1023px (sm to lg breakpoint)
+      setIsTablet(width >= 640 && width < 1024)
+    }
+
+    checkTablet()
+    window.addEventListener('resize', checkTablet)
+    return () => window.removeEventListener('resize', checkTablet)
+  }, [])
+
+  return isTablet
+}
 
 // =============================================================================
 // FEATURE DATA
@@ -41,12 +63,17 @@ const FEATURES: Omit<FeatureCardProps, 'isSequenceActive' | 'hasCompletedSequenc
 
 export function WhatDisruptDoesSection() {
   const sectionRef = useRef<HTMLElement>(null)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const isTablet = useIsTablet()
 
   // Track which card is currently animating (-1 = none, 0-3 = card index)
   const [activeIndex, setActiveIndex] = useState(-1)
 
   // Track which cards have completed their animation
   const [completedCards, setCompletedCards] = useState<Set<number>>(new Set())
+
+  // Track which card is currently tapped on tablet (-1 = none)
+  const [tappedIndex, setTappedIndex] = useState(-1)
 
   // Track if sequence has ever started (to prevent re-triggering)
   const hasStartedRef = useRef(false)
@@ -78,6 +105,31 @@ export function WhatDisruptDoesSection() {
     }
   }, [])
 
+  // Handle tap on a card (tablet only)
+  const handleCardTap = useCallback((index: number) => {
+    // Toggle: if same card is tapped, deactivate; otherwise activate new card
+    setTappedIndex(prev => prev === index ? -1 : index)
+  }, [])
+
+  // Handle click outside cards to deactivate tap animation (tablet only)
+  useEffect(() => {
+    if (!isTablet || tappedIndex === -1) return
+
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (gridRef.current && !gridRef.current.contains(e.target as Node)) {
+        setTappedIndex(-1)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
+  }, [isTablet, tappedIndex])
+
   return (
     <section
       ref={sectionRef}
@@ -94,7 +146,10 @@ export function WhatDisruptDoesSection() {
           />
 
           {/* Feature Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-24 sm:gap-8 lg:gap-10 w-full">
+          <div
+            ref={gridRef}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-24 sm:gap-8 lg:gap-10 w-full"
+          >
             {FEATURES.map((feature, index) => (
               <FeatureCard
                 key={feature.title}
@@ -102,6 +157,8 @@ export function WhatDisruptDoesSection() {
                 isSequenceActive={activeIndex === index}
                 hasCompletedSequence={completedCards.has(index)}
                 onSequenceComplete={() => handleCardComplete(index)}
+                isTappedActive={tappedIndex === index}
+                onTap={() => handleCardTap(index)}
               />
             ))}
           </div>

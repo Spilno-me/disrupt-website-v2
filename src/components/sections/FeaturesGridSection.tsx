@@ -39,7 +39,7 @@ const FEATURES: FeatureCardData[] = [
 function FeatureGridCard({ title, description }: FeatureCardData) {
   return (
     <div
-      className="flex flex-col gap-6 p-6 rounded-xl border border-slate-200 bg-cream"
+      className="flex flex-col gap-6 p-6 rounded-xl border border-dashed border-slate-300 bg-cream"
       data-element="feature-grid-card"
     >
       <div className="flex flex-col gap-4">

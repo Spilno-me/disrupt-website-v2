@@ -146,20 +146,22 @@ function PrivacyPolicyField({ control }: ContactFormFieldsProps) {
       control={control}
       name="privacyPolicy"
       render={({ field }) => (
-        <FormItem className="flex items-center gap-3 w-full space-y-0">
-          <FormControl>
-            <Checkbox
-              checked={field.value}
-              onCheckedChange={field.onChange}
-              className={`${FORM_CONSTANTS.CHECKBOX_SIZES.MOBILE} ${FORM_CONSTANTS.CHECKBOX_SIZES.DESKTOP} flex-shrink-0`}
-            />
-          </FormControl>
-          <div className="grid gap-1.5 leading-none">
-            <FormLabel className="text-sm leading-tight cursor-pointer">
-              <PrivacyPolicyLabel text={t('contact.form.labels.privacyPolicy')} />
-            </FormLabel>
-            <FormMessage />
+        <FormItem className="w-full space-y-0">
+          <div className="flex items-start gap-3">
+            <FormControl>
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={field.onChange}
+                className={`${FORM_CONSTANTS.CHECKBOX_SIZES.MOBILE} ${FORM_CONSTANTS.CHECKBOX_SIZES.DESKTOP} flex-shrink-0 mt-0.5`}
+              />
+            </FormControl>
+            <div className="flex-1 min-h-[24px]">
+              <FormLabel className="text-sm leading-tight cursor-pointer">
+                <PrivacyPolicyLabel text={t('contact.form.labels.privacyPolicy')} />
+              </FormLabel>
+            </div>
           </div>
+          <FormMessage className="ml-8" />
         </FormItem>
       )}
     />

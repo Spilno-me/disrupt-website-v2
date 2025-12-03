@@ -3,6 +3,25 @@ import { motion, useMotionValue, useSpring, animate } from 'motion/react'
 import { ElectricLucideIcon, IconName } from '@/components/ui/ElectricLucideIcon'
 import { useIsMobile } from '@/hooks'
 
+// Hook to detect tablet (between mobile and desktop)
+function useIsTablet() {
+  const [isTablet, setIsTablet] = useState(false)
+
+  useEffect(() => {
+    const checkTablet = () => {
+      const width = window.innerWidth
+      // Tablet: 640px to 1023px (sm to lg breakpoint)
+      setIsTablet(width >= 640 && width < 1024)
+    }
+
+    checkTablet()
+    window.addEventListener('resize', checkTablet)
+    return () => window.removeEventListener('resize', checkTablet)
+  }, [])
+
+  return isTablet
+}
+
 // =============================================================================
 // CONSTANTS
 // =============================================================================
@@ -34,6 +53,10 @@ export interface FeatureCardProps {
   hasCompletedSequence?: boolean
   /** Callback when sequence animation should complete */
   onSequenceComplete?: () => void
+  /** External control: is this card tapped active (for tablet) */
+  isTappedActive?: boolean
+  /** Callback when card is tapped (for tablet) */
+  onTap?: () => void
 }
 
 // =============================================================================
@@ -57,10 +80,12 @@ export function FeatureCard({
   isSequenceActive = false,
   hasCompletedSequence = false,
   onSequenceComplete,
+  isTappedActive = false,
+  onTap,
 }: FeatureCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const isMobile = useIsMobile()
-  const cardRef = useRef<HTMLDivElement>(null)
+  const isTablet = useIsTablet()
 
   // Motion values for rotation
   const rotation = useMotionValue(0)
@@ -73,8 +98,10 @@ export function FeatureCard({
   const sequenceStartedRef = useRef(false)
 
   // Determine if spin/electric animation should be active
-  // Active when: sequence is active OR hovering (after sequence completed)
-  const isSpinActive = isSequenceActive || (hasCompletedSequence && isHovered)
+  // Active when: sequence is active OR hovering on desktop OR tapped on tablet
+  const isSpinActive = isSequenceActive ||
+    (hasCompletedSequence && isHovered && !isTablet) ||
+    (hasCompletedSequence && isTappedActive && isTablet)
 
   // Determine if text should be visible
   // Visible when: sequence is active OR sequence has completed OR on mobile
@@ -124,21 +151,28 @@ export function FeatureCard({
   }, [isSpinActive, rotation])
 
   const handleMouseEnter = () => {
-    if (isMobile) return
+    if (isMobile || isTablet) return
     setIsHovered(true)
   }
 
   const handleMouseLeave = () => {
-    if (isMobile) return
+    if (isMobile || isTablet) return
     setIsHovered(false)
+  }
+
+  // Handle tap on tablet - notify parent to manage state
+  const handleCardClick = () => {
+    if (isTablet && hasCompletedSequence) {
+      onTap?.()
+    }
   }
 
   return (
     <div
-      ref={cardRef}
       className="flex flex-col items-center text-center gap-4 sm:gap-6 cursor-pointer"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleCardClick}
     >
       {/* Icon with colored circle and dashed outer ring */}
       <div className="relative w-24 h-24 sm:w-[120px] sm:h-[120px]" data-cursor-repel="true">

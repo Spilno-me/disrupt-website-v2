@@ -39,7 +39,7 @@ export const FORM_CONSTANTS = {
     DESKTOP: 'sm:text-sm'
   },
   CHECKBOX_SIZES: {
-    MOBILE: 'w-5 h-5',
+    MOBILE: 'w-6 h-6',
     DESKTOP: 'sm:w-4 sm:h-4'
   }
 } as const;

@@ -164,7 +164,7 @@ export function ROICalculatorSection() {
         </div>
 
         {/* Calculator Card */}
-        <div className="max-w-[1120px] mx-auto bg-white rounded-[14px] border border-slate-200 overflow-hidden">
+        <div className="max-w-[1120px] mx-auto bg-white rounded-[14px] border border-dashed border-slate-300 overflow-hidden">
           <div className="flex flex-col lg:flex-row">
             {/* Left Side - Sliders */}
             <div className="flex-1 p-6 lg:p-8">
