@@ -73,10 +73,10 @@ export function Header({
       data-element="main-header"
     >
       <nav
-        className="flex items-center gap-4 p-4"
+        className="flex items-center gap-4 py-4 px-4 sm:px-6"
         data-element="header-nav"
       >
-        <div className="w-full max-w-[1359px] mx-auto flex items-center justify-between gap-4">
+        <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center overflow-visible" data-element="header-logo">
             <AnimatedLogo
