@@ -1,12 +1,12 @@
 import { useState, useCallback, useRef } from 'react'
-import { ANIMATION, COLORS } from '@/constants/designTokens'
+import { ANIMATION, COLORS } from '@disrupt/design-system/tokens'
 
-// Particle spawn configuration
+// Particle spawn configuration - Teal variations matching brand color
 const PARTICLE_COLORS = [
-  COLORS.circleBlue,
-  '#60A5FA',
-  '#93C5FD',
-  '#BFDBFE',
+  COLORS.teal,      // Base teal #08A4BD
+  '#3DBDD4',        // Light teal (60% lighter)
+  '#6FD0E0',        // Lighter teal (75% lighter)
+  '#A1E3EC',        // Lightest teal (85% lighter)
 ] as const
 
 const POSITION_OFFSET = 30

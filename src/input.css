@@ -46,29 +46,117 @@
 }
 
 @theme {
+  /* Fonts */
   --font-display: "Pilat Extended", "Arial", "sans-serif";
   --font-sans: "Fixel", "system-ui", "sans-serif";
 
   /* Custom animations */
   --animate-spin-slow: spin-slow 3s linear infinite;
-  --color-primary: #3b82f6;
+
+  /* Brand Colors */
+  --color-primary: #2D3142;         /* Dark - primary text/buttons */
+  --color-accent: #08A4BD;          /* Teal - links/accents */
+  --color-ferrari-red: #F70D1A;     /* Brand red */
   --color-secondary: #9333ea;
 
-  /* Figma Design Colors */
+  /* Background Colors */
   --color-cream: #FBFBF3;           /* Main background */
-  --color-dark: #2D3142;            /* Primary dark / text / buttons */
-  --color-teal: #08A4BD;            /* Accent / links */
-  --color-ferrari-red: #F70D1A;     /* Brand accent (logo red) */
-  --color-muted: #5E4F7E;           /* Secondary/paragraph text (dusty purple) */
-  --color-darkPurple: #341E63;      /* Section headings, pricing tables */
-  --color-slate: #CBD5E1;           /* Disabled/inactive states */
-  --color-lightPurple: #F5F1FD;     /* Light backgrounds */
+  --color-background: #FBFBF3;
+  --color-surface: #FFFFFF;
+
+  /* Text Colors */
+  --color-dark: #2D3142;            /* Primary text */
+  --color-muted: #5E4F7E;           /* Secondary/paragraph text */
+  --color-text-secondary: #5E4F7E;  /* Alias for muted */
+  --color-text-primary: #2D3142;
+  --color-slate: #CBD5E1;           /* Disabled/inactive */
+
+  /* Semantic Colors */
+  --color-teal: #08A4BD;            /* Accent color */
+  --color-error: #F70D1A;
+  --color-linkedin: #0A66C2;
 
   /* Feature Card Circle Colors */
   --color-circle-blue: #3B82F6;     /* Automate */
   --color-circle-red: #EF4444;      /* Advice */
   --color-circle-yellow: #EAB308;   /* Adapt */
   --color-circle-green: #22C55E;    /* Scale */
+
+  /* Layout Max Widths */
+  --max-width-container: 1358px;    /* Main container max-width */
+  --max-width-hero: 1358px;         /* Hero frame max-width */
+  --max-width-header: 1358px;       /* Header max-width */
+
+  /* Spacing (using Tailwind's spacing scale) */
+  --spacing: 0.25rem;               /* Base spacing unit (4px) */
+
+  /* Border Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* Transitions */
+  --transition-fast: 150ms;
+  --transition-normal: 200ms;
+  --transition-smooth: 300ms;
+
+  /* Typography - Font Sizes */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  --font-size-4xl: 36px;
+  --font-size-5xl: 48px;
+  --font-size-6xl: 60px;
+  --font-size-7xl: 72px;
+  --font-size-8xl: 96px;
+  --font-size-9xl: 128px;
+
+  /* Line Heights */
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+
+  /* Letter Spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+
+  /* Border Widths */
+  --border-width-0: 0px;
+  --border-width-1: 1px;
+  --border-width-2: 2px;
+  --border-width-4: 4px;
+  --border-width-8: 8px;
+
+  /* Z-Index Layers */
+  --z-index-0: 0;
+  --z-index-10: 10;
+  --z-index-20: 20;
+  --z-index-30: 30;
+  --z-index-40: 40;
+  --z-index-50: 50;
+  --z-index-100: 100;
 }
 
 /* Glass morphism header styling - Figma design */
@@ -314,52 +402,6 @@
   left: 0;
   right: 0;
   z-index: 1000;
-}
-
-.contact-button {
-  display: flex;
-  height: 36px;
-  padding: 8px 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 10px;
-  background: #E6E8E6;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background-color 0.2s ease-in-out;
-}
-
-@media (hover: hover) {
-  .contact-button:hover {
-    background: #10b981;
-    color: white;
-  }
-  
-  .contact-form-submit:hover {
-    background: #10b981 !important;
-    color: white !important;
-  }
-}
-
-/* Mobile contact button - green by default since no hover on mobile */
-.contact-button-mobile {
-  display: flex;
-  height: 36px;
-  padding: 8px 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 10px;
-  background: #10b981;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: background-color 0.2s ease-in-out;
 }
 
 .hero-content-wrapper {

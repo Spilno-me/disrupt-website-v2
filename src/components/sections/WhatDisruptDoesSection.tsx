@@ -1,8 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useInView } from 'motion/react'
-import { FeatureCard, FeatureCardProps } from '@/components/ui/FeatureCard'
-import { SectionContainer, SectionHeading } from '@/components/ui/SectionLayout'
-import { COLORS } from '@/constants/designTokens'
+import { FeatureCard, FeatureCardProps } from '@disrupt/design-system'
+import { SectionContainer, SectionHeading } from '@disrupt/design-system'
+import { COLORS } from '@disrupt/design-system/tokens'
 
 // =============================================================================
 // TABLET DETECTION HOOK
@@ -30,28 +30,28 @@ function useIsTablet() {
 // FEATURE DATA
 // =============================================================================
 
-const FEATURES: Omit<FeatureCardProps, 'isSequenceActive' | 'hasCompletedSequence' | 'onSequenceComplete'>[] = [
+const FEATURES: Omit<FeatureCardProps, 'isSequenceActive' | 'hasCompletedSequence' | 'onSequenceComplete' | 'isTappedActive' | 'onTap'>[] = [
   {
     iconName: 'automate',
-    circleColor: COLORS.circleBlue,
+    circleColor: COLORS.feature.blue,
     title: 'Automate',
     description: <>Cut up to <strong>70% of admin</strong> — freeing time for training, coaching, and prevention.</>,
   },
   {
     iconName: 'advice',
-    circleColor: COLORS.circleRed,
+    circleColor: COLORS.feature.red,
     title: 'Advice',
     description: <><strong>Real-time AI guidance</strong> during audits and reporting — helping teams avoid mistakes before they become incidents.</>,
   },
   {
     iconName: 'adapt',
-    circleColor: COLORS.circleYellow,
+    circleColor: COLORS.feature.yellow,
     title: 'Adapt',
     description: <>Build forms and workflows <strong>instantly</strong> — no coding, no bottlenecks. Flexible enough for EHS today.</>,
   },
   {
     iconName: 'scale',
-    circleColor: COLORS.circleGreen,
+    circleColor: COLORS.feature.green,
     title: 'Scale',
     description: <>Architected to <strong>extend beyond EHS</strong> into any workflow where admin slows people down.</>,
   },

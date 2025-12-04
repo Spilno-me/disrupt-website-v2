@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import { Button } from '@disrupt/design-system'
+import { ElectricButtonWrapper } from '@disrupt/design-system'
 import { scrollToElement } from '@/utils/navigation'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
+import { GridBlobBackground } from '@disrupt/design-system'
 
 // =============================================================================
 // COMPONENT
@@ -14,10 +14,10 @@ export function ReadyToAchieveSection() {
       data-element="ready-to-achieve-section"
     >
       <GridBlobBackground scale={1.5} />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-[1]">
+      <div className="max-w-container mx-auto px-4 sm:px-6 relative z-[1]">
         <div className="flex flex-col items-start lg:items-center text-left lg:text-center">
           {/* Heading */}
-          <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] mb-4 text-dark">
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-display font-bold leading-[1.2] mb-4 text-dark">
             Ready to Achieve Predictive Prevention?
           </h2>
 

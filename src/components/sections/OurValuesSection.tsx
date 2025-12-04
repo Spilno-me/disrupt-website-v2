@@ -1,5 +1,5 @@
-import { AnimatedCheck } from '@/components/ui/AnimatedCheck'
-import { ContentSection } from '@/components/ui/SectionLayout'
+import { AnimatedCheck } from '@disrupt/design-system'
+import { ContentSection } from '@disrupt/design-system'
 import { aboutImages } from '@/assets/optimized/about'
 
 // =============================================================================

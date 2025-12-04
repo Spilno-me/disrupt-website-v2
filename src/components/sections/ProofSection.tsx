@@ -1,12 +1,12 @@
-import { BlobSection } from '@/components/ui/GridBlobCanvas'
-import { CheckListItem } from '@/components/ui/CheckListItem'
+import { BlobSection } from '@disrupt/design-system'
+import { CheckListItem } from '@disrupt/design-system'
 import {
   SectionContainer,
   SectionHeading,
   TwoColumnLayout,
   Column,
-} from '@/components/ui/SectionLayout'
-import { ResponsiveImage } from '@/components/ui/ResponsiveImage'
+} from '@disrupt/design-system'
+import { ResponsiveImage } from '@disrupt/design-system'
 import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================

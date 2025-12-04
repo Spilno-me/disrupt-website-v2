@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, RefObject } from 'react'
-import { LAYOUT, COLOR_CONSTANTS } from '@/constants/designTokens'
+import { LAYOUT, COLOR_CONSTANTS } from '@disrupt/design-system/tokens'
 import {
   getColorBrightness,
   checkDarkImageElementsInHeaderArea,

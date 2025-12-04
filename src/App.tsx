@@ -1,5 +1,5 @@
 import { Toaster } from 'sonner'
-import { TooltipProvider } from '@/components/ui/tooltip'
+import { TooltipProvider } from '@disrupt/design-system'
 import { PageLayout } from '@/components/layout/PageLayout'
 import { HeroSection } from '@/components/sections/HeroSection'
 import { AIPlatformSection } from '@/components/sections/AIPlatformSection'

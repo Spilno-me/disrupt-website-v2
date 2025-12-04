@@ -1,15 +1,15 @@
 import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form } from '@/components/ui/form'
+import { Form } from '@disrupt/design-system'
 import { createContactFormSchema, ContactFormData, defaultFormValues } from '@/schemas/createContactFormSchema'
 import { useTranslation } from '@/hooks/useI18n'
 import { useContactFormSubmission } from '@/hooks/useContactFormSubmission'
 import { ContactFormFields } from './ContactFormFields'
 import { ContactFormSuccessModal } from './ContactFormSuccessModal'
 import { ContactFormErrorModal } from './ContactFormErrorModal'
-import { Button } from '@/components/ui/button'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import { Button } from '@disrupt/design-system'
+import { ElectricButtonWrapper } from '@disrupt/design-system'
 
 export function ContactForm() {
   const { t } = useTranslation()

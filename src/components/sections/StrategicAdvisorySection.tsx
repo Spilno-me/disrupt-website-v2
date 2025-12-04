@@ -1,4 +1,4 @@
-import { COLORS } from '@/constants/designTokens'
+import { COLORS } from '@disrupt/design-system/tokens'
 import { Shield, BookOpen, BarChart3, Scale } from 'lucide-react'
 
 // =============================================================================
@@ -45,22 +45,14 @@ const ADVISORY_FEATURES: AdvisoryFeature[] = [
 function FeatureItem({ icon: Icon, title, description }: AdvisoryFeature) {
   return (
     <div className="flex gap-4">
-      <div
-        className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center bg-darkPurple/10"
-      >
-        <Icon className="w-6 h-6" style={{ color: COLORS.darkPurple }} strokeWidth={2} />
+      <div className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center bg-muted-100">
+        <Icon className="w-6 h-6 text-muted" strokeWidth={2} />
       </div>
       <div className="flex flex-col gap-1">
-        <h4
-          className="font-sans font-bold text-base tracking-tight"
-          style={{ color: COLORS.darkPurple }}
-        >
+        <h4 className="font-sans font-bold text-base tracking-tight text-dark">
           {title}
         </h4>
-        <p
-          className="font-sans text-sm leading-[1.43] tracking-tight"
-          style={{ color: COLORS.muted }}
-        >
+        <p className="font-sans text-sm leading-[1.43] tracking-tight text-muted">
           {description}
         </p>
       </div>
@@ -78,14 +70,14 @@ export function StrategicAdvisorySection() {
       className="py-8 sm:py-12 lg:py-16 bg-cream border-y-dashed-figma"
       data-element="strategic-advisory-section"
     >
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 flex justify-center relative z-[1]">
+      <div className="max-w-container mx-auto px-4 sm:px-6 flex justify-center relative z-[1]">
         {/* Card */}
-        <div className="max-w-[894px] w-full bg-white rounded-[14px] border border-dashed border-teal relative">
+        <div className="max-w-[894px] w-full bg-white rounded-lg border border-dashed border-teal relative">
           {/* Badge */}
           <div className="absolute -top-3 left-1/2 -translate-x-1/2">
             <span
               className="px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold text-white whitespace-nowrap"
-              style={{ backgroundColor: COLORS.circleRed }}
+              style={{ backgroundColor: COLORS.feature.red }}
             >
               STRATEGIC ADVISORY ADD-ON
             </span>
@@ -99,24 +91,15 @@ export function StrategicAdvisorySection() {
                 <h3 className="text-xl sm:text-2xl font-display font-bold uppercase tracking-wide text-dark">
                   Expert Agents
                 </h3>
-                <p
-                  className="font-sans text-sm max-w-[320px]"
-                  style={{ color: COLORS.muted }}
-                >
+                <p className="font-sans text-sm max-w-[320px] text-muted">
                   Your virtual board of directors, available 24/7.
                 </p>
               </div>
               <div className="flex flex-col gap-1 md:text-right">
-                <span
-                  className="font-display font-bold text-2xl"
-                  style={{ color: COLORS.ferrariRed }}
-                >
+                <span className="font-display font-bold text-2xl text-dark">
                   $7500/mo
                 </span>
-                <span
-                  className="font-sans text-sm"
-                  style={{ color: COLORS.muted }}
-                >
+                <span className="font-sans text-sm text-muted">
                   Replaces €100k–500k/yr consulting spend
                 </span>
               </div>

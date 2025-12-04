@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { ChevronDown } from 'lucide-react'
-import { COLORS } from '@/constants/designTokens'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
+import { GridBlobBackground } from '@disrupt/design-system'
 
 // =============================================================================
 // TYPES
@@ -55,14 +54,11 @@ function AccordionItem({ item, isOpen, onToggle, isLast = false }: AccordionItem
   return (
     <div className={isLast ? '' : 'border-b border-dashed border-teal'}>
       <button
-        className="w-full flex items-center justify-between py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-md"
+        className="w-full flex items-center justify-between py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
         onClick={onToggle}
         aria-expanded={isOpen}
       >
-        <span
-          className="font-sans font-medium text-sm pr-4"
-          style={{ color: COLORS.darkPurple }}
-        >
+        <span className="font-sans font-medium text-sm pr-4 text-dark">
           {item.question}
         </span>
         <motion.div
@@ -70,10 +66,7 @@ function AccordionItem({ item, isOpen, onToggle, isLast = false }: AccordionItem
           transition={{ duration: 0.2 }}
           className="flex-shrink-0"
         >
-          <ChevronDown
-            className="w-5 h-5"
-            style={{ color: COLORS.muted }}
-          />
+          <ChevronDown className="w-5 h-5 text-muted" />
         </motion.div>
       </button>
 
@@ -86,10 +79,9 @@ function AccordionItem({ item, isOpen, onToggle, isLast = false }: AccordionItem
             transition={{ duration: 0.2, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="bg-teal/5 rounded-md p-4 mb-4">
+            <div className="bg-teal/5 rounded-sm p-4 mb-4">
               <p
-                className="font-sans text-sm leading-relaxed"
-                style={{ color: COLORS.darkPurple }}
+                className="font-sans text-sm leading-relaxed text-text-secondary"
               >
                 {item.answer}
               </p>
@@ -118,7 +110,7 @@ export function FAQSection() {
       data-element="faq-section"
     >
       <GridBlobBackground scale={1.5} />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-[1]">
+      <div className="max-w-container mx-auto px-4 sm:px-6 relative z-[1]">
         {/* Dashed separator */}
         <div className="max-w-[900px] mx-auto mb-10">
           <div className="border-t-2 border-dashed border-teal/40" />
@@ -126,7 +118,7 @@ export function FAQSection() {
 
         <div className="max-w-[620px] mx-auto">
           {/* Header */}
-          <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-left lg:text-center text-dark mb-10">
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-display font-bold leading-[1.2] text-left lg:text-center text-dark mb-10">
             FAQs
           </h2>
 

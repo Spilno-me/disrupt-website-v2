@@ -1,10 +1,9 @@
-import { COLORS } from '@/constants/designTokens'
 import { Check, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import { Button } from '@disrupt/design-system'
+import { ElectricButtonWrapper } from '@disrupt/design-system'
 import { scrollToElement } from '@/utils/navigation'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
-import { ScrollableTableWrapper } from '@/components/ui/ScrollableTableWrapper'
+import { GridBlobBackground } from '@disrupt/design-system'
+import { ScrollableTableWrapper } from '@disrupt/design-system'
 
 // =============================================================================
 // TYPES
@@ -34,7 +33,7 @@ const PRICING_TIERS: PricingTier[] = [
   {
     name: 'Viewer',
     price: '$10/mo',
-    description: 'Field workers, contractors, employees. Report observations, receive training.',
+    description: 'Field Workers & Personnel. Report observations, access assigned training. ',
   },
   {
     name: 'Contributor',
@@ -51,40 +50,6 @@ const PRICING_TIERS: PricingTier[] = [
     name: 'Creator',
     price: '$150/mo',
     description: 'Core EHS team, administrators. All model building, system configuration.',
-  },
-]
-
-// Core Capabilities Table
-const CORE_CAPABILITIES_HEADER: FeatureRow = {
-  label: 'CORE CAPABILITIES',
-  viewer: 'Viewer',
-  contributor: 'Contributor',
-  powerUser: 'Power User',
-  creator: 'Creator',
-}
-
-const CORE_CAPABILITIES: FeatureRow[] = [
-  {
-    label: 'Annual Platform Fee',
-    description: 'Quoted based on total business siz...',
-    viewer: '',
-    contributor: '',
-    powerUser: 'Get a Custom Quote',
-    creator: '',
-  },
-  {
-    label: 'Per-User Fee (Monthly)',
-    viewer: '$10/mo',
-    contributor: '$30/mo',
-    powerUser: '$60/mo',
-    creator: '$150/mo',
-  },
-  {
-    label: 'Definition:',
-    viewer: 'Field workers, contractors, employees. Report observations, receive training.',
-    contributor: 'Department heads, supervisors. Full incident entry, workflow approvals.',
-    powerUser: 'EHS Specialists, managers. Advanced data analysis, report building.',
-    creator: 'Core EHS team, administrators. All model building, system configuration.',
   },
 ]
 
@@ -182,37 +147,26 @@ function FeatureCell({
     >
       {isCheck && (
         <Check
-          className="w-5 h-5 mx-auto"
-          style={{ color: isHighlighted ? '#fff' : COLORS.dark }}
+          className={`w-5 h-5 mx-auto ${isHighlighted ? 'text-white' : 'text-dark'}`}
         />
       )}
       {isX && (
         <X
-          className="w-5 h-5 mx-auto"
-          style={{ color: isHighlighted ? 'rgba(255,255,255,0.5)' : COLORS.slate }}
+          className={`w-5 h-5 mx-auto ${isHighlighted ? 'text-white/50' : 'text-slate-400'}`}
         />
       )}
       {isGetQuote && (
-        <span
-          className="text-sm font-medium"
-          style={{ color: isHighlighted ? '#fff' : COLORS.teal }}
-        >
+        <span className={`text-sm font-medium ${isHighlighted ? 'text-white' : 'text-teal'}`}>
           {value}
         </span>
       )}
       {isPrice && !isCheck && !isX && !isEmpty && !isGetQuote && (
-        <span
-          className={`font-display font-bold text-xl lg:text-2xl ${isHighlighted ? 'text-white' : ''}`}
-          style={{ color: isHighlighted ? undefined : COLORS.darkPurple }}
-        >
+        <span className={`font-display font-bold text-xl lg:text-2xl ${isHighlighted ? 'text-white' : 'text-dark'}`}>
           {value}
         </span>
       )}
       {isDefinition && !isCheck && !isX && !isEmpty && !isGetQuote && (
-        <span
-          className={`text-xs leading-relaxed block text-left ${isHighlighted ? 'text-white/80' : ''}`}
-          style={{ color: isHighlighted ? undefined : COLORS.muted }}
-        >
+        <span className={`text-xs leading-relaxed block text-left ${isHighlighted ? 'text-white/80' : 'text-muted'}`}>
           {value}
         </span>
       )}
@@ -229,17 +183,11 @@ function PricingFeatureCard({
   description: string
 }) {
   return (
-    <div className="flex-1 p-6 bg-white rounded-[14px] border border-dashed border-slate-300">
-      <h3
-        className="font-sans font-bold text-lg mb-2"
-        style={{ color: COLORS.dark }}
-      >
+    <div className="flex-1 p-6 bg-white rounded-lg border border-dashed border-slate-300">
+      <h3 className="font-sans font-bold text-lg mb-2 text-dark">
         {title}
       </h3>
-      <p
-        className="font-sans text-sm leading-relaxed"
-        style={{ color: COLORS.muted }}
-      >
+      <p className="font-sans text-sm leading-relaxed text-muted">
         {description}
       </p>
     </div>
@@ -257,10 +205,10 @@ export function PlatformTiersSection() {
       data-element="platform-tiers-section"
     >
       <GridBlobBackground scale={1.5} />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-[1]">
+      <div className="max-w-container mx-auto px-4 sm:px-6 relative z-[1]">
         {/* Header */}
         <div className="flex flex-col items-start lg:items-center gap-4 mb-10">
-          <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-left lg:text-center text-dark">
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-display font-bold leading-[1.2] text-left lg:text-center text-dark">
             Platform Tiers: Foundational EHS & Agentic AI
           </h2>
           <p className="text-sm sm:text-base lg:text-lg font-display font-medium text-left lg:text-center max-w-[800px] text-teal">
@@ -281,7 +229,7 @@ export function PlatformTiersSection() {
         </div>
 
         {/* Core Capabilities Table */}
-        <div className="bg-white rounded-[14px] overflow-hidden mb-4 border border-dashed border-slate-300">
+        <div className="bg-white rounded-lg overflow-hidden mb-4 border border-dashed border-slate-300">
           <ScrollableTableWrapper>
             <table className="w-full min-w-[800px] table-fixed">
               <colgroup>
@@ -293,19 +241,15 @@ export function PlatformTiersSection() {
               </colgroup>
               <thead>
                 <tr>
-                  <th
-                    className="px-4 py-4 text-left bg-slate-100 font-sans font-semibold text-sm uppercase tracking-wider"
-                    style={{ color: COLORS.dark }}
-                  >
+                  <th className="px-4 py-4 text-left bg-slate-100 font-sans font-semibold text-sm uppercase tracking-wider text-dark">
                     CORE CAPABILITIES
                   </th>
                   {PRICING_TIERS.map((tier) => (
                     <th
                       key={tier.name}
                       className={`px-4 py-4 text-center font-sans font-semibold text-sm ${
-                        tier.isHighlighted ? 'bg-dark text-white' : 'bg-slate-100'
+                        tier.isHighlighted ? 'bg-dark text-white' : 'bg-slate-100 text-dark'
                       }`}
-                      style={{ color: tier.isHighlighted ? undefined : COLORS.dark }}
                     >
                       {tier.name}
                     </th>
@@ -314,12 +258,12 @@ export function PlatformTiersSection() {
               </thead>
               <tbody>
                 {/* Annual Platform Fee */}
-                <tr className="bg-[#5E4F7E]/10">
+                <tr className="bg-muted-50">
                   <td className="px-4 py-4 border-b border-slate-200">
-                    <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
+                    <span className="font-sans font-semibold text-sm block text-dark">
                       Annual Platform Fee
                     </span>
-                    <span className="font-sans text-xs block mt-1" style={{ color: COLORS.muted }}>
+                    <span className="font-sans text-xs block mt-1 text-muted">
                       Quoted based on total business size
                     </span>
                   </td>
@@ -336,7 +280,7 @@ export function PlatformTiersSection() {
                 {/* Per-User Fee */}
                 <tr>
                   <td className="px-4 py-4 border-b border-slate-200">
-                    <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
+                    <span className="font-sans font-semibold text-sm block text-dark">
                       Per-User Fee (Monthly)
                     </span>
                   </td>
@@ -349,9 +293,8 @@ export function PlatformTiersSection() {
                     >
                       <span
                         className={`font-display font-bold text-xl lg:text-2xl ${
-                          tier.isHighlighted ? 'text-white' : ''
+                          tier.isHighlighted ? 'text-white' : 'text-dark'
                         }`}
-                        style={{ color: tier.isHighlighted ? undefined : COLORS.darkPurple }}
                       >
                         {tier.price}
                       </span>
@@ -362,7 +305,7 @@ export function PlatformTiersSection() {
                 {/* Definition - Last row, no bottom border */}
                 <tr>
                   <td className="px-4 py-4">
-                    <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
+                    <span className="font-sans font-semibold text-sm block text-dark">
                       Definition:
                     </span>
                   </td>
@@ -373,9 +316,8 @@ export function PlatformTiersSection() {
                     >
                       <span
                         className={`text-xs leading-relaxed block ${
-                          tier.isHighlighted ? 'text-white/80' : ''
+                          tier.isHighlighted ? 'text-white/80' : 'text-muted'
                         }`}
-                        style={{ color: tier.isHighlighted ? undefined : COLORS.muted }}
                       >
                         {tier.description}
                       </span>
@@ -388,7 +330,7 @@ export function PlatformTiersSection() {
         </div>
 
         {/* Foundational EHS Modules Table */}
-        <div className="bg-white rounded-[14px] overflow-hidden mb-4 border border-dashed border-slate-300">
+        <div className="bg-white rounded-lg overflow-hidden mb-4 border border-dashed border-slate-300">
           <ScrollableTableWrapper>
             <table className="w-full min-w-[800px] table-fixed">
               <colgroup>
@@ -400,19 +342,15 @@ export function PlatformTiersSection() {
               </colgroup>
               <thead>
                 <tr>
-                  <th
-                    className="px-4 py-4 text-left bg-slate-100 font-sans font-semibold text-sm uppercase tracking-wider"
-                    style={{ color: COLORS.darkPurple }}
-                  >
+                  <th className="px-4 py-4 text-left bg-slate-100 font-sans font-semibold text-sm uppercase tracking-wider text-dark">
                     FOUNDATIONAL EHS MODULES (The Data Engine)
                   </th>
                   {PRICING_TIERS.map((tier) => (
                     <th
                       key={tier.name}
                       className={`px-4 py-4 text-center font-sans font-semibold text-sm ${
-                        tier.isHighlighted ? 'bg-dark text-white' : 'bg-slate-100'
+                        tier.isHighlighted ? 'bg-dark text-white' : 'bg-slate-100 text-dark'
                       }`}
-                      style={{ color: tier.isHighlighted ? undefined : COLORS.dark }}
                     >
                       {tier.name}
                     </th>
@@ -425,11 +363,11 @@ export function PlatformTiersSection() {
                   return (
                     <tr key={row.label}>
                       <td className={`px-4 py-4 ${isLastRow ? '' : 'border-b border-slate-200'}`}>
-                        <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
+                        <span className="font-sans font-semibold text-sm block text-dark">
                           {row.label} <span className="font-normal">{row.description?.split('.')[0]}.</span>
                         </span>
                         {row.description?.includes('Target:') && (
-                          <span className="font-sans text-xs block mt-1" style={{ color: COLORS.teal }}>
+                          <span className="font-sans text-xs block mt-1 text-teal">
                             Target: {row.description.split('Target:')[1]}
                           </span>
                         )}
@@ -447,7 +385,7 @@ export function PlatformTiersSection() {
         </div>
 
         {/* Agentic AI Modules Table */}
-        <div className="bg-white rounded-[14px] overflow-hidden mb-8 border border-dashed border-slate-300">
+        <div className="bg-white rounded-lg overflow-hidden mb-8 border border-dashed border-slate-300">
           <ScrollableTableWrapper>
             <table className="w-full min-w-[800px] table-fixed">
               <colgroup>
@@ -459,19 +397,15 @@ export function PlatformTiersSection() {
               </colgroup>
               <thead>
                 <tr>
-                  <th
-                    className="px-4 py-4 text-left bg-slate-100 font-sans font-semibold text-sm uppercase tracking-wider"
-                    style={{ color: COLORS.darkPurple }}
-                  >
+                  <th className="px-4 py-4 text-left bg-slate-100 font-sans font-semibold text-sm uppercase tracking-wider text-dark">
                     AGENTIC AI MODULES (The Automation Layer)
                   </th>
                   {PRICING_TIERS.map((tier) => (
                     <th
                       key={tier.name}
                       className={`px-4 py-4 text-center font-sans font-semibold text-sm ${
-                        tier.isHighlighted ? 'bg-dark text-white' : 'bg-slate-100'
+                        tier.isHighlighted ? 'bg-dark text-white' : 'bg-slate-100 text-dark'
                       }`}
-                      style={{ color: tier.isHighlighted ? undefined : COLORS.dark }}
                     >
                       {tier.name}
                     </th>
@@ -484,11 +418,11 @@ export function PlatformTiersSection() {
                   return (
                     <tr key={row.label}>
                       <td className={`px-4 py-4 ${isLastRow ? '' : 'border-b border-slate-200'}`}>
-                        <span className="font-sans font-semibold text-sm block" style={{ color: COLORS.dark }}>
+                        <span className="font-sans font-semibold text-sm block text-dark">
                           {row.label}
                         </span>
                         {row.description && (
-                          <span className="font-sans text-xs block mt-1" style={{ color: COLORS.teal }}>
+                          <span className="font-sans text-xs block mt-1 text-teal">
                             {row.description}
                           </span>
                         )}

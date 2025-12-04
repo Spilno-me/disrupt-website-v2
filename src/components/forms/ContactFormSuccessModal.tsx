@@ -7,9 +7,9 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+} from '@disrupt/design-system'
+import { Button } from '@disrupt/design-system'
+import { ElectricButtonWrapper } from '@disrupt/design-system'
 import { useTranslation } from '@/hooks/useI18n'
 
 interface ContactFormSuccessModalProps {

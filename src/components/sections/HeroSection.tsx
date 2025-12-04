@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
-import { HeroParticles } from '@/components/ui/HeroParticles'
-import { MouseParticleRenderer } from '@/components/ui/MouseParticleRenderer'
-import { BlurImage } from '@/components/ui/BlurImage'
+import { GridBlobBackground } from '@disrupt/design-system'
+import { HeroParticles } from '@disrupt/design-system'
+import { MouseParticleRenderer } from '@disrupt/design-system'
+import { BlurImage } from '@disrupt/design-system'
 import { useHeroTitleRotation } from '@/hooks/useHeroTitleRotation'
 import { useMouseParticles } from '@/hooks/useMouseParticles'
 import { optimizedImages } from '@/assets/optimized'
@@ -34,6 +34,7 @@ export function HeroSection() {
     <section
       className="relative mb-8 lg:mb-[56px] mt-[82px]"
       data-element="hero-section"
+      data-header-theme="light"
       onMouseMove={handleMouseMove}
     >
       <GridBlobBackground scale={1.8} />
@@ -45,7 +46,7 @@ export function HeroSection() {
       >
         <div
           ref={heroFrameRef}
-          className="w-full h-[380px] sm:h-[420px] lg:h-[499px] rounded-none sm:rounded-b-[10px] overflow-hidden relative max-w-[1440px]"
+          className="w-full h-[380px] sm:h-[420px] lg:h-[499px] rounded-none sm:rounded-b-md overflow-hidden relative max-w-container"
           data-element="hero-bg-frame"
           data-dark-background="true"
         >
@@ -77,7 +78,7 @@ export function HeroSection() {
 
       {/* Content */}
       <div
-        className="mx-auto relative z-[2] flex flex-col w-full h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 sm:px-6 max-w-[1440px]"
+        className="mx-auto relative z-[2] flex flex-col w-full h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 sm:px-6 max-w-container"
         data-element="hero-wrapper"
       >
         <div
@@ -96,7 +97,7 @@ export function HeroSection() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 30 }}
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
-                className="absolute inset-0 flex items-center justify-center font-display font-bold text-white text-[32px] sm:text-[32px] lg:text-[48px] leading-[44px] sm:leading-[48px] lg:leading-[60px] tracking-[2.5px] sm:tracking-[3px] lg:tracking-[4px]"
+                className="absolute inset-0 flex items-center justify-center font-display font-bold text-white text-3xl sm:text-3xl lg:text-[48px] leading-[44px] sm:leading-[48px] lg:leading-[60px] tracking-[2.5px] sm:tracking-[3px] lg:tracking-[4px]"
               >
                 {HERO_TITLES[currentIndex]}
               </motion.h1>

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { ANIMATION } from '@/constants/designTokens'
+import { ANIMATION } from '@disrupt/design-system/tokens'
 
 interface UseSpinAnimationOptions {
   /** Maximum rotation speed */

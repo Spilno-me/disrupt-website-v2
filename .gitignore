@@ -9,3 +9,6 @@ google-cloud-sdk/
 deploy-package/
 *.pem
 SSH_Public
+
+*storybook.log
+storybook-static

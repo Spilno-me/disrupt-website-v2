@@ -1,9 +1,8 @@
-import { COLORS, RADIUS, SHADOWS, TYPOGRAPHY, SPACING } from '@/constants/designTokens'
 import { Check } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import { Button } from '@disrupt/design-system'
+import { ElectricButtonWrapper } from '@disrupt/design-system'
 import { scrollToElement } from '@/utils/navigation'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
+import { GridBlobBackground } from '@disrupt/design-system'
 
 // =============================================================================
 // TYPES
@@ -37,7 +36,7 @@ const PRICING_CARD_TIERS: PricingCardTier[] = [
     features: [
       {
         label: 'Always Included Modules',
-        description: 'Incidents, Observations, Actions Tracking, Risk, JHA, Bow-ties, Safety Meetings, Training Management, Doc Control, Basic Reporting',
+        description: ' Limited Access to Core EHS Modules: "Incidents, Observations, Actions Tracking, Risk, JHA, Bow-ties, Safety Meetings, Training Management, Doc Control, Basic Reporting"',
       },
       {
         label: 'Tier 1: Time Saver Agents',
@@ -105,45 +104,30 @@ function PricingComponentCard({
   description: string
 }) {
   return (
-    <div className="flex-1 p-6 bg-white rounded-[14px] border border-dashed border-slate-300">
-      <h3
-        className="font-sans font-bold text-lg mb-2"
-        style={{ color: COLORS.dark }}
-      >
+    <div className="flex-1 p-6 bg-white rounded-lg border border-dashed border-slate-300">
+      <h3 className="font-sans font-bold text-lg mb-2 text-dark">
         {title}
       </h3>
-      <p
-        className="font-sans text-sm leading-relaxed"
-        style={{ color: COLORS.muted }}
-      >
+      <p className="font-sans text-sm leading-relaxed text-muted">
         {description}
       </p>
     </div>
   )
 }
 
-function FeatureListItem({ feature }: { feature: TierFeature }) {
+function FeatureListItem({ feature, isHighlighted }: { feature: TierFeature; isHighlighted?: boolean }) {
   return (
     <div className="flex items-start gap-3">
       <Check
-        className="w-5 h-5 flex-shrink-0 mt-0.5"
-        style={{ color: COLORS.teal }}
+        className={`w-5 h-5 flex-shrink-0 mt-0.5 ${isHighlighted ? 'text-teal' : 'text-teal'}`}
       />
       <div className="flex-1">
-        <span
-          className="font-sans text-sm leading-[1.625] tracking-[-0.01em]"
-          style={{ color: COLORS.muted }}
-        >
+        <span className={`font-sans text-sm leading-[1.625] tracking-[-0.01em] ${isHighlighted ? 'text-dark' : 'text-muted'}`}>
           {feature.label}
+          {feature.description && (
+            <span className="opacity-80">{feature.description}</span>
+          )}
         </span>
-        {feature.description && (
-          <span
-            className="font-sans text-sm leading-[1.625] tracking-[-0.01em] block opacity-80"
-            style={{ color: COLORS.muted }}
-          >
-            {feature.description}
-          </span>
-        )}
       </div>
     </div>
   )
@@ -152,22 +136,16 @@ function FeatureListItem({ feature }: { feature: TierFeature }) {
 function PricingCard({ tier }: { tier: PricingCardTier }) {
   return (
     <div
-      className={`relative flex flex-col p-6 h-full rounded-[14px] border border-dashed ${
+      className={`relative flex flex-col p-6 h-full rounded-lg border border-dashed ${
         tier.isHighlighted
-          ? 'border-teal bg-white'
+          ? 'border-teal bg-white shadow-lg'
           : 'border-slate-300 bg-white'
       }`}
-      style={{
-        boxShadow: tier.isHighlighted ? SHADOWS.image : SHADOWS.buttonDefault,
-      }}
       data-element="pricing-card"
     >
       {/* Badge */}
       {tier.badge && (
-        <div
-          className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full font-sans text-xs font-semibold text-white whitespace-nowrap"
-          style={{ backgroundColor: COLORS.circleRed }}
-        >
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full font-sans text-xs font-semibold text-white whitespace-nowrap bg-ferrari-red">
           {tier.badge}
         </div>
       )}
@@ -176,32 +154,20 @@ function PricingCard({ tier }: { tier: PricingCardTier }) {
       <div className="flex flex-col gap-6">
         {/* Tier Info */}
         <div className="flex flex-col gap-3 pt-2">
-          <h3
-            className="font-sans font-bold text-xl leading-[1.4] tracking-[-0.02em]"
-            style={{ color: COLORS.dark }}
-          >
+          <h3 className="font-sans font-bold text-xl leading-[1.4] tracking-[-0.02em] text-dark">
             {tier.name}
           </h3>
-          <p
-            className="font-sans text-sm leading-[1.625] tracking-[-0.01em]"
-            style={{ color: COLORS.muted }}
-          >
+          <p className="font-sans text-sm leading-[1.625] tracking-[-0.01em] text-muted">
             {tier.description}
           </p>
         </div>
 
         {/* Price */}
         <div className="flex items-end gap-1">
-          <span
-            className="font-display font-bold text-3xl lg:text-4xl leading-[1.1]"
-            style={{ color: COLORS.dark }}
-          >
+          <span className="font-display font-bold text-3xl lg:text-4xl leading-[1.1] text-dark">
             {tier.price.replace('/mo', '')}
           </span>
-          <span
-            className="font-sans text-base leading-[1.5] pb-1"
-            style={{ color: COLORS.muted }}
-          >
+          <span className="font-sans text-base leading-[1.5] pb-1 text-muted">
             /month
           </span>
         </div>
@@ -211,13 +177,11 @@ function PricingCard({ tier }: { tier: PricingCardTier }) {
           <ElectricButtonWrapper className="!w-full [&>div]:w-full">
             <button
               onClick={() => scrollToElement('contact')}
-              className="w-full py-3 px-4 font-sans text-sm font-medium cursor-pointer transition-all"
-              style={{
-                backgroundColor: tier.isHighlighted ? COLORS.dark : COLORS.lightPurple,
-                color: tier.isHighlighted ? '#fff' : COLORS.dark,
-                borderRadius: RADIUS.md,
-                boxShadow: SHADOWS.buttonDefault,
-              }}
+              className={`w-full py-3 px-4 font-sans text-sm font-medium cursor-pointer transition-all rounded-sm text-white ${
+                tier.isHighlighted
+                  ? 'bg-primary hover:bg-red-500'
+                  : 'bg-teal-800 hover:bg-teal-900'
+              }`}
             >
               Get Started
             </button>
@@ -227,14 +191,11 @@ function PricingCard({ tier }: { tier: PricingCardTier }) {
 
       {/* Features Section */}
       <div className="flex flex-col gap-4 mt-8 pt-6 border-t border-slate-200">
-        <span
-          className="font-sans font-semibold text-sm"
-          style={{ color: COLORS.dark }}
-        >
+        <span className="font-sans font-semibold text-sm text-dark">
           {tier.includesFrom}
         </span>
         {tier.features.map((feature, idx) => (
-          <FeatureListItem key={idx} feature={feature} />
+          <FeatureListItem key={idx} feature={feature} isHighlighted={tier.isHighlighted} />
         ))}
       </div>
     </div>
@@ -252,17 +213,13 @@ export function PricingCardsSection() {
       data-element="pricing-cards-section"
     >
       <GridBlobBackground scale={1.5} />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-[1]">
+      <div className="max-w-container mx-auto px-4 sm:px-6 relative z-[1]">
         {/* Header */}
         <div className="flex flex-col items-start lg:items-center gap-4 mb-10">
-          <h2
-            className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-left lg:text-center text-dark"
-          >
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-display font-bold leading-[1.2] text-left lg:text-center text-dark">
             Platform Tiers: Foundational EHS & Agentic AI
           </h2>
-          <p
-            className="text-sm sm:text-base lg:text-lg font-display font-medium text-teal text-left lg:text-center max-w-[672px]"
-          >
+          <p className="text-sm sm:text-base lg:text-lg font-display font-medium text-teal text-left lg:text-center max-w-[672px]">
             Pricing is structured with two components
           </p>
         </div>
@@ -280,19 +237,13 @@ export function PricingCardsSection() {
         </div>
 
         {/* Annual Platform Fee Row */}
-        <div className="bg-white rounded-[14px] border border-dashed border-slate-300 p-4 sm:p-6 mb-10">
+        <div className="bg-white rounded-lg border border-dashed border-slate-300 p-4 sm:p-6 mb-10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h4
-                className="font-sans font-bold text-base"
-                style={{ color: COLORS.dark }}
-              >
+              <h4 className="font-sans font-bold text-base text-dark">
                 Annual Platform Fee
               </h4>
-              <p
-                className="font-sans text-sm"
-                style={{ color: COLORS.muted }}
-              >
+              <p className="font-sans text-sm text-muted">
                 Quoted based on total business size
               </p>
             </div>

@@ -11,23 +11,25 @@ export const escapeHtml = (str) => {
 };
 
 const isSmtpConfigured = () => {
-  return !!(
-    process.env.SMTP_HOST &&
-    process.env.SMTP_USER &&
-    process.env.SMTP_PASS
-  );
+  return !!(process.env.SMTP_HOST);
 };
 
 const createTransporter = () => {
-  return nodemailer.createTransport({
+  const config = {
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT) || 587,
     secure: process.env.SMTP_SECURE === 'true',
-    auth: {
+  };
+
+  // Only add auth if credentials are provided
+  if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+    config.auth = {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
-    }
-  });
+    };
+  }
+
+  return nodemailer.createTransport(config);
 };
 
 const getBaseStyles = () => `
@@ -192,7 +194,7 @@ export const sendEmails = async (contactData) => {
   // Send user confirmation
   console.log('Sending user confirmation to:', email);
   const userResult = await transporter.sendMail({
-    from: `"${process.env.FROM_NAME || 'Disrupt Inc.'}" <${process.env.SMTP_USER}>`,
+    from: `"${process.env.FROM_NAME || 'Disrupt Inc.'}" <${process.env.FROM_EMAIL}>`,
     to: email,
     subject: userEmail.subject,
     html: userEmail.html
@@ -202,7 +204,7 @@ export const sendEmails = async (contactData) => {
   // Send team notification
   console.log('Sending team notification to:', process.env.TEAM_EMAIL);
   const teamResult = await transporter.sendMail({
-    from: `"${process.env.FROM_NAME || 'Disrupt Inc.'}" <${process.env.SMTP_USER}>`,
+    from: `"${process.env.FROM_NAME || 'Disrupt Inc.'}" <${process.env.FROM_EMAIL}>`,
     to: process.env.TEAM_EMAIL,
     replyTo: email,
     subject: teamEmail.subject,

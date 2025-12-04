@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import { Button } from '@disrupt/design-system'
+import { ElectricButtonWrapper } from '@disrupt/design-system'
 import { scrollToElement } from '@/utils/navigation'
-import { ContentSection } from '@/components/ui/SectionLayout'
+import { ContentSection } from '@disrupt/design-system'
 import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================

@@ -12,7 +12,7 @@ export function Footer() {
       data-element="main-footer"
     >
       <div
-        className="max-w-[1440px] mx-auto px-4 sm:px-6"
+        className="max-w-container mx-auto px-4 sm:px-6"
         data-element="footer-container"
       >
         <div className="flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-4">

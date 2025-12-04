@@ -1,5 +1,4 @@
-import { COLORS } from '@/constants/designTokens'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
+import { GridBlobBackground } from '@disrupt/design-system'
 
 // =============================================================================
 // TYPES
@@ -39,21 +38,15 @@ const FEATURES: FeatureCardData[] = [
 function FeatureGridCard({ title, description }: FeatureCardData) {
   return (
     <div
-      className="flex flex-col gap-6 p-6 rounded-xl border border-dashed border-slate-300 bg-cream"
+      className="flex flex-col gap-6 p-6 rounded-lg border border-dashed border-slate-300 bg-cream"
       data-element="feature-grid-card"
     >
       <div className="flex flex-col gap-4">
-        <h3
-          className="font-sans font-bold text-xl leading-[1.4] tracking-[-0.02em]"
-          style={{ color: COLORS.dark }}
-        >
+        <h3 className="font-sans font-bold text-xl leading-[1.4] tracking-[-0.02em] text-dark">
           {title}
         </h3>
       </div>
-      <p
-        className="font-sans text-sm leading-[1.625] tracking-[-0.01em]"
-        style={{ color: COLORS.muted }}
-      >
+      <p className="font-sans text-sm leading-[1.625] tracking-[-0.01em] text-muted">
         {description}
       </p>
     </div>
@@ -71,10 +64,10 @@ export function FeaturesGridSection() {
       data-element="features-grid-section"
     >
       <GridBlobBackground scale={1.5} />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-[1]">
+      <div className="max-w-container mx-auto px-4 sm:px-6 relative z-[1]">
         {/* Header */}
         <div className="flex flex-col items-start lg:items-center gap-4 mb-10">
-          <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-left lg:text-center text-dark">
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-display font-bold leading-[1.2] text-left lg:text-center text-dark">
             The Monolith is Dead. Architecture Matters.
           </h2>
           <p className="text-sm sm:text-base lg:text-lg font-display font-medium text-teal text-left lg:text-center max-w-[672px]">

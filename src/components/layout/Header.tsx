@@ -1,11 +1,11 @@
 import { Link, useLocation } from 'react-router-dom'
-import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
+import { AnimatedLogo } from '@disrupt/design-system'
 import { COMPANY_INFO } from '@/constants/appConstants'
 import { scrollToElement, scrollToElementWithDelay, smoothScrollToTop } from '@/utils/navigation'
-import { MobileMenu } from '@/components/ui/mobile-menu'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import { MobileMenu } from '@disrupt/design-system'
+import { ElectricButtonWrapper } from '@disrupt/design-system'
 import { useIsMobile } from '@/hooks/useIsMobile'
-import { useHeaderContrast } from '@/hooks/useContrastColor'
+import { GLASS_CLASSES } from '@disrupt/design-system/tokens'
 
 interface HeaderProps {
   showContactButton?: boolean
@@ -26,10 +26,10 @@ export function Header({
 }: HeaderProps) {
   const location = useLocation()
   const isMobile = useIsMobile()
-  const contrastMode = useHeaderContrast()
 
-  // Text color based on background
-  const navTextColor = contrastMode === 'dark' ? 'text-dark' : 'text-white'
+  // Always use dark text on light background
+  const navTextColor = 'text-dark'
+  const colorMode = 'dark'
 
   const handleLogoClick = () => {
     if (onLogoClick) {
@@ -69,7 +69,7 @@ export function Header({
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-[10px] bg-cream/30 border-b border-teal shadow-[0px_2px_4px_5px_rgba(0,0,0,0.15)]"
+      className={`fixed top-0 left-0 right-0 z-50 ${GLASS_CLASSES.header}`}
       data-element="main-header"
     >
       <nav
@@ -83,7 +83,7 @@ export function Header({
               className="h-[54px] w-[178px] cursor-pointer overflow-visible"
               onClick={handleLogoClick}
               alt={COMPANY_INFO.FULL_NAME}
-              colorMode={contrastMode}
+              colorMode={colorMode}
             />
           </div>
 
@@ -93,10 +93,10 @@ export function Header({
               {NAV_ITEMS.map((item) => {
                 const isActive = isActiveRoute(item.path)
                 return (
-                  <ElectricButtonWrapper key={item.path} className="nav-item" isActive={isActive} colorMode={contrastMode}>
+                  <ElectricButtonWrapper key={item.path} className="nav-item" isActive={isActive} colorMode={colorMode}>
                     <Link
                       to={item.path}
-                      className={`h-9 px-4 py-2 rounded-[8px] text-sm font-sans font-medium leading-[1.43] transition-colors flex items-center justify-center gap-2 cursor-pointer ${navTextColor} ${
+                      className={`h-9 px-4 py-2 rounded-sm text-sm font-sans font-medium leading-[1.43] transition-colors flex items-center justify-center gap-2 cursor-pointer ${navTextColor} ${
                         isActive ? '' : 'hover:bg-white/10'
                       }`}
                     >
@@ -109,11 +109,11 @@ export function Header({
 
             {/* Contact Button */}
             {showContactButton && (
-              <ElectricButtonWrapper colorMode={contrastMode}>
+              <ElectricButtonWrapper colorMode={colorMode}>
                 <Link
                   to="/#contact"
                   onClick={handleContactClick}
-                  className="h-9 px-4 py-2 rounded-[12px] text-sm font-sans font-medium leading-[1.43] flex items-center justify-center gap-2 transition-colors hover:opacity-90 bg-dark text-white cursor-pointer"
+                  className="h-9 px-4 py-2 rounded-sm text-sm font-sans font-medium leading-[1.43] flex items-center justify-center gap-2 transition-colors bg-dark text-white hover:bg-teal-800 cursor-pointer"
                 >
                   Contact us
                 </Link>
@@ -129,7 +129,7 @@ export function Header({
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`px-4 py-3 rounded-[8px] text-base font-medium cursor-pointer ${
+                    className={`px-4 py-3 rounded-sm text-base font-medium cursor-pointer ${
                       isActiveRoute(item.path)
                         ? 'bg-teal/10 text-teal'
                         : 'text-dark hover:bg-white/10'
@@ -146,7 +146,7 @@ export function Header({
                   <Link
                     to="/#contact"
                     onClick={handleContactClick}
-                    className="w-full h-11 px-4 py-2 rounded-[12px] text-base font-medium cursor-pointer bg-dark text-white flex items-center justify-center"
+                    className="w-full h-11 px-4 py-2 rounded-sm text-base font-medium cursor-pointer bg-dark text-white hover:bg-teal-800 transition-colors flex items-center justify-center"
                   >
                     Contact us
                   </Link>

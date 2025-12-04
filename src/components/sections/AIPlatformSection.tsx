@@ -1,4 +1,4 @@
-import { ContentSection } from '@/components/ui/SectionLayout'
+import { ContentSection } from '@disrupt/design-system'
 import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================

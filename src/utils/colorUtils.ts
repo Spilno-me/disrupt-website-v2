@@ -1,4 +1,4 @@
-import { LAYOUT, COLOR_CONSTANTS } from '@/constants/designTokens'
+import { LAYOUT, COLOR_CONSTANTS } from '@disrupt/design-system/tokens'
 
 // =============================================================================
 // COLOR UTILITIES
