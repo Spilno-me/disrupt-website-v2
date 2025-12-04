@@ -1,11 +1,11 @@
 import { Link, useLocation } from 'react-router-dom'
-import { AnimatedLogo } from '@disrupt/design-system'
+import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
 import { COMPANY_INFO } from '@/constants/appConstants'
 import { scrollToElement, scrollToElementWithDelay, smoothScrollToTop } from '@/utils/navigation'
-import { MobileMenu } from '@disrupt/design-system'
+import { MobileMenu } from '@/components/ui/mobile-menu'
 import { ElectricButtonWrapper } from '@disrupt/design-system'
 import { useIsMobile } from '@/hooks/useIsMobile'
-import { GLASS_CLASSES } from '@disrupt/design-system/tokens'
+import { GLASS_CLASSES } from '@disrupt/design-system'
 
 interface HeaderProps {
   showContactButton?: boolean
