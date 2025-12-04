@@ -52,7 +52,7 @@
     "vitest": "^2.1.9"
   },
   "dependencies": {
-    "@disrupt/design-system": "github:Spilno-me/disrupt-design-system",
+    "@disrupt/design-system": "file:../DDS",
     "@hookform/resolvers": "^5.2.1",
     "@radix-ui/react-checkbox": "^1.3.3",
     "@radix-ui/react-dialog": "^1.1.15",
