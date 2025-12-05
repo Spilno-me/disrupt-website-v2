@@ -1,6 +1,6 @@
 import { COLORS } from '@/constants/designTokens'
 import { Check, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@disrupt/design-system'
 import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { scrollToElement } from '@/utils/navigation'
 import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'

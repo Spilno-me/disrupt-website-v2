@@ -8,7 +8,7 @@ import { useContactFormSubmission } from '@/hooks/useContactFormSubmission'
 import { ContactFormFields } from './ContactFormFields'
 import { ContactFormSuccessModal } from './ContactFormSuccessModal'
 import { ContactFormErrorModal } from './ContactFormErrorModal'
-import { Button } from '@/components/ui/button'
+import { Button } from '@disrupt/design-system'
 import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 
 export function ContactForm() {

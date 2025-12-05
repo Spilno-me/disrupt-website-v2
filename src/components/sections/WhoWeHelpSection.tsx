@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button } from '@disrupt/design-system'
 import { CheckListItem } from '@/components/ui/CheckListItem'
 import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { scrollToElement } from '@/utils/navigation'

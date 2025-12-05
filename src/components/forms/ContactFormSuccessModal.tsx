@@ -8,7 +8,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog'
-import { Button } from '@/components/ui/button'
+import { Button } from '@disrupt/design-system'
 import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { useTranslation } from '@/hooks/useI18n'
 

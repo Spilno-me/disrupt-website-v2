@@ -3,9 +3,7 @@
 import * as React from "react"
 import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "motion/react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { LAYOUT } from "@/constants/designTokens"
+import { cn, Button, LAYOUT } from "@disrupt/design-system"
 
 function AnimatedBurger({ isOpen }: { isOpen: boolean }) {
   return (
