@@ -91,8 +91,34 @@ export function ROICalculatorSection() {
         {/* Calculator Card */}
         <Card variant="pricing" shadow="sm" className="max-w-[1120px] mx-auto overflow-hidden !p-0">
           <div className="flex flex-col lg:flex-row">
-            {/* Left Side - Sliders */}
-            <div className="flex-1 p-6 lg:p-8">
+            {/* Results - Top on mobile, Right on desktop */}
+            <div className="flex-1 p-6 lg:p-8 lg:pl-12 order-1 lg:order-2 lg:border-l lg:border-dashed border-slate-200 flex flex-col justify-center gap-8">
+              <CostDisplay
+                label="Incumbent Annual Cost"
+                amount={calculations.incumbentAnnualCost}
+                subtitle="Variable & Unpredictable"
+                variant="incumbent"
+              />
+
+              <CostDisplay
+                label="Agentic Annual Cost"
+                amount={calculations.agenticAnnualCost}
+                subtitle="Predictable"
+                variant="agentic"
+              />
+
+              <div className="pt-6 border-t border-slate-200">
+                <CostDisplay
+                  label="Total Annual Savings"
+                  amount={calculations.annualSavings}
+                  subtitle=""
+                  variant="savings"
+                />
+              </div>
+            </div>
+
+            {/* Sliders - Bottom on mobile, Left on desktop */}
+            <div className="flex-1 p-6 lg:p-8 order-2 lg:order-1 border-t lg:border-t-0 border-slate-200">
               <div className="flex flex-col gap-10">
                 {/* Workers Slider */}
                 <Slider
@@ -133,32 +159,6 @@ export function ROICalculatorSection() {
                     </li>
                   </ul>
                 </div>
-              </div>
-            </div>
-
-            {/* Right Side - Results */}
-            <div className="flex-1 p-6 lg:p-8 lg:pl-12 border-t lg:border-t-0 lg:border-l border-slate-200 flex flex-col justify-center gap-8">
-              <CostDisplay
-                label="Incumbent Annual Cost"
-                amount={calculations.incumbentAnnualCost}
-                subtitle="Variable & Unpredictable"
-                variant="incumbent"
-              />
-
-              <CostDisplay
-                label="Agentic Annual Cost"
-                amount={calculations.agenticAnnualCost}
-                subtitle="Predictable"
-                variant="agentic"
-              />
-
-              <div className="pt-6 border-t border-slate-200">
-                <CostDisplay
-                  label="Total Annual Savings"
-                  amount={calculations.annualSavings}
-                  subtitle=""
-                  variant="savings"
-                />
               </div>
             </div>
           </div>

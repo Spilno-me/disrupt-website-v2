@@ -93,7 +93,7 @@ export function ProductHeroSection() {
 
           {/* Subtitle */}
           <p
-            className="font-display font-medium text-teal text-sm sm:text-base lg:text-lg"
+            className="font-display font-medium text-tealLight text-sm sm:text-base lg:text-lg"
             data-element="product-hero-subtitle"
           >
             {HERO_SUBTITLE}

@@ -1,6 +1,6 @@
 import { animate } from 'motion/react'
 import { NAVIGATION } from '@/constants/appConstants'
-import { LAYOUT, ANIMATION } from '@/constants/designTokens'
+import { LAYOUT, ANIMATION } from '@adrozdenko/design-system'
 
 // =============================================================================
 // NAVIGATION UTILITIES

@@ -174,15 +174,15 @@ function FeatureListItem({ feature, index = 0 }: { feature: TierFeature; index?:
       />
       <div className="flex-1">
         <span
-          className="font-sans font-semibold text-sm leading-[1.625] tracking-[-0.01em]"
-          style={{ color: COLORS.dark }}
+          className="font-sans text-sm leading-[1.625] tracking-[-0.01em]"
+          style={{ color: COLORS.text.emphasis, fontWeight: 520 }}
         >
           {feature.label}
         </span>
         {feature.description && (
           <span
             className="font-sans text-sm leading-[1.625] tracking-[-0.01em] block mt-0.5"
-            style={{ color: COLORS.muted }}
+            style={{ color: COLORS.muted, fontWeight: 300 }}
           >
             {feature.description}
           </span>

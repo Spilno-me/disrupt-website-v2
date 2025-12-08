@@ -108,7 +108,7 @@ export function HeroSection() {
 
           {/* Subtitle - positioned near bottom */}
           <p
-            className="text-center text-teal font-display font-medium text-sm sm:text-base lg:text-lg max-w-[340px] sm:max-w-none z-10"
+            className="text-center text-tealLight font-display font-medium text-sm sm:text-base lg:text-lg max-w-[340px] sm:max-w-none z-10"
             data-element="hero-subtitle"
           >
             {HERO_SUBTITLE}
