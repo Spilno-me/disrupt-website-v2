@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, Button, ElectricButtonWrapper } from '@adrozdenko/design-system'
+import { Form, Button } from '@adrozdenko/design-system'
 import { createContactFormSchema, ContactFormData, defaultFormValues } from '@/schemas/createContactFormSchema'
 import { useTranslation } from '@/hooks/useI18n'
 import { useContactFormSubmission } from '@/hooks/useContactFormSubmission'
@@ -48,18 +48,15 @@ export function ContactForm() {
         >
           <ContactFormFields control={form.control} />
 
-          <div>
-            <ElectricButtonWrapper className="w-full">
-              <Button
-                type="submit"
-                variant="contact"
-                disabled={form.formState.isSubmitting}
-                className="w-full"
-              >
-                {form.formState.isSubmitting ? 'Sending...' : 'Get in touch'}
-              </Button>
-            </ElectricButtonWrapper>
-          </div>
+          <Button
+            type="submit"
+            variant="default"
+            size="lg"
+            fullWidth
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? 'Sending...' : 'Get in touch'}
+          </Button>
         </form>
       </Form>
 
