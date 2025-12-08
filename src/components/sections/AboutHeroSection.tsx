@@ -51,6 +51,7 @@ export function AboutHeroSection() {
     <section
       className="relative mb-8 lg:mb-[56px] mt-[82px]"
       data-element="about-hero-section"
+      data-header-theme="light"
       onMouseMove={handleMouseMove}
     >
       {/* Grid Blob Background */}
@@ -63,7 +64,7 @@ export function AboutHeroSection() {
       >
         <div
           ref={heroFrameRef}
-          className="w-full h-[380px] sm:h-[420px] lg:h-[499px] rounded-none sm:rounded-b-[10px] overflow-hidden relative max-w-[1440px] bg-black"
+          className="w-full h-[380px] sm:h-[420px] lg:h-[499px] rounded-none sm:rounded-b-md overflow-hidden relative max-w-container bg-black"
           data-element="about-hero-frame"
           data-dark-background="true"
         >
@@ -94,7 +95,7 @@ export function AboutHeroSection() {
 
       {/* Content */}
       <div
-        className="mx-auto relative z-[2] flex flex-col w-full h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 sm:px-6 max-w-[1440px]"
+        className="mx-auto relative z-[2] flex flex-col w-full h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 sm:px-6 max-w-container"
         data-element="about-hero-wrapper"
       >
         <div
@@ -116,7 +117,7 @@ export function AboutHeroSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 40 }}
                     transition={{ duration: 0.4, ease: 'easeInOut' }}
-                    className="absolute inset-0 flex items-start font-display font-bold text-white text-[32px] sm:text-[40px] lg:text-[56px] leading-[1.15] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px]"
+                    className="absolute inset-0 flex items-start font-display font-bold text-white text-3xl sm:text-[40px] lg:text-[56px] leading-[1.15] tracking-[2px] sm:tracking-[3px] lg:tracking-[4px]"
                   >
                     {HERO_TITLES[currentIndex]}
                   </motion.h1>

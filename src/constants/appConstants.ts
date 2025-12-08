@@ -30,10 +30,6 @@ export const FORM_CONSTANTS = {
     MOBILE: 'h-12',
     DESKTOP: 'sm:h-9'
   },
-  BUTTON_COLORS: {
-    MOBILE_SUBMIT: '#10b981',
-    DESKTOP_SUBMIT: '#2D3142'
-  },
   TEXT_SIZES: {
     MOBILE: 'text-base',
     DESKTOP: 'sm:text-sm'

@@ -3,7 +3,7 @@ import { Header as DdsHeader, NavItem } from '@adrozdenko/design-system'
 import { COMPANY_INFO } from '@/constants/appConstants'
 import { scrollToElement, scrollToElementWithDelay, smoothScrollToTop } from '@/utils/navigation'
 import { useIsMobile } from '@/hooks/useIsMobile'
-import { useHeaderContrast } from '@/hooks/useContrastColor'
+import { GLASS_CLASSES } from '@disrupt/design-system'
 
 interface HeaderProps {
   showContactButton?: boolean
@@ -24,7 +24,6 @@ export function Header({
 }: HeaderProps) {
   const location = useLocation()
   const isMobile = useIsMobile()
-  const contrastMode = useHeaderContrast()
 
   const handleLogoClick = () => {
     if (onLogoClick) {

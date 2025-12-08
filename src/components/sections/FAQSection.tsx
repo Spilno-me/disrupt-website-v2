@@ -39,7 +39,7 @@ export function FAQSection() {
       data-element="faq-section"
     >
       <GridBlobBackground scale={1.5} />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-[1]">
+      <div className="max-w-container mx-auto px-4 sm:px-6 relative z-[1]">
         {/* Dashed separator */}
         <div className="max-w-[900px] mx-auto mb-10">
           <div className="border-t-2 border-dashed border-teal/40" />
@@ -47,7 +47,7 @@ export function FAQSection() {
 
         <div className="max-w-[620px] mx-auto">
           {/* Header */}
-          <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-left lg:text-center text-dark mb-10">
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-display font-bold leading-[1.2] text-left lg:text-center text-dark mb-10">
             FAQs
           </h2>
 

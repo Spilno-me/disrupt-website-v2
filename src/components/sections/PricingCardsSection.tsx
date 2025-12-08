@@ -181,6 +181,9 @@ function FeatureListItem({ feature, index = 0 }: { feature: TierFeature; index?:
           style={{ color: COLORS.dark }}
         >
           {feature.label}
+          {feature.description && (
+            <span className="opacity-80">{feature.description}</span>
+          )}
         </span>
         {feature.description && (
           <span
@@ -205,10 +208,7 @@ function PricingCard({ tier }: { tier: PricingCardTier }) {
     >
       {/* Badge */}
       {tier.badge && (
-        <div
-          className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full font-sans text-xs font-semibold text-white whitespace-nowrap"
-          style={{ backgroundColor: COLORS.circleRed }}
-        >
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full font-sans text-xs font-semibold text-white whitespace-nowrap bg-ferrari-red">
           {tier.badge}
         </div>
       )}
@@ -217,10 +217,7 @@ function PricingCard({ tier }: { tier: PricingCardTier }) {
       <div className="flex flex-col gap-6">
         {/* Tier Info */}
         <div className="flex flex-col gap-3 pt-2">
-          <h3
-            className="font-sans font-bold text-xl leading-[1.4] tracking-[-0.02em]"
-            style={{ color: COLORS.dark }}
-          >
+          <h3 className="font-sans font-bold text-xl leading-[1.4] tracking-[-0.02em] text-dark">
             {tier.name}
           </h3>
           <div
@@ -236,16 +233,10 @@ function PricingCard({ tier }: { tier: PricingCardTier }) {
 
         {/* Price */}
         <div className="flex items-end gap-1">
-          <span
-            className="font-display font-bold text-3xl lg:text-4xl leading-[1.1]"
-            style={{ color: COLORS.dark }}
-          >
+          <span className="font-display font-bold text-3xl lg:text-4xl leading-[1.1] text-dark">
             {tier.price.replace('/mo', '')}
           </span>
-          <span
-            className="font-sans text-base leading-[1.5] pb-1"
-            style={{ color: COLORS.muted }}
-          >
+          <span className="font-sans text-base leading-[1.5] pb-1 text-muted">
             /month
           </span>
         </div>
@@ -269,10 +260,7 @@ function PricingCard({ tier }: { tier: PricingCardTier }) {
 
       {/* Features Section */}
       <div className="flex flex-col gap-4 mt-8 pt-6 border-t border-slate-200">
-        <span
-          className="font-sans font-semibold text-sm"
-          style={{ color: COLORS.dark }}
-        >
+        <span className="font-sans font-semibold text-sm text-dark">
           {tier.includesFrom}
         </span>
         {tier.features.map((feature, idx) => (
@@ -294,17 +282,13 @@ export function PricingCardsSection() {
       data-element="pricing-cards-section"
     >
       <GridBlobBackground scale={1.5} />
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 relative z-[1]">
+      <div className="max-w-container mx-auto px-4 sm:px-6 relative z-[1]">
         {/* Header */}
         <div className="flex flex-col items-start lg:items-center gap-4 mb-10">
-          <h2
-            className="text-2xl sm:text-3xl lg:text-[32px] font-display font-bold leading-[1.2] text-left lg:text-center text-dark"
-          >
+          <h2 className="text-2xl sm:text-3xl lg:text-3xl font-display font-bold leading-[1.2] text-left lg:text-center text-dark">
             Platform Tiers: Foundational EHS & Agentic AI
           </h2>
-          <p
-            className="text-sm sm:text-base lg:text-lg font-display font-medium text-teal text-left lg:text-center max-w-[672px]"
-          >
+          <p className="text-sm sm:text-base lg:text-lg font-display font-medium text-teal text-left lg:text-center max-w-[672px]">
             Pricing is structured with two components
           </p>
         </div>

@@ -32,6 +32,7 @@ export function ProductHeroSection() {
     <section
       className="relative mb-8 lg:mb-[56px] mt-[82px]"
       data-element="product-hero-section"
+      data-header-theme="light"
       onMouseMove={handleMouseMove}
     >
       <GridBlobBackground scale={1.8} />
@@ -43,7 +44,7 @@ export function ProductHeroSection() {
       >
         <div
           ref={heroFrameRef}
-          className="w-full h-[380px] sm:h-[420px] lg:h-[499px] rounded-none sm:rounded-b-[10px] overflow-hidden relative max-w-[1440px]"
+          className="w-full h-[380px] sm:h-[420px] lg:h-[499px] rounded-none sm:rounded-b-md overflow-hidden relative max-w-container"
           data-element="product-hero-bg-frame"
           data-dark-background="true"
         >
@@ -75,7 +76,7 @@ export function ProductHeroSection() {
 
       {/* Content */}
       <div
-        className="mx-auto relative z-[2] flex flex-col w-full h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 sm:px-6 max-w-[1440px]"
+        className="mx-auto relative z-[2] flex flex-col w-full h-[380px] sm:h-[420px] lg:h-[499px] pointer-events-none px-4 sm:px-6 max-w-container"
         data-element="product-hero-wrapper"
       >
         <div
@@ -84,7 +85,7 @@ export function ProductHeroSection() {
         >
           {/* Title */}
           <h1
-            className="font-display font-bold text-cream text-[32px] sm:text-[32px] lg:text-[48px] leading-[44px] sm:leading-[48px] lg:leading-[60px] tracking-[2.5px] sm:tracking-[3px] lg:tracking-[4px] mb-4"
+            className="font-display font-bold text-cream text-3xl sm:text-3xl lg:text-[48px] leading-[44px] sm:leading-[48px] lg:leading-[60px] tracking-[2.5px] sm:tracking-[3px] lg:tracking-[4px] mb-4"
             data-element="product-hero-title"
           >
             {HERO_TITLE}

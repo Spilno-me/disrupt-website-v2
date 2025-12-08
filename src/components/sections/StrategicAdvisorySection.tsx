@@ -38,7 +38,7 @@ export function StrategicAdvisorySection() {
       className="py-8 sm:py-12 lg:py-16 bg-cream border-y-dashed-figma"
       data-element="strategic-advisory-section"
     >
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 flex justify-center relative z-[1]">
+      <div className="max-w-container mx-auto px-4 sm:px-6 flex justify-center relative z-[1]">
         {/* Card */}
         <Card
           variant="pricing"
@@ -50,7 +50,7 @@ export function StrategicAdvisorySection() {
           <div className="absolute -top-3 left-1/2 -translate-x-1/2">
             <span
               className="px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold text-white whitespace-nowrap"
-              style={{ backgroundColor: COLORS.circleRed }}
+              style={{ backgroundColor: COLORS.feature.red }}
             >
               STRATEGIC ADVISORY ADD-ON
             </span>
@@ -64,10 +64,7 @@ export function StrategicAdvisorySection() {
                 <h3 className="text-xl sm:text-2xl font-display font-bold uppercase tracking-wide text-dark">
                   Expert Agents
                 </h3>
-                <p
-                  className="font-sans text-sm max-w-[320px]"
-                  style={{ color: COLORS.muted }}
-                >
+                <p className="font-sans text-sm max-w-[320px] text-muted">
                   Your virtual board of directors, available 24/7.
                 </p>
               </div>
@@ -78,10 +75,7 @@ export function StrategicAdvisorySection() {
                 >
                   $7500/mo
                 </span>
-                <span
-                  className="font-sans text-sm"
-                  style={{ color: COLORS.muted }}
-                >
+                <span className="font-sans text-sm text-muted">
                   Replaces €100k–500k/yr consulting spend
                 </span>
               </div>
