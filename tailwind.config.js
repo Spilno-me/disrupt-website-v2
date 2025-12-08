@@ -17,6 +17,15 @@ export default {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@adrozdenko/design-system/dist/**/*.{js,ts,jsx,tsx}',
+  ],
+  // Safelist classes used dynamically in the design system
+  safelist: [
+    'flex',
+    'inline-flex',
+    'w-full',
+    'w-fit',
+    'relative',
   ],
   theme: {
     // Override default breakpoints
