@@ -85,7 +85,6 @@ export function Header({
       contactButtonPath="/#contact"
       logoAlt={COMPANY_INFO.FULL_NAME}
       showLogoTagline={true}
-      colorMode={contrastMode}
       onLogoClick={handleLogoClick}
       onContactClick={handleContactClick}
       renderNavLink={renderNavLink}

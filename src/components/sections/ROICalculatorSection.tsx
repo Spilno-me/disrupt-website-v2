@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { COLORS, Card, Slider } from '@adrozdenko/design-system'
+import { Card, Slider, COLORS } from '@adrozdenko/design-system'
 
 // =============================================================================
 // CONSTANTS
@@ -27,23 +27,24 @@ function CostDisplay({ label, amount, subtitle, variant }: CostDisplayProps) {
     savings: COLORS.circleGreen,
   }
 
-  const subtitleColorClasses = {
-    incumbent: 'text-ferrari-red/70',
-    agentic: 'text-muted',
-    savings: 'text-green-500',
+  const subtitleColors = {
+    incumbent: `${COLORS.red}B3`, // 70% opacity
+    agentic: COLORS.muted,
+    savings: COLORS.circleGreen,
   }
 
   return (
     <div className="flex flex-col gap-2">
-      <span className="font-sans text-sm uppercase tracking-wider font-medium text-dark">
+      <span className="font-sans text-sm uppercase tracking-wider font-medium" style={{ color: COLORS.dark }}>
         {label}
       </span>
       <span
-        className={`font-display font-bold ${variant === 'savings' ? 'text-4xl lg:text-5xl' : 'text-3xl lg:text-4xl'} ${amountColorClasses[variant]}`}
+        className={`font-display font-bold ${variant === 'savings' ? 'text-4xl lg:text-5xl' : 'text-3xl lg:text-4xl'}`}
+        style={{ color: amountColors[variant] }}
       >
         ${amount.toLocaleString()}
       </span>
-      <span className={`font-sans text-xs ${subtitleColorClasses[variant]}`}>
+      <span className="font-sans text-xs" style={{ color: subtitleColors[variant] }}>
         {subtitle}
       </span>
     </div>
