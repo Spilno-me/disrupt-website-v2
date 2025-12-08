@@ -190,7 +190,7 @@ describe('ContactForm Email Tests', () => {
 
       // Wait for form to load
       await waitFor(() => {
-        expect(screen.getByText('Book a Demo')).toBeInTheDocument()
+        expect(screen.getByText('Get in touch')).toBeInTheDocument()
       })
 
       // Fill out the form using placeholder text to find inputs
@@ -207,7 +207,7 @@ describe('ContactForm Email Tests', () => {
       await user.click(privacyCheckbox)
 
       // Submit the form
-      const submitButton = screen.getByText('Book a Demo')
+      const submitButton = screen.getByText('Get in touch')
       await user.click(submitButton)
 
       // Verify EmailService was called with correct data
@@ -229,7 +229,7 @@ describe('ContactForm Email Tests', () => {
         expect(screen.getByPlaceholderText('Email*')).toBeInTheDocument()
         expect(screen.getByPlaceholderText('Company*')).toBeInTheDocument()
         expect(screen.getByPlaceholderText('Leave a message')).toBeInTheDocument()
-        expect(screen.getByText('Book a Demo')).toBeInTheDocument()
+        expect(screen.getByText('Get in touch')).toBeInTheDocument()
       })
     })
   })
