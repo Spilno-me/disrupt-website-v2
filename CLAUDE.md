@@ -54,6 +54,11 @@ docs: update README
 chore: update dependencies
 ```
 
+**IMPORTANT: NEVER add Claude attribution to commits.** Do NOT include:
+- "🤖 Generated with Claude Code"
+- "Co-Authored-By: Claude"
+- Any mention of Claude or AI in commit messages
+
 ### Creating a New Feature
 
 ```bash
