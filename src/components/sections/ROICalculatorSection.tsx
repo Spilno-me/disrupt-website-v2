@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { COLORS } from '@/constants/designTokens'
+import { COLORS, Card, Slider } from '@adrozdenko/design-system'
 
 // =============================================================================
 // CONSTANTS
@@ -8,71 +8,6 @@ import { COLORS } from '@/constants/designTokens'
 const WORKING_DAYS_PER_YEAR = 250
 const AGENTIC_MONTHLY_COST_PER_USER = 10 // Viewer License
 const INCUMBENT_COST_PER_TASK = 2.5
-
-// =============================================================================
-// TYPES
-// =============================================================================
-
-interface SliderProps {
-  label: string
-  value: number
-  min: number
-  max: number
-  step: number
-  unit: string
-  onChange: (value: number) => void
-}
-
-// =============================================================================
-// SLIDER COMPONENT
-// =============================================================================
-
-function Slider({ label, value, min, max, step, unit, onChange }: SliderProps) {
-  const percentage = ((value - min) / (max - min)) * 100
-
-  return (
-    <div className="flex flex-col gap-4">
-      <div className="flex justify-between items-center">
-        <span className="font-sans font-semibold text-base text-dark tracking-tight">
-          {label}
-        </span>
-        <span className="font-sans font-bold text-base text-dark tracking-tight">
-          {value} {unit}
-        </span>
-      </div>
-      <div className="relative h-4">
-        {/* Track Background */}
-        <div className="absolute inset-0 bg-slate-100 rounded-full" />
-        {/* Track Fill */}
-        <div
-          className="absolute left-0 top-0 h-full rounded-full"
-          style={{
-            width: `${percentage}%`,
-            backgroundColor: COLORS.ferrariRed,
-          }}
-        />
-        {/* Slider Input */}
-        <input
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-        />
-        {/* Thumb */}
-        <div
-          className="absolute top-1/2 -translate-y-1/2 w-5 h-5 bg-white rounded-full shadow-md border border-ferrari-red pointer-events-none"
-          style={{
-            left: `calc(${percentage}% - 10px)`,
-            borderColor: COLORS.ferrariRed,
-          }}
-        />
-      </div>
-    </div>
-  )
-}
 
 // =============================================================================
 // COST DISPLAY COMPONENT
@@ -87,7 +22,7 @@ interface CostDisplayProps {
 
 function CostDisplay({ label, amount, subtitle, variant }: CostDisplayProps) {
   const amountColors = {
-    incumbent: COLORS.ferrariRed,
+    incumbent: COLORS.circleRed,
     agentic: COLORS.dark,
     savings: COLORS.circleGreen,
   }
@@ -164,7 +99,7 @@ export function ROICalculatorSection() {
         </div>
 
         {/* Calculator Card */}
-        <div className="max-w-[1120px] mx-auto bg-white rounded-[14px] border border-dashed border-slate-300 overflow-hidden">
+        <Card variant="pricing" shadow="sm" className="max-w-[1120px] mx-auto overflow-hidden !p-0">
           <div className="flex flex-col lg:flex-row">
             {/* Left Side - Sliders */}
             <div className="flex-1 p-6 lg:p-8">
@@ -252,7 +187,7 @@ export function ROICalculatorSection() {
               </div>
             </div>
           </div>
-        </div>
+        </Card>
       </div>
     </section>
   )

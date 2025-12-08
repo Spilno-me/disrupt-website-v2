@@ -1,15 +1,13 @@
 import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form } from '@/components/ui/form'
+import { Form, Button, ElectricButtonWrapper } from '@adrozdenko/design-system'
 import { createContactFormSchema, ContactFormData, defaultFormValues } from '@/schemas/createContactFormSchema'
 import { useTranslation } from '@/hooks/useI18n'
 import { useContactFormSubmission } from '@/hooks/useContactFormSubmission'
 import { ContactFormFields } from './ContactFormFields'
 import { ContactFormSuccessModal } from './ContactFormSuccessModal'
 import { ContactFormErrorModal } from './ContactFormErrorModal'
-import { Button } from '@disrupt/design-system'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 
 export function ContactForm() {
   const { t } = useTranslation()
@@ -50,14 +48,15 @@ export function ContactForm() {
         >
           <ContactFormFields control={form.control} />
 
-          <div className="flex justify-end sm:justify-start">
-            <ElectricButtonWrapper>
+          <div>
+            <ElectricButtonWrapper className="w-full">
               <Button
                 type="submit"
                 variant="contact"
                 disabled={form.formState.isSubmitting}
+                className="w-full"
               >
-                {form.formState.isSubmitting ? 'Sending...' : 'Book a Demo'}
+                {form.formState.isSubmitting ? 'Sending...' : 'Get in touch'}
               </Button>
             </ElectricButtonWrapper>
           </div>

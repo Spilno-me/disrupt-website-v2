@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Scan DDS package for Tailwind classes */
+@source "../node_modules/@adrozdenko/design-system/dist/**/*.js";
+
 @custom-variant dark (&:is(.dark *));
 
 @font-face {

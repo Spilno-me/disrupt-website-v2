@@ -1,7 +1,5 @@
-import { Button } from '@disrupt/design-system'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import { Button, ElectricButtonWrapper, GridBlobBackground } from '@adrozdenko/design-system'
 import { scrollToElement } from '@/utils/navigation'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 
 // =============================================================================
 // COMPONENT

@@ -1,5 +1,4 @@
-import { Button } from '@disrupt/design-system'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import { Button, ElectricButtonWrapper } from '@adrozdenko/design-system'
 import { useTranslation } from '@/hooks/useI18n'
 import { FORM_CONSTANTS } from '@/constants/appConstants'
 

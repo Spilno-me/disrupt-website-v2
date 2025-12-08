@@ -1,6 +1,8 @@
-import { CheckListItem } from '@/components/ui/CheckListItem'
-import { ContentSection } from '@/components/ui/SectionLayout'
-import { optimizedImages } from '@/assets/optimized'
+import {
+  CheckListItem,
+  ContentSection,
+  optimizedImages,
+} from '@adrozdenko/design-system'
 
 // =============================================================================
 // DATA

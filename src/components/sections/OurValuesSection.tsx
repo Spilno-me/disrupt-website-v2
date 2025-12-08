@@ -1,6 +1,4 @@
-import { AnimatedCheck } from '@/components/ui/AnimatedCheck'
-import { ContentSection } from '@/components/ui/SectionLayout'
-import { aboutImages } from '@/assets/optimized/about'
+import { AnimatedCheck, ContentSection, aboutImages } from '@adrozdenko/design-system'
 
 // =============================================================================
 // CONSTANTS

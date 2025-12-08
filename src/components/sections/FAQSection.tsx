@@ -1,23 +1,11 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'motion/react'
-import { ChevronDown } from 'lucide-react'
-import { COLORS } from '@/constants/designTokens'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
-
-// =============================================================================
-// TYPES
-// =============================================================================
-
-interface FAQItem {
-  question: string
-  answer: string
-}
+import { COLORS, GridBlobBackground, Card, Accordion } from '@adrozdenko/design-system'
+import type { AccordionItem } from '@adrozdenko/design-system'
 
 // =============================================================================
 // DATA
 // =============================================================================
 
-const FAQ_ITEMS: FAQItem[] = [
+const FAQ_ITEMS: AccordionItem[] = [
   {
     question: 'How does migration from legacy systems work?',
     answer: 'Our migration team works with you to map your existing data structures, workflows, and configurations. We provide automated migration tools and dedicated support to ensure a smooth transition with minimal disruption to your operations. Most migrations complete within 4-8 weeks depending on complexity.',
@@ -41,77 +29,10 @@ const FAQ_ITEMS: FAQItem[] = [
 ]
 
 // =============================================================================
-// ACCORDION ITEM COMPONENT
-// =============================================================================
-
-interface AccordionItemProps {
-  item: FAQItem
-  isOpen: boolean
-  onToggle: () => void
-  isLast?: boolean
-}
-
-function AccordionItem({ item, isOpen, onToggle, isLast = false }: AccordionItemProps) {
-  return (
-    <div className={isLast ? '' : 'border-b border-dashed border-teal'}>
-      <button
-        className="w-full flex items-center justify-between py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-md"
-        onClick={onToggle}
-        aria-expanded={isOpen}
-      >
-        <span
-          className="font-sans font-medium text-sm pr-4"
-          style={{ color: COLORS.darkPurple }}
-        >
-          {item.question}
-        </span>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="flex-shrink-0"
-        >
-          <ChevronDown
-            className="w-5 h-5"
-            style={{ color: COLORS.muted }}
-          />
-        </motion.div>
-      </button>
-
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="overflow-hidden"
-          >
-            <div className="bg-teal/5 rounded-md p-4 mb-4">
-              <p
-                className="font-sans text-sm leading-relaxed"
-                style={{ color: COLORS.darkPurple }}
-              >
-                {item.answer}
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-
-// =============================================================================
 // MAIN COMPONENT
 // =============================================================================
 
 export function FAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(2) // Third item open by default
-
-  const handleToggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
-
   return (
     <section
       className="py-8 sm:py-12 lg:py-16 relative"
@@ -131,17 +52,13 @@ export function FAQSection() {
           </h2>
 
           {/* Accordion */}
-          <div className="bg-white rounded-lg border border-dashed border-teal p-6">
-            {FAQ_ITEMS.map((item, index) => (
-              <AccordionItem
-                key={item.question}
-                item={item}
-                isOpen={openIndex === index}
-                onToggle={() => handleToggle(index)}
-                isLast={index === FAQ_ITEMS.length - 1}
-              />
-            ))}
-          </div>
+          <Card variant="pricing" shadow="sm" style={{ borderColor: COLORS.teal }}>
+            <Accordion
+              items={FAQ_ITEMS}
+              defaultOpenIndex={2}
+              borderColor={COLORS.teal}
+            />
+          </Card>
         </div>
       </div>
     </section>

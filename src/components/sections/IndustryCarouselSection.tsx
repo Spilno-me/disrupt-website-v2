@@ -1,8 +1,7 @@
 import { useState, useRef, useCallback, forwardRef, useEffect, memo } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { useIsMobile } from '@/hooks/useIsMobile'
+import { useIsMobile, SectionContainer } from '@adrozdenko/design-system'
 import { Building2, Factory, Zap, Pill, Truck } from 'lucide-react'
-import { SectionContainer } from '@/components/ui/SectionLayout'
 
 // Industry images - responsive versions
 // Construction

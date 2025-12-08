@@ -1,5 +1,4 @@
-import { ContentSection } from '@/components/ui/SectionLayout'
-import { aboutImages } from '@/assets/optimized/about'
+import { ContentSection, aboutImages } from '@adrozdenko/design-system'
 
 // =============================================================================
 // COMPONENT

@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@adrozdenko/design-system'
 
 export function LanguageSwitcher() {
   const { currentLanguage, setLanguage, languages } = useI18n()

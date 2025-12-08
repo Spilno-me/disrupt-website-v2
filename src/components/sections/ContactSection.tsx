@@ -1,6 +1,6 @@
+import { BlobSection } from '@adrozdenko/design-system'
 import { ContactForm } from '@/components/forms/ContactForm'
 import { ContactInfo } from './ContactInfo'
-import { BlobSection } from '@/components/ui/GridBlobCanvas'
 
 export function ContactSection() {
   return (

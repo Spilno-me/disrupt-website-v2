@@ -1,9 +1,16 @@
-import { COLORS, RADIUS, SHADOWS, TYPOGRAPHY, SPACING } from '@/constants/designTokens'
-import { Check } from 'lucide-react'
-import { Button } from '@disrupt/design-system'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import {
+  COLORS,
+  Button,
+  Card,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  PricingConnector,
+  GridBlobBackground,
+  ElectricButtonWrapper,
+  AnimatedCheck
+} from '@adrozdenko/design-system'
 import { scrollToElement } from '@/utils/navigation'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
 
 // =============================================================================
 // TYPES
@@ -17,6 +24,7 @@ interface TierFeature {
 interface PricingCardTier {
   name: string
   price: string
+  subtitle?: string
   description: string
   isHighlighted?: boolean
   badge?: string
@@ -32,12 +40,21 @@ const PRICING_CARD_TIERS: PricingCardTier[] = [
   {
     name: 'Viewer',
     price: '$10/mo',
-    description: 'Field workers, contractors, employees. Report observations, receive training.',
+    subtitle: 'Field Workers & Personnel.',
+    description: 'Report observations, access assigned training.',
     includesFrom: "What's included:",
     features: [
       {
-        label: 'Always Included Modules',
-        description: 'Incidents, Observations, Actions Tracking, Risk, JHA, Bow-ties, Safety Meetings, Training Management, Doc Control, Basic Reporting',
+        label: 'Limited Access to Core EHS Modules',
+        description: 'Observations, Actions, Risk, Training & Basic Reporting',
+      },
+      {
+        label: 'Read/Write Access',
+        description: 'Observations, Incidents, Risk and Actions',
+      },
+      {
+        label: 'Training Management',
+        description: 'View & Take Assigned Courses',
       },
       {
         label: 'Tier 1: Time Saver Agents',
@@ -48,12 +65,21 @@ const PRICING_CARD_TIERS: PricingCardTier[] = [
   {
     name: 'Contributor',
     price: '$30/mo',
-    description: 'Department heads, supervisors. Full incident entry, workflow approvals.',
-    includesFrom: 'Everything in Viewer, plus:',
+    subtitle: 'Supervisors & Line Management.',
+    description: 'Full incident/event management, workflow approvals.',
+    includesFrom: 'Everything in Viewer, plus Full Module Control:',
     features: [
       {
-        label: 'Safety Essentials Bundle',
-        description: 'Inspections & Audits',
+        label: 'Full Create/Edit/Manage',
+        description: 'of all Core Modules',
+      },
+      {
+        label: 'Safety Essentials:',
+        description: 'Inspections, Audits, Checklists',
+      },
+      {
+        label: 'Full Workflow Approval',
+        description: '& Action Management',
       },
       {
         label: 'Tier 2: Process Agents',
@@ -64,14 +90,21 @@ const PRICING_CARD_TIERS: PricingCardTier[] = [
   {
     name: 'Power User',
     price: '$60/mo',
-    description: 'EHS Specialists, managers. Advanced data analysis, report building.',
-    isHighlighted: true,
-    badge: 'Most popular',
-    includesFrom: 'Everything in Contributor, plus:',
+    subtitle: 'EHS Specialists & Managers.',
+    description: 'Advanced data analysis, proactive risk scoring, complete module access.',
+    includesFrom: 'Everything in Contributor, plus Advanced EHS & Analytics:',
     features: [
       {
-        label: 'Enterprise Disruptor Bundle',
-        description: 'Permit to Work (LOTO), Contractor & Chemical Management',
+        label: 'Complete Access',
+        description: 'to ALL EHS Modules',
+      },
+      {
+        label: 'Enterprise Bundle:',
+        description: 'Permit to Work (LOTO), Contractor, Chemical Management',
+      },
+      {
+        label: 'Advanced Analytics',
+        description: '& Custom Report Building',
       },
       {
         label: 'Tier 3: Analytical Agents',
@@ -82,12 +115,20 @@ const PRICING_CARD_TIERS: PricingCardTier[] = [
   {
     name: 'Creator',
     price: '$150/mo',
-    description: 'Core EHS team, administrators. All model building, system configuration.',
-    includesFrom: 'Everything in Power User, plus:',
+    subtitle: 'Core EHS Team & Administrators.',
+    description: 'Platform configuration, data modeling, agent development.',
+    includesFrom: 'Everything in Power User, plus System Administration & AI Development:',
     features: [
       {
-        label: 'Agent Master Suite',
-        description: 'Full Autonomy - Builder, Integrator, Engager Agents',
+        label: 'Full Administrator Permissions',
+      },
+      {
+        label: 'System Configuration',
+        description: '& User Management',
+      },
+      {
+        label: 'Agent Master Suite:',
+        description: 'Tools for Building & Deploying Agents',
       },
     ],
   },
@@ -105,40 +146,45 @@ function PricingComponentCard({
   description: string
 }) {
   return (
-    <div className="flex-1 p-6 bg-white rounded-[14px] border border-dashed border-slate-300">
-      <h3
-        className="font-sans font-bold text-lg mb-2"
+    <Card variant="pricingHighlight" shadow="sm" className="flex-1">
+      <CardTitle
+        className="font-sans font-bold text-lg mb-3"
         style={{ color: COLORS.dark }}
       >
         {title}
-      </h3>
-      <p
-        className="font-sans text-sm leading-relaxed"
-        style={{ color: COLORS.muted }}
+      </CardTitle>
+      <CardContent
+        className="rounded-md p-3 !px-3"
+        style={{ backgroundColor: 'rgba(247, 13, 26, 0.05)' }}
       >
-        {description}
-      </p>
-    </div>
+        <CardDescription
+          className="font-sans text-sm leading-relaxed"
+          style={{ color: COLORS.muted }}
+        >
+          {description}
+        </CardDescription>
+      </CardContent>
+    </Card>
   )
 }
 
-function FeatureListItem({ feature }: { feature: TierFeature }) {
+function FeatureListItem({ feature, index = 0 }: { feature: TierFeature; index?: number }) {
   return (
     <div className="flex items-start gap-3">
-      <Check
+      <AnimatedCheck
         className="w-5 h-5 flex-shrink-0 mt-0.5"
-        style={{ color: COLORS.teal }}
+        index={index}
       />
       <div className="flex-1">
         <span
-          className="font-sans text-sm leading-[1.625] tracking-[-0.01em]"
-          style={{ color: COLORS.muted }}
+          className="font-sans font-semibold text-sm leading-[1.625] tracking-[-0.01em]"
+          style={{ color: COLORS.dark }}
         >
           {feature.label}
         </span>
         {feature.description && (
           <span
-            className="font-sans text-sm leading-[1.625] tracking-[-0.01em] block opacity-80"
+            className="font-sans text-sm leading-[1.625] tracking-[-0.01em] block mt-0.5"
             style={{ color: COLORS.muted }}
           >
             {feature.description}
@@ -151,15 +197,10 @@ function FeatureListItem({ feature }: { feature: TierFeature }) {
 
 function PricingCard({ tier }: { tier: PricingCardTier }) {
   return (
-    <div
-      className={`relative flex flex-col p-6 h-full rounded-[14px] border border-dashed ${
-        tier.isHighlighted
-          ? 'border-teal bg-white'
-          : 'border-slate-300 bg-white'
-      }`}
-      style={{
-        boxShadow: tier.isHighlighted ? SHADOWS.image : SHADOWS.buttonDefault,
-      }}
+    <Card
+      variant="pricing"
+      shadow="sm"
+      className="relative"
       data-element="pricing-card"
     >
       {/* Badge */}
@@ -182,12 +223,15 @@ function PricingCard({ tier }: { tier: PricingCardTier }) {
           >
             {tier.name}
           </h3>
-          <p
+          <div
             className="font-sans text-sm leading-[1.625] tracking-[-0.01em]"
             style={{ color: COLORS.muted }}
           >
+            {tier.subtitle && (
+              <span className="font-bold block" style={{ color: COLORS.dark }}>{tier.subtitle}</span>
+            )}
             {tier.description}
-          </p>
+          </div>
         </div>
 
         {/* Price */}
@@ -209,18 +253,16 @@ function PricingCard({ tier }: { tier: PricingCardTier }) {
         {/* CTA Button */}
         <div className="w-full">
           <ElectricButtonWrapper className="!w-full [&>div]:w-full">
-            <button
+            <Button
               onClick={() => scrollToElement('contact')}
-              className="w-full py-3 px-4 font-sans text-sm font-medium cursor-pointer transition-all"
+              className="w-full"
               style={{
-                backgroundColor: tier.isHighlighted ? COLORS.dark : COLORS.lightPurple,
-                color: tier.isHighlighted ? '#fff' : COLORS.dark,
-                borderRadius: RADIUS.md,
-                boxShadow: SHADOWS.buttonDefault,
+                backgroundColor: COLORS.ferrariRed,
+                color: 'white'
               }}
             >
               Get Started
-            </button>
+            </Button>
           </ElectricButtonWrapper>
         </div>
       </div>
@@ -234,10 +276,10 @@ function PricingCard({ tier }: { tier: PricingCardTier }) {
           {tier.includesFrom}
         </span>
         {tier.features.map((feature, idx) => (
-          <FeatureListItem key={idx} feature={feature} />
+          <FeatureListItem key={idx} feature={feature} index={idx} />
         ))}
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -268,11 +310,13 @@ export function PricingCardsSection() {
         </div>
 
         {/* Pricing Structure Cards */}
-        <div className="flex flex-col md:flex-row gap-6 mb-8">
+        <div className="flex flex-col md:flex-row items-stretch gap-4 md:gap-6 mb-8">
           <PricingComponentCard
             title="A: Base Platform Fee"
             description="Annual cost, quoted based on total employee count to cover core engine, API, security and hosting"
           />
+          {/* Plus sign connector */}
+          <PricingConnector spinInterval={3000} />
           <PricingComponentCard
             title="B: Per-User Fee"
             description="Monthly cost dependent on the access level required (Viewer, Contributor, etc)"
@@ -280,21 +324,21 @@ export function PricingCardsSection() {
         </div>
 
         {/* Annual Platform Fee Row */}
-        <div className="bg-white rounded-[14px] border border-dashed border-slate-300 p-4 sm:p-6 mb-10">
+        <Card variant="pricing" shadow="sm" className="p-4 sm:p-6 mb-10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h4
+              <CardTitle
                 className="font-sans font-bold text-base"
                 style={{ color: COLORS.dark }}
               >
                 Annual Platform Fee
-              </h4>
-              <p
+              </CardTitle>
+              <CardDescription
                 className="font-sans text-sm"
                 style={{ color: COLORS.muted }}
               >
                 Quoted based on total business size
-              </p>
+              </CardDescription>
             </div>
             <ElectricButtonWrapper>
               <Button
@@ -305,7 +349,7 @@ export function PricingCardsSection() {
               </Button>
             </ElectricButtonWrapper>
           </div>
-        </div>
+        </Card>
 
         {/* Pricing Cards Grid */}
         <div

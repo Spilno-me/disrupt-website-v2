@@ -1,5 +1,4 @@
-import { COLORS } from '@/constants/designTokens'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
+import { COLORS, GridBlobBackground, Card } from '@adrozdenko/design-system'
 
 // =============================================================================
 // TYPES
@@ -38,8 +37,10 @@ const FEATURES: FeatureCardData[] = [
 
 function FeatureGridCard({ title, description }: FeatureCardData) {
   return (
-    <div
-      className="flex flex-col gap-6 p-6 rounded-xl border border-dashed border-slate-300 bg-cream"
+    <Card
+      variant="pricing"
+      shadow="sm"
+      className="gap-6 bg-cream"
       data-element="feature-grid-card"
     >
       <div className="flex flex-col gap-4">
@@ -56,7 +57,7 @@ function FeatureGridCard({ title, description }: FeatureCardData) {
       >
         {description}
       </p>
-    </div>
+    </Card>
   )
 }
 

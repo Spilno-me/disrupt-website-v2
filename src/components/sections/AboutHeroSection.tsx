@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
-import { HeroParticles } from '@/components/ui/HeroParticles'
-import { MouseParticleRenderer } from '@/components/ui/MouseParticleRenderer'
-import { BlurImage } from '@/components/ui/BlurImage'
-import { useMouseParticles } from '@/hooks/useMouseParticles'
-import { AnimatedCheck } from '@/components/ui/AnimatedCheck'
-import { aboutImages } from '@/assets/optimized/about'
+import {
+  GridBlobBackground,
+  HeroParticles,
+  MouseParticleRenderer,
+  BlurImage,
+  useMouseParticles,
+  AnimatedCheck,
+  aboutImages,
+} from '@adrozdenko/design-system'
 
 // =============================================================================
 // CONSTANTS

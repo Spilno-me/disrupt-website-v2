@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Footer as DdsFooter } from '@adrozdenko/design-system'
 import { COMPANY_INFO, NAVIGATION } from '@/constants/appConstants'
 
 // =============================================================================
@@ -7,37 +8,25 @@ import { COMPANY_INFO, NAVIGATION } from '@/constants/appConstants'
 
 export function Footer() {
   return (
-    <footer
-      className="py-3 sm:py-4 backdrop-blur-[10px] bg-cream/30 shadow-[0px_-1px_3px_rgba(0,0,0,0.08)]"
-      data-element="main-footer"
-    >
-      <div
-        className="max-w-[1440px] mx-auto px-4 sm:px-6"
-        data-element="footer-container"
-      >
-        <div className="flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-4">
-          {/* Copyright */}
-          <p className="text-dark text-xs sm:text-sm font-medium order-2 md:order-1">
-            Copyright {COMPANY_INFO.COPYRIGHT_YEAR} © {COMPANY_INFO.WEBSITE}
-          </p>
-
-          {/* Links */}
-          <div className="flex items-center gap-3 sm:gap-6 order-1 md:order-2 flex-wrap justify-center" data-element="footer-links">
-            <Link
-              to={NAVIGATION.PRIVACY_POLICY}
-              className="text-dark hover:text-teal transition-colors text-xs sm:text-sm font-medium"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              to={NAVIGATION.TERMS_OF_SERVICE}
-              className="text-dark hover:text-teal transition-colors text-xs sm:text-sm font-medium"
-            >
-              Terms of Service
-            </Link>
-          </div>
+    <DdsFooter
+      companyName={COMPANY_INFO.WEBSITE}
+      copyrightYear={COMPANY_INFO.COPYRIGHT_YEAR}
+      rightContent={
+        <div className="flex items-center gap-3 sm:gap-6 flex-wrap justify-center">
+          <Link
+            to={NAVIGATION.PRIVACY_POLICY}
+            className="text-dark hover:text-teal transition-colors text-xs sm:text-sm font-medium"
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            to={NAVIGATION.TERMS_OF_SERVICE}
+            className="text-dark hover:text-teal transition-colors text-xs sm:text-sm font-medium"
+          >
+            Terms of Service
+          </Link>
         </div>
-      </div>
-    </footer>
+      }
+    />
   )
 }

@@ -1,13 +1,13 @@
-import { BlobSection } from '@/components/ui/GridBlobCanvas'
-import { CheckListItem } from '@/components/ui/CheckListItem'
 import {
+  BlobSection,
+  CheckListItem,
   SectionContainer,
   SectionHeading,
   TwoColumnLayout,
   Column,
-} from '@/components/ui/SectionLayout'
-import { ResponsiveImage } from '@/components/ui/ResponsiveImage'
-import { aboutImages } from '@/assets/optimized/about'
+  ResponsiveImage,
+  aboutImages,
+} from '@adrozdenko/design-system'
 
 // =============================================================================
 // DATA

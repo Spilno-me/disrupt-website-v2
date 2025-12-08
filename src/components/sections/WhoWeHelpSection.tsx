@@ -1,9 +1,11 @@
-import { Button } from '@disrupt/design-system'
-import { CheckListItem } from '@/components/ui/CheckListItem'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
+import {
+  Button,
+  CheckListItem,
+  ElectricButtonWrapper,
+  ContentSection,
+  optimizedImages,
+} from '@adrozdenko/design-system'
 import { scrollToElement } from '@/utils/navigation'
-import { ContentSection } from '@/components/ui/SectionLayout'
-import { optimizedImages } from '@/assets/optimized'
 
 // =============================================================================
 // DATA

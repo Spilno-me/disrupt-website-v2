@@ -1,8 +1,14 @@
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Checkbox } from '@/components/ui/checkbox'
-import { ElectricInputWrapper } from '@/components/ui/ElectricInput'
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+  Input,
+  Textarea,
+  Checkbox,
+  ElectricInput as ElectricInputWrapper,
+} from '@adrozdenko/design-system'
 import { Control } from 'react-hook-form'
 import { ContactFormData } from '@/schemas/createContactFormSchema'
 import { UI_CONSTANTS, FORM_CONSTANTS } from '@/constants/appConstants'
@@ -147,19 +153,17 @@ function PrivacyPolicyField({ control }: ContactFormFieldsProps) {
       name="privacyPolicy"
       render={({ field }) => (
         <FormItem className="w-full space-y-0">
-          <div className="flex items-start gap-3">
+          <div className="flex items-center gap-3">
             <FormControl>
               <Checkbox
                 checked={field.value}
                 onCheckedChange={field.onChange}
-                className={`${FORM_CONSTANTS.CHECKBOX_SIZES.MOBILE} ${FORM_CONSTANTS.CHECKBOX_SIZES.DESKTOP} flex-shrink-0 mt-0.5`}
+                className={`${FORM_CONSTANTS.CHECKBOX_SIZES.MOBILE} ${FORM_CONSTANTS.CHECKBOX_SIZES.DESKTOP} flex-shrink-0`}
               />
             </FormControl>
-            <div className="flex-1 min-h-[24px]">
-              <FormLabel className="text-sm leading-tight cursor-pointer">
-                <PrivacyPolicyLabel text={t('contact.form.labels.privacyPolicy')} />
-              </FormLabel>
-            </div>
+            <FormLabel className="text-sm leading-normal cursor-pointer">
+              <PrivacyPolicyLabel text={t('contact.form.labels.privacyPolicy')} />
+            </FormLabel>
           </div>
           <FormMessage className="ml-8" />
         </FormItem>

@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react'
-import { GridBlobBackground } from '@/components/ui/GridBlobCanvas'
-import { HeroParticles } from '@/components/ui/HeroParticles'
-import { MouseParticleRenderer } from '@/components/ui/MouseParticleRenderer'
-import { BlurImage } from '@/components/ui/BlurImage'
-import { useMouseParticles } from '@/hooks/useMouseParticles'
-import { productImages } from '@/assets/optimized/product'
+import {
+  GridBlobBackground,
+  HeroParticles,
+  MouseParticleRenderer,
+  BlurImage,
+  useMouseParticles,
+  productImages,
+} from '@adrozdenko/design-system'
 
 // =============================================================================
 // CONSTANTS

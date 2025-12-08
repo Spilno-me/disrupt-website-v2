@@ -1,21 +1,11 @@
-import { COLORS } from '@/constants/designTokens'
+import { COLORS, Card, FeatureItem } from '@adrozdenko/design-system'
 import { Shield, BookOpen, BarChart3, Scale } from 'lucide-react'
-
-// =============================================================================
-// TYPES
-// =============================================================================
-
-interface AdvisoryFeature {
-  icon: React.ElementType
-  title: string
-  description: string
-}
 
 // =============================================================================
 // DATA
 // =============================================================================
 
-const ADVISORY_FEATURES: AdvisoryFeature[] = [
+const ADVISORY_FEATURES = [
   {
     icon: Shield,
     title: 'Compliance Advisor',
@@ -39,36 +29,6 @@ const ADVISORY_FEATURES: AdvisoryFeature[] = [
 ]
 
 // =============================================================================
-// FEATURE ITEM COMPONENT
-// =============================================================================
-
-function FeatureItem({ icon: Icon, title, description }: AdvisoryFeature) {
-  return (
-    <div className="flex gap-4">
-      <div
-        className="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center bg-darkPurple/10"
-      >
-        <Icon className="w-6 h-6" style={{ color: COLORS.darkPurple }} strokeWidth={2} />
-      </div>
-      <div className="flex flex-col gap-1">
-        <h4
-          className="font-sans font-bold text-base tracking-tight"
-          style={{ color: COLORS.darkPurple }}
-        >
-          {title}
-        </h4>
-        <p
-          className="font-sans text-sm leading-[1.43] tracking-tight"
-          style={{ color: COLORS.muted }}
-        >
-          {description}
-        </p>
-      </div>
-    </div>
-  )
-}
-
-// =============================================================================
 // MAIN COMPONENT
 // =============================================================================
 
@@ -80,7 +40,12 @@ export function StrategicAdvisorySection() {
     >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 flex justify-center relative z-[1]">
         {/* Card */}
-        <div className="max-w-[894px] w-full bg-white rounded-[14px] border border-dashed border-teal relative">
+        <Card
+          variant="pricing"
+          shadow="sm"
+          className="max-w-[894px] w-full relative"
+          style={{ borderColor: COLORS.teal }}
+        >
           {/* Badge */}
           <div className="absolute -top-3 left-1/2 -translate-x-1/2">
             <span
@@ -109,7 +74,7 @@ export function StrategicAdvisorySection() {
               <div className="flex flex-col gap-1 md:text-right">
                 <span
                   className="font-display font-bold text-2xl"
-                  style={{ color: COLORS.ferrariRed }}
+                  style={{ color: COLORS.circleRed }}
                 >
                   $7500/mo
                 </span>
@@ -132,7 +97,7 @@ export function StrategicAdvisorySection() {
               ))}
             </div>
           </div>
-        </div>
+        </Card>
       </div>
     </section>
   )

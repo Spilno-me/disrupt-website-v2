@@ -1,8 +1,12 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useInView } from 'motion/react'
-import { FeatureCard, FeatureCardProps } from '@/components/ui/FeatureCard'
-import { SectionContainer, SectionHeading } from '@/components/ui/SectionLayout'
-import { COLORS } from '@/constants/designTokens'
+import {
+  FeatureCard,
+  SectionContainer,
+  SectionHeading,
+  COLORS,
+} from '@adrozdenko/design-system'
+import type { FeatureCardProps } from '@adrozdenko/design-system'
 
 // =============================================================================
 // TABLET DETECTION HOOK

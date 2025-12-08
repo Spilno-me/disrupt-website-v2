@@ -1,9 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
-import { AnimatedLogo } from '@/components/ui/AnimatedLogo'
+import { Header as DdsHeader, NavItem } from '@adrozdenko/design-system'
 import { COMPANY_INFO } from '@/constants/appConstants'
 import { scrollToElement, scrollToElementWithDelay, smoothScrollToTop } from '@/utils/navigation'
-import { MobileMenu } from '@/components/ui/mobile-menu'
-import { ElectricButtonWrapper } from '@/components/ui/ElectricInput'
 import { useIsMobile } from '@/hooks/useIsMobile'
 import { useHeaderContrast } from '@/hooks/useContrastColor'
 
@@ -13,11 +11,11 @@ interface HeaderProps {
   onLogoClick?: () => void
 }
 
-const NAV_ITEMS = [
+const NAV_ITEMS: NavItem[] = [
   { label: 'Home', path: '/' },
   { label: 'Product', path: '/product' },
   { label: 'About', path: '/about' },
-] as const
+]
 
 export function Header({
   showContactButton = true,
@@ -27,9 +25,6 @@ export function Header({
   const location = useLocation()
   const isMobile = useIsMobile()
   const contrastMode = useHeaderContrast()
-
-  // Text color based on background
-  const navTextColor = contrastMode === 'dark' ? 'text-dark' : 'text-white'
 
   const handleLogoClick = () => {
     if (onLogoClick) {
@@ -63,99 +58,39 @@ export function Header({
     // If no contact section, let the Link navigate to /#contact
   }
 
-  const isActiveRoute = (path: string) => {
-    return location.pathname === path
-  }
+  // Add isActive flag to nav items based on current route
+  const navItemsWithActive = NAV_ITEMS.map(item => ({
+    ...item,
+    isActive: location.pathname === item.path
+  }))
+
+  // Custom renderer for nav links using React Router
+  const renderNavLink = (item: NavItem, children: React.ReactNode) => (
+    <Link to={item.path}>
+      {children}
+    </Link>
+  )
+
+  // Custom renderer for contact button using React Router
+  const renderContactLink = (children: React.ReactNode) => (
+    <Link to="/#contact" onClick={handleContactClick}>
+      {children}
+    </Link>
+  )
 
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-[10px] bg-cream/30 border-b border-teal shadow-[0px_2px_4px_5px_rgba(0,0,0,0.15)]"
-      data-element="main-header"
-    >
-      <nav
-        className="flex items-center gap-4 py-4 px-4 sm:px-6"
-        data-element="header-nav"
-      >
-        <div className="w-full max-w-[1440px] mx-auto flex items-center justify-between gap-4">
-          {/* Logo */}
-          <div className="flex items-center overflow-visible" data-element="header-logo">
-            <AnimatedLogo
-              className="h-[54px] w-[178px] cursor-pointer overflow-visible"
-              onClick={handleLogoClick}
-              alt={COMPANY_INFO.FULL_NAME}
-              colorMode={contrastMode}
-            />
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-5">
-            <div className="flex items-center gap-1">
-              {NAV_ITEMS.map((item) => {
-                const isActive = isActiveRoute(item.path)
-                return (
-                  <ElectricButtonWrapper key={item.path} className="nav-item" isActive={isActive} colorMode={contrastMode}>
-                    <Link
-                      to={item.path}
-                      className={`h-9 px-4 py-2 rounded-[8px] text-sm font-sans font-medium leading-[1.43] transition-colors flex items-center justify-center gap-2 cursor-pointer ${navTextColor} ${
-                        isActive ? '' : 'hover:bg-white/10'
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  </ElectricButtonWrapper>
-                )
-              })}
-            </div>
-
-            {/* Contact Button */}
-            {showContactButton && (
-              <ElectricButtonWrapper colorMode={contrastMode}>
-                <Link
-                  to="/#contact"
-                  onClick={handleContactClick}
-                  className="h-9 px-4 py-2 rounded-[12px] text-sm font-sans font-medium leading-[1.43] flex items-center justify-center gap-2 transition-colors hover:opacity-90 bg-dark text-white cursor-pointer"
-                >
-                  Contact us
-                </Link>
-              </ElectricButtonWrapper>
-            )}
-          </div>
-
-          {/* Mobile Navigation */}
-          <div className="md:hidden">
-            <MobileMenu onItemClick={() => {}}>
-              <div className="flex flex-col gap-2 mb-4">
-                {NAV_ITEMS.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    className={`px-4 py-3 rounded-[8px] text-base font-medium cursor-pointer ${
-                      isActiveRoute(item.path)
-                        ? 'bg-teal/10 text-teal'
-                        : 'text-dark hover:bg-white/10'
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-
-              {/* Mobile Contact Button */}
-              {showContactButton && (
-                <ElectricButtonWrapper className="w-full">
-                  <Link
-                    to="/#contact"
-                    onClick={handleContactClick}
-                    className="w-full h-11 px-4 py-2 rounded-[12px] text-base font-medium cursor-pointer bg-dark text-white flex items-center justify-center"
-                  >
-                    Contact us
-                  </Link>
-                </ElectricButtonWrapper>
-              )}
-            </MobileMenu>
-          </div>
-        </div>
-      </nav>
-    </header>
+    <DdsHeader
+      navItems={navItemsWithActive}
+      showContactButton={showContactButton}
+      contactButtonText="Let's talk"
+      contactButtonPath="/#contact"
+      logoAlt={COMPANY_INFO.FULL_NAME}
+      showLogoTagline={true}
+      colorMode={contrastMode}
+      onLogoClick={handleLogoClick}
+      onContactClick={handleContactClick}
+      renderNavLink={renderNavLink}
+      renderContactLink={renderContactLink}
+    />
   )
 }
