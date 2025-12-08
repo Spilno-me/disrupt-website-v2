@@ -52,7 +52,7 @@
     "vitest": "^2.1.9"
   },
   "dependencies": {
-    "@adrozdenko/design-system": "^1.1.0",
+    "@adrozdenko/design-system": "^1.1.2",
     "@hookform/resolvers": "^5.2.1",
     "@radix-ui/react-checkbox": "^1.3.3",
     "@radix-ui/react-dialog": "^1.1.15",
