@@ -46,7 +46,7 @@ const PRICING_CARD_TIERS: PricingCardTier[] = [
     features: [
       {
         label: 'Limited Access to Core EHS Modules',
-        description: 'Observations, Actions, Risk, Training & Basic Reporting',
+        description: 'Observations, Incidents, Actions, Risk, Training & Basic Reporting',
       },
       {
         label: 'Read/Write Access',
@@ -79,7 +79,6 @@ const PRICING_CARD_TIERS: PricingCardTier[] = [
       },
       {
         label: 'Full Workflow Approval',
-        description: '& Action Management',
       },
       {
         label: 'Tier 2: Process Agents',
@@ -104,7 +103,6 @@ const PRICING_CARD_TIERS: PricingCardTier[] = [
       },
       {
         label: 'Advanced Analytics',
-        description: '& Custom Report Building',
       },
       {
         label: 'Tier 3: Analytical Agents',
@@ -124,7 +122,6 @@ const PRICING_CARD_TIERS: PricingCardTier[] = [
       },
       {
         label: 'System Configuration',
-        description: '& User Management',
       },
       {
         label: 'Agent Master Suite:',
@@ -181,9 +178,6 @@ function FeatureListItem({ feature, index = 0 }: { feature: TierFeature; index?:
           style={{ color: COLORS.dark }}
         >
           {feature.label}
-          {feature.description && (
-            <span className="opacity-80">{feature.description}</span>
-          )}
         </span>
         {feature.description && (
           <span
