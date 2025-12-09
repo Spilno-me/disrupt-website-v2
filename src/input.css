@@ -2,10 +2,12 @@
 @import "tw-animate-css";
 
 /* =============================================================================
-   DESIGN SYSTEM TOKENS
-   All design tokens are imported from @adrozdenko/design-system
-   This ensures consistency across all applications using the design system.
+   DESIGN SYSTEM STYLES
+   Import the main CSS from the design system which includes:
+   - All component styles (HeroParticles, etc.)
+   - Design tokens (colors, spacing, typography)
    ============================================================================= */
+@import "@adrozdenko/design-system/styles";
 @import "@adrozdenko/design-system/tokens.css";
 
 /* Scan DDS package for Tailwind classes */

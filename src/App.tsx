@@ -1,22 +1,40 @@
 import { Toaster } from 'sonner'
-import { TooltipProvider } from '@adrozdenko/design-system'
-import { PageLayout } from '@/components/layout/PageLayout'
-import { HeroSection } from '@/components/sections/HeroSection'
-import { AIPlatformSection } from '@/components/sections/AIPlatformSection'
-import { WhatDisruptDoesSection } from '@/components/sections/WhatDisruptDoesSection'
-import { ProofSection } from '@/components/sections/ProofSection'
-import { WhoWeHelpSection } from '@/components/sections/WhoWeHelpSection'
-import { WhyDifferentSection } from '@/components/sections/WhyDifferentSection'
-import { FutureCapabilitiesSection } from '@/components/sections/FutureCapabilitiesSection'
-import { ContactSection } from '@/components/sections/ContactSection'
+import {
+  TooltipProvider,
+  PageLayout,
+  HeroSection,
+  AIPlatformSection,
+  WhatDisruptDoesSection,
+  ProofSection,
+  WhoWeHelpSection,
+  WhyDifferentSection,
+  FutureCapabilitiesSection,
+  ContactSection,
+  optimizedImages,
+} from '@adrozdenko/design-system'
 import { I18nLoader } from '@/components/I18nLoader'
+import { useRouterNavigation } from '@/hooks/useRouterNavigation'
 
 function App() {
+  const { renderNavLink, renderContactLink, onLogoClick } = useRouterNavigation()
+
   return (
     <I18nLoader>
       <TooltipProvider>
-        <PageLayout>
-          <HeroSection />
+        <PageLayout
+          renderNavLink={renderNavLink}
+          renderContactLink={renderContactLink}
+          onLogoClick={onLogoClick}
+        >
+          <HeroSection
+            title="Protect People"
+            rotatingTitles={['Protect People', 'Empower Strategy', 'Cut the Admin']}
+            subtitle="Compliance should make workplaces safer and decisions smarter — not bury teams in forms."
+            backgroundImage={optimizedImages.heroFrame}
+            layout="center"
+            showParticles={true}
+            showGridBlob={false}
+          />
           <AIPlatformSection />
           <WhoWeHelpSection />
           <WhatDisruptDoesSection />

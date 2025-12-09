@@ -1,9 +1,16 @@
-import { PageLayout } from '@/components/layout/PageLayout'
+import { PageLayout } from '@adrozdenko/design-system'
+import { useRouterNavigation } from '@/hooks/useRouterNavigation'
 
 function PrivacyPolicy() {
+  const { renderNavLink, renderContactLink, onLogoClick } = useRouterNavigation()
 
   return (
-    <PageLayout showContactButton={false}>
+    <PageLayout
+      showContactButton={false}
+      renderNavLink={renderNavLink}
+      renderContactLink={renderContactLink}
+      onLogoClick={onLogoClick}
+    >
       <div className="flex-grow">
           <div className="container mx-auto px-6 py-24 max-w-4xl">
             <h1 className="text-4xl font-display font-bold text-center mb-8">Privacy Information Statement</h1>

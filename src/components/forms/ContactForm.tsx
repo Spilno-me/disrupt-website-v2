@@ -1,13 +1,11 @@
 import { useState, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, Button } from '@adrozdenko/design-system'
+import { Form, Button, ContactFormSuccessModal, ContactFormErrorModal } from '@adrozdenko/design-system'
 import { createContactFormSchema, ContactFormData, defaultFormValues } from '@/schemas/createContactFormSchema'
 import { useTranslation } from '@/hooks/useI18n'
 import { useContactFormSubmission } from '@/hooks/useContactFormSubmission'
 import { ContactFormFields } from './ContactFormFields'
-import { ContactFormSuccessModal } from './ContactFormSuccessModal'
-import { ContactFormErrorModal } from './ContactFormErrorModal'
 
 export function ContactForm() {
   const { t } = useTranslation()
@@ -63,12 +61,19 @@ export function ContactForm() {
       <ContactFormSuccessModal
         open={showSuccessModal}
         onClose={() => setShowSuccessModal(false)}
+        title={t('contact.form.modal.title')}
+        description={t('contact.form.modal.description')}
+        buttonText={t('contact.form.modal.button')}
       />
 
       <ContactFormErrorModal
         open={showErrorModal}
         onClose={() => setShowErrorModal(false)}
         onRetry={handleRetry}
+        title={t('contact.form.errorModal.title')}
+        description={t('contact.form.errorModal.description')}
+        closeButtonText={t('contact.form.errorModal.closeButton')}
+        retryButtonText={t('contact.form.errorModal.retryButton')}
       />
     </>
   )

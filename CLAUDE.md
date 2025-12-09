@@ -170,6 +170,52 @@ FROM_NAME=Disrupt Inc.
 
 ---
 
+## Testing DDS (Design System) Changes Locally
+
+When working on components in the DDS package (`@adrozdenko/design-system`), use `npm link` to test changes locally before publishing.
+
+### Setup (Link DDS)
+
+```bash
+# 1. In DDS directory - create global link
+cd ~/Desktop/DDS
+npm link
+
+# 2. In website directory - use the linked package
+cd ~/Desktop/DisruptInc.io\ -\ Webite
+npm link @adrozdenko/design-system
+
+# 3. Clear Vite cache and restart dev server
+rm -rf node_modules/.vite
+npm run dev
+```
+
+### After Making DDS Changes
+
+```bash
+# 1. Rebuild DDS after changes
+cd ~/Desktop/DDS
+npm run build
+
+# 2. Clear website cache and refresh browser
+cd ~/Desktop/DisruptInc.io\ -\ Webite
+rm -rf node_modules/.vite
+# Refresh browser (Cmd+Shift+R for hard refresh)
+```
+
+### Cleanup (Unlink DDS)
+
+**Important**: Always unlink before committing or running CI tests - linked packages cause duplicate React instances.
+
+```bash
+# Unlink and reinstall from npm registry
+cd ~/Desktop/DisruptInc.io\ -\ Webite
+npm unlink @adrozdenko/design-system
+npm install @adrozdenko/design-system@latest
+```
+
+---
+
 ## Important Notes
 
 1. **Multi-language support**: Website supports EN, ES, IT, AR (RTL), FR
